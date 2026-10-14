@@ -314,7 +314,11 @@ textarea.linput { resize: vertical; }
   .lock-badge { width: 110px; height: 110px; }
   .gb-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
   .gb-grid img { border-radius: 18px; }
-  .gb-wrap.locked .gb-grid { min-height: 0; max-height: 560px; overflow: hidden; }
+  .gb-grid > div { aspect-ratio: 4/5; }
+  .gb-wrap.locked .gb-grid { min-height: 0; height: 450px; overflow: hidden; grid-template-rows: repeat(2, 1fr); }
+  .gb-wrap.locked .gb-grid > div { aspect-ratio: auto; height: auto; min-height: 0; }
+  #guestbook .h2 { margin-bottom: 18px !important; }
+  #guestbook.glass { padding-top: 48px; }
   .gb-lock { padding: 12px 8px; }
   .lock-card { padding: 22px 18px; gap: 10px; max-width: 290px; }
   .lock-title { font-size: 26px; }
