@@ -522,9 +522,9 @@
     if (mobile) {
       // headline pins, then the 30, the stickers, the text, the countdown, and the banner on top
       layers = [kicker, w30, row, heroIntro, heroCd, mq];
-      const H = layers.map((el) => el.offsetHeight), t0 = navH + 6, tCd = t0 + 34 + H[3] - 44;
+      const t0 = navH + 6;
       G = [0, 8, -28, 22, 22, 18];
-      T = [t0, t0 + 8, t0 + 4, t0 + 34, tCd, tCd + Math.round(H[4] * .45)];
+      T = layers.map(() => t0);                              // every layer pins on the same line under the menu
     } else {
       // desktop: headline pins, the 30 (stickers ride on it) slides over it, then the text + countdown, then the banner
       layers = [kicker, w30, row, heroBottom, mq];
@@ -532,8 +532,8 @@
       const H = layers.map((el) => el.offsetHeight);
       Y[2] = Y[1]; H[2] = 0;                                   // sticker layer is a zero-height anchor on the 30
       G = Y.map((y, i) => (i ? y - (Y[i - 1] + H[i - 1]) : 0));
-      const t0 = navH + 18, t1 = t0 + Math.round(H[0] * .42), t3 = t1 + Math.round(H[1] * .55);
-      T = [t0, t1, t1, t3, t3 + Math.round(H[3] * .55)];
+      const t0 = navH + 18;
+      T = layers.map(() => t0);                              // every layer pins on the same line under the menu
     }
     const H = layers.map((el, i) => (!mobile && i === 2 ? 0 : el.offsetHeight));
     const R = Math.max(...T.map((t, i) => t + H[i]));
