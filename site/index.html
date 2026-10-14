@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=33">
+<link rel="stylesheet" href="styles.css?v=34">
 <script src="config.js?v=26"></script>
-<script src="app.js?v=30" defer></script>
+<script src="app.js?v=34" defer></script>
 </head>
 <body>
 <div class="page">
@@ -72,7 +72,7 @@
   <div class="marquee" aria-label="KATHI x JOSHUA (TURNING 30) · JAN 15—18 · JOSHUA TREE · RSVP BY OCT 30"><div class="marquee-track" id="marquee" aria-hidden="true"></div></div>
 
   <section class="glass reveal" aria-label="The deal">
-    <div class="hscroll grid-auto" style="--min:230px">
+    <div class="stack grid-auto" style="--min:230px">
       <div class="card deal-silver lift"><span class="deal-big red-text">3 nights</span><span class="body16">Fri Jan 15 → Mon Jan 18. Under the stars.</span></div>
       <div class="card deal-blue lift"><span class="deal-big">$300</span><span class="body16">per person, all 3 nights. I'm covering part of the stay.</span></div>
       <div class="card card-dark lift"><span class="deal-big chrome-soft-text">Oct 30</span><span class="body16">RSVP deadline so I know you're INN</span></div>
@@ -84,7 +84,7 @@
       <h2 class="h2 chrome-text">the plan</h2>
       <span class="mono">(preliminary) · subject to vibes</span>
     </div>
-    <div class="hscroll plan-row">
+    <div class="stack plan-row">
       <div class="card card-glass lift day">
         <div class="day-head"><span class="day-name">FRI</span><span class="mono-plain">JAN 15</span></div>
         <span class="emoji">🚗</span>
@@ -125,7 +125,7 @@
       <button class="chrome-round car-next" id="nextSlide" aria-label="next photo">→</button>
     </div>
     <div class="dots" id="dots"></div>
-    <div class="hscroll grid-auto mt16" style="--min:300px">
+    <div class="stack grid-auto mt16" style="--min:300px">
       <a class="card-sand house" href="https://www.google.com/maps/search/?api=1&amp;query=7670+Wilton+Rd,+Joshua+Tree,+CA+92252" target="_blank" rel="noopener">
         <span class="mono-plain small ls1">🏡 HOUSE 01</span>
         <span class="house-street">7670 Wilton Rd</span>
@@ -154,7 +154,7 @@
 
   <section id="travel" class="glass reveal">
     <h2 class="h2 chrome-text" style="margin-bottom:28px">getting there</h2>
-    <div class="hscroll grid-auto" style="--min:340px">
+    <div class="stack grid-auto" style="--min:340px">
       <div class="route lift">
         <span class="mono-plain ls1">ROUTE 01 · ✈️ + 🚙</span>
         <span class="route-title">Fly to LA, rent a car</span>
@@ -174,7 +174,7 @@
         <h2 class="h2-car chrome-text">carpool board</h2>
         <span class="mono" id="seatSummary">drivers + riders, find each other</span>
       </div>
-      <div class="hscroll grid-auto" style="--min:320px">
+      <div class="grid-auto" style="--min:320px">
         <form id="driverForm" class="dform">
           <span class="form-title">🚙 I'm driving</span>
           <input name="name" class="dinput" placeholder="your name" required maxlength="60" autocomplete="given-name" aria-label="your name">
@@ -201,7 +201,7 @@
           <button type="submit" class="submit mono btn-red" style="margin-top:auto">hop in</button>
         </form>
       </div>
-      <div class="hscroll board" id="board"></div>
+      <div class="board" id="board"></div>
       <div class="looking" id="looking" hidden></div>
     </div>
   </section>
@@ -211,7 +211,7 @@
       <h2 class="h2 chrome-text">the soundtrack</h2>
       <span class="homework mono-plain">homework: add ≥1 song to EACH 🎧</span>
     </div>
-    <div class="hscroll grid-auto music" style="--min:280px">
+    <div class="stack grid-auto music" style="--min:280px">
       <div class="playlist pl-day">
         <span class="mono-plain ls1">☀️ DAY PLAYLIST</span>
         <span class="pl-title">kathi x joshua days</span>
@@ -264,7 +264,7 @@
         </label>
         <button type="submit" class="submit mono" style="background:var(--ink);color:var(--paper)">post it</button>
       </form>
-      <div class="hscroll notes" id="notes"></div>
+      <div class="notes" id="notes"></div>
     </div>
   </section>
 
@@ -272,7 +272,7 @@
     <div class="col gap28" style="position:relative">
       <span class="mono-plain ls1 red-label">RSVP BY OCTOBER 30 📅</span>
       <div class="rsvp-big chrome-text">are you<br>INN? 🏡</div>
-      <div class="hscroll grid-auto gap12 steps" style="--min:220px">
+      <div class="stack grid-auto gap12 steps" style="--min:220px">
         <div class="step"><span class="mono-plain step-n">01</span><span class="step-body"><span class="body16 lh145">RSVP on Partiful. Bringing someone? Add your +1 right in the RSVP.</span><a data-href="partifulUrl" target="_blank" rel="noopener" class="tilt">💌 tap to RSVP →</a></span></div>
         <div class="step"><span class="mono-plain step-n">02</span><span class="step-body"><span class="body16 lh145">Send your $300 via Venmo or PayPal.</span><a href="#pay" class="tilt">💸 pay your share →</a></span></div>
         <div class="step"><span class="mono-plain step-n">03</span><span class="step-body"><span class="body16 lh145">Join the group chat 💬 for updates, rides and gc spam.</span><a data-href="whatsappUrl" target="_blank" rel="noopener" class="tilt">💬 join WhatsApp →</a></span></div>
@@ -293,7 +293,7 @@
       </div>
       <div id="bring" class="card-sand pack-card bring">
         <div class="pack-head"><h2 class="h2-pack">who's bringing what</h2><span class="mono-plain" id="bringCount"></span></div>
-        <div class="hscroll bring-list" id="bringList"></div>
+        <div class="bring-list" id="bringList"></div>
       </div>
     </div>
   </section>

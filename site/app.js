@@ -418,6 +418,30 @@
   addEventListener('resize', onScroll);
   onScroll();
 
+  // ---------- phones: stacked cards ----------
+  const stackGroups = [...document.querySelectorAll('.stack')];
+  stackGroups.forEach((g) => [...g.children].forEach((c, i) => c.style.setProperty('--i', i)));
+  const nav = document.querySelector('.nav');
+  function layoutStacks() {
+    const mobile = innerWidth <= 640;
+    document.documentElement.style.setProperty('--stack-top', (nav ? nav.offsetHeight : 90) + 12 + 'px');
+    stackGroups.forEach((g) => {
+      const kids = [...g.children];
+      kids.forEach((c, i) => {
+        if (!mobile || reduceMotion) { c.style.transform = ''; c.style.filter = ''; return; }
+        // how many later cards are already stuck on top of this one
+        const top = c.getBoundingClientRect().top;
+        let covered = 0;
+        for (let j = i + 1; j < kids.length; j++) if (kids[j].getBoundingClientRect().top - top < c.offsetHeight * 0.6) covered++;
+        c.style.transform = covered ? `scale(${1 - covered * 0.045})` : '';
+        c.style.filter = covered ? `brightness(${1 - covered * 0.06})` : '';
+      });
+    });
+  }
+  addEventListener('scroll', () => requestAnimationFrame(layoutStacks), { passive: true });
+  addEventListener('resize', layoutStacks);
+  layoutStacks();
+
   // ---------- reveal on scroll ----------
   if (!reduceMotion && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver((es) => es.forEach((en) => {

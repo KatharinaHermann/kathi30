@@ -461,3 +461,16 @@ textarea.linput { resize: vertical; }
 .card-glass-dark.day-sat { box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 -2px 0 rgba(0,0,0,.4), 0 4px 0 #0b0b0d, 0 20px 50px rgba(20,12,8,.28); }
 .card-glass-dark.day-sat { box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 20px 50px rgba(20,12,8,.28); }
 .tilt { white-space: nowrap; }
+
+/* ---------- phones: card groups stack up as you scroll ---------- */
+@media (max-width: 640px) {
+  .stack { display: block !important; overflow: visible !important; margin: 0 !important; padding: 0 !important; }
+  .stack > * { position: sticky; top: calc(var(--stack-top, 104px) + var(--i, 0) * 14px); margin-bottom: 16px; transform-origin: 50% 0;
+    transition: transform .25s ease-out, filter .25s ease-out; will-change: transform; box-shadow: 0 -8px 28px rgba(20,12,8,.14), 0 18px 40px rgba(20,12,8,.16); }
+  .stack > *:last-child { margin-bottom: 0; }
+  .glass-rsvp { overflow: clip; }
+  /* see-through cards get frosted so the card underneath doesn't show through */
+  .stack > .card-glass, .stack > .step, .stack > .route { background: rgba(250,246,242,.82); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); }
+  .stack > .polaroid { width: 100%; rotate: 0deg; }
+  .stack > .day { min-height: 0; }
+}
