@@ -583,7 +583,8 @@
 // liquid chrome headlines: every title is spelled with the Etsy chrome letter images.
 // The real text stays as the heading's accessible name; the images are decoration.
 (() => {
-  const silverKicker = !/(^|[?&])etsy\b/.test(location.search); // headline uses the regular silver font; ?etsy previews it in the Etsy letters
+  const silverKicker = !/(^|[?&])etsy/.test(location.search);
+  const etsyX = /(^|[?&])etsyx\b/.test(location.search); // ?etsyx: Etsy letters with the Etsy X instead of the red x // headline uses the regular silver font; ?etsy previews it in the Etsy letters
   // ?black previews the headline in solid black (?allblack also turns the x black)
   if (/(^|[?&])(all)?black\b/.test(location.search)) document.documentElement.classList.add('kicker-black');
   if (/(^|[?&])allblack\b/.test(location.search)) document.documentElement.classList.add('kicker-allblack');
@@ -599,6 +600,8 @@
         const words = n.textContent.toUpperCase().split(/(\s+)/);
         const html = words.map((w) => (/^\s+$/.test(w) ? '<span class="el-sp"> </span>' : w ? `<span class="el-w" aria-hidden="true">${[...w].map(glyph).join('')}</span>` : '')).join('');
         const t = document.createElement('template'); t.innerHTML = html; n.replaceWith(t.content);
+      } else if (n.nodeType === 1 && n.classList.contains('kx') && etsyX) {
+        n.className = 'el-w'; n.setAttribute('aria-hidden', 'true'); n.innerHTML = glyph('X');
       } else if (n.nodeType === 1 && !n.classList.contains('kx')) walk(n);
     });
     walk(h);
