@@ -681,3 +681,6 @@ textarea.linput { resize: vertical; }
 
 /* header: silver-to-gold like the stargazing glam card */
 .nav { background: linear-gradient(100deg,#f7f8fb 0%,#c9cdd5 30%,#9ea3ad 48%,#e8c7a5 70%,#fff6ec 100%); border-bottom-color: rgba(36,34,31,.12); }
+@media (max-width: 640px) {
+  .hero-stack .hero-kicker { position: sticky; z-index: 0; transition: filter .15s linear, opacity .15s linear; }
+}

@@ -496,7 +496,7 @@
       kids.forEach((c, i) => c.style.setProperty('top', stackTop + STEP * i + 'px', 'important'));
     });
   }
-  // hero on phones: the 30 pins, the sticker row slides onto it, then the intro text slides onto the stickers;
+  // hero on phones: the headline pins, the 30 slides onto it, then the sticker row, the intro text and the countdown;
   // all three release together
   const heroIntro = document.querySelector('.hero-intro'), heroCd = document.querySelector('.hero-bottom .countdown'), heroBottom = document.querySelector('.hero-bottom');
   function sizeHero() {
@@ -507,15 +507,16 @@
     if (mobile && heroIntro.parentNode !== stack) stack.append(heroIntro, heroCd);
     if (!mobile && heroIntro.parentNode !== heroBottom) heroBottom.append(heroIntro, heroCd);
     heroBottom.hidden = mobile;
-    const layers = [w30, row, heroIntro, heroCd];
+    const kicker = stack.querySelector('.hero-kicker');
+    const layers = [kicker, w30, row, heroIntro, heroCd];
     layers.forEach((el) => ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
     stack.style.removeProperty('margin-bottom');
     if (!mobile) return;
     const navH = nav ? nav.offsetHeight : 90;
     const t30 = navH + 6;
     const H = layers.map((el) => el.offsetHeight);
-    const G = [0, -28, 22, 22];                           // resting gap before each layer (stickers overlap the 30 a bit)
-    const T = [t30, t30 + 4, t30 + 34, t30 + 34 + H[2] - 44]; // where each layer pins: 30, stickers at the ceiling, text, countdown over the text's last line
+    const G = [0, 8, -28, 22, 22];                        // resting gap before each layer (stickers overlap the 30 a bit)
+    const T = [t30, t30 + 8, t30 + 4, t30 + 34, t30 + 34 + H[3] - 44]; // where each layer pins: headline, 30, stickers at the ceiling, text, countdown over the text's last line
     const R = Math.max(...T.map((t, i) => t + H[i]));
     const MB = T.map((t, i) => R - t - H[i]);         // pads every layer so they all let go at the same moment
     layers.forEach((el, i) => {
@@ -526,11 +527,12 @@
     stack.style.marginBottom = 18 - MB[MB.length - 1] + 'px';  // banner sits 18px under the countdown; the release padding below it stays invisible
   }
   // hero only: whatever gets covered by the next stacked layer blurs and fades out
+  const stack0 = (w) => w.parentNode.querySelector('.hero-kicker');
   function coverFx() {
     const pairs = [];
     if (innerWidth <= 640 && !reduceMotion) {
       const w30 = document.querySelector('.hero-stack .hero-30-wrap'), row = $('heroBadges');
-      if (w30 && heroIntro.parentNode === w30.parentNode) pairs.push([w30, row, 40, .7], [row, heroIntro, -16, .3], [heroIntro, heroCd, -16, .35]);
+      if (w30 && heroIntro.parentNode === w30.parentNode) pairs.push([stack0(w30), w30, 4, .45], [w30, row, 40, .7], [row, heroIntro, -16, .3], [heroIntro, heroCd, -16, .35]);
     }
     pairs.forEach(([below, above, rest, span]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
