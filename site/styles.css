@@ -639,3 +639,8 @@ textarea.linput { resize: vertical; }
 .hero-line em { color: inherit; }
 .hero-line { font-size: clamp(22px, 1.9vw, 27px); }
 @media (max-width: 640px) { .hero-line { font-size: 7.6vw; line-height: 1.06; } }
+@media (max-width: 640px) {
+  .hero-stack .countdown { position: sticky; z-index: 5; display: flex; transition: filter .15s linear, opacity .15s linear; }
+  .hero-stack .hero-intro { transition: filter .15s linear, opacity .15s linear; }
+  .hero-bottom:empty { display: none; }
+}

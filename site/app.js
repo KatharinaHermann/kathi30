@@ -487,22 +487,22 @@
   }
   // hero on phones: the 30 pins, the sticker row slides onto it, then the intro text slides onto the stickers;
   // all three release together
-  const heroIntro = document.querySelector('.hero-intro'), heroBottom = document.querySelector('.hero-bottom');
+  const heroIntro = document.querySelector('.hero-intro'), heroCd = document.querySelector('.hero-bottom .countdown'), heroBottom = document.querySelector('.hero-bottom');
   function sizeHero() {
     const stack = document.querySelector('.hero-stack');
     const w30 = document.querySelector('.hero-stack .hero-30-wrap'), row = $('heroBadges');
     if (!stack || !w30 || !row || !heroIntro) return;
     const mobile = innerWidth <= 640 && !reduceMotion;
-    if (mobile && heroIntro.parentNode !== stack) stack.appendChild(heroIntro);
-    if (!mobile && heroIntro.parentNode !== heroBottom) heroBottom.prepend(heroIntro);
-    const layers = [w30, row, heroIntro];
+    if (mobile && heroIntro.parentNode !== stack) stack.append(heroIntro, heroCd);
+    if (!mobile && heroIntro.parentNode !== heroBottom) heroBottom.append(heroIntro, heroCd);
+    const layers = [w30, row, heroIntro, heroCd];
     layers.forEach((el) => ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
     if (!mobile) return;
     const navH = nav ? nav.offsetHeight : 90;
     const t30 = navH + 6;
-    const T = [t30, t30 + 4, t30 + 34];               // where each layer pins: 30, stickers at the ceiling, text just below
-    const G = [0, -28, 22];                           // resting gap before each layer (stickers overlap the 30 a bit)
     const H = layers.map((el) => el.offsetHeight);
+    const G = [0, -28, 22, 22];                           // resting gap before each layer (stickers overlap the 30 a bit)
+    const T = [t30, t30 + 4, t30 + 34, t30 + 34 + H[2] - 44]; // where each layer pins: 30, stickers at the ceiling, text, countdown over the text's last line
     const R = Math.max(...T.map((t, i) => t + H[i]));
     const MB = T.map((t, i) => R - t - H[i]);         // pads every layer so they all let go at the same moment
     layers.forEach((el, i) => {
@@ -516,15 +516,15 @@
     const pairs = [];
     if (innerWidth <= 640 && !reduceMotion) {
       const w30 = document.querySelector('.hero-stack .hero-30-wrap'), row = $('heroBadges');
-      if (w30 && heroIntro.parentNode === w30.parentNode) pairs.push([w30, row, 40], [row, heroIntro, 30]);
+      if (w30 && heroIntro.parentNode === w30.parentNode) pairs.push([w30, row, 40, .7], [row, heroIntro, -16, .3], [heroIntro, heroCd, -16, .35]);
       document.querySelectorAll('.stack').forEach((g) => {
         const k = [...g.children];
-        k.slice(0, -1).forEach((c, i) => pairs.push([c, k[i + 1], 0]));
+        k.slice(0, -1).forEach((c, i) => pairs.push([c, k[i + 1], 0, .7]));
       });
     }
-    pairs.forEach(([below, above, rest]) => {
+    pairs.forEach(([below, above, rest, span]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (a.height * .7)));
+      const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (a.height * span)));
       const v = Math.round(p * 20) / 20;
       if (below._cv === v) return;
       below._cv = v;
