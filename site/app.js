@@ -582,3 +582,47 @@
   center();
   addEventListener('load', center);
 })();
+
+// liquid chrome headlines: puffy 3D metal letters drawn by an SVG lighting filter.
+// The bevel has to scale with the type, so each size gets its own filter.
+(() => {
+  const hosts = document.querySelectorAll('.hero-kicker, .h2, .h2-car');
+  if (!hosts.length) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('width', '0'); svg.setAttribute('height', '0'); svg.setAttribute('aria-hidden', 'true');
+  svg.style.position = 'absolute';
+  document.body.appendChild(svg);
+  const made = {};
+  const filterFor = (fs) => {
+    const sd = Math.max(1.2, Math.round(fs * 0.068 * 2) / 2), id = 'lq' + String(sd).replace('.', '_');
+    if (!made[id]) {
+      made[id] = 1;
+      const ss = (sd * 2.2).toFixed(1);
+      svg.insertAdjacentHTML('beforeend', `<filter id="${id}" x="-5%" y="-15%" width="110%" height="130%" color-interpolation-filters="sRGB">
+        <feMorphology in="SourceAlpha" operator="erode" radius="1" result="er"/>
+        <feGaussianBlur in="er" stdDeviation="${sd}" result="bump"/>
+        <feDiffuseLighting in="bump" surfaceScale="${ss}" diffuseConstant="1.05" lighting-color="#fff" result="dif"><feDistantLight azimuth="225" elevation="50"/></feDiffuseLighting>
+        <feComponentTransfer in="dif" result="env"><feFuncR type="table" tableValues="0.1 0.6 0.28 0.82 0.42 0.9 0.97"/><feFuncG type="table" tableValues="0.11 0.61 0.29 0.83 0.43 0.91 0.97"/><feFuncB type="table" tableValues="0.14 0.65 0.33 0.87 0.48 0.94 1"/></feComponentTransfer>
+        <feSpecularLighting in="bump" surfaceScale="${ss}" specularConstant="1.1" specularExponent="40" lighting-color="#fff" result="spec"><fePointLight x="-200" y="-300" z="300"/></feSpecularLighting>
+        <feComposite in="env" in2="spec" operator="arithmetic" k1="0" k2="1" k3=".75" k4="0" result="lit"/>
+        <feComposite in="lit" in2="SourceAlpha" operator="in"/>
+      </filter>`);
+    }
+    return `url(#${id})`;
+  };
+  // wrap the words (not the red x) so only the letters get the metal
+  hosts.forEach((h) => {
+    h.classList.add('liquid');
+    const walk = (el) => [...el.childNodes].forEach((n) => {
+      if (n.nodeType === 3 && n.textContent.trim()) {
+        const s = document.createElement('span'); s.className = 'lq'; s.textContent = n.textContent; n.replaceWith(s);
+      } else if (n.nodeType === 1 && !n.classList.contains('kx')) walk(n);
+    });
+    walk(h);
+  });
+  const size = () => hosts.forEach((h) => h.style.setProperty('--lqf', filterFor(parseFloat(getComputedStyle(h).fontSize) || 40)));
+  size();
+  addEventListener('resize', size);
+  if (document.fonts) document.fonts.ready.then(() => { size(); if (window.restackLight) window.restackLight(); });
+})();

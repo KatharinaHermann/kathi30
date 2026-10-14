@@ -653,3 +653,12 @@ textarea.linput { resize: vertical; }
 
 /* phones: sections only fade in; a transform on the section would drag its pinned title and cards along */
 @media (max-width: 640px) { .reveal.pre { transform: none; transition: opacity .8s var(--ease); } }
+
+/* header 2: liquid silver bar */
+.nav { background: linear-gradient(180deg,#ffffff 0%,#dfe2e7 40%,#b9bec8 58%,#eef0f3 100%); border-bottom-color: rgba(36,34,31,.12); }
+
+/* headline M: squishy Bagel letters in 3D liquid chrome (filter set per size in app.js) */
+.liquid { font-family: 'Bagel Fat One', 'Arial Black', sans-serif !important; font-weight: 400 !important; letter-spacing: 0 !important; background: none !important; color: #c8ccd2; -webkit-text-fill-color: #c8ccd2; }
+.liquid .lq { color: #c8ccd2; -webkit-text-fill-color: #c8ccd2; filter: var(--lqf); }
+.liquid .kx { font-style: normal; color: var(--red); -webkit-text-fill-color: var(--red); }
+.hero-kicker .lq { display: inline; }
