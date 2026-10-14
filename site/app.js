@@ -485,25 +485,56 @@
       }
     });
   }
-  // hero on phones: pin the 30, slide the sticker row up onto it, release both together
+  // hero on phones: the 30 pins, the sticker row slides onto it, then the intro text slides onto the stickers;
+  // all three release together
+  const heroIntro = document.querySelector('.hero-intro'), heroBottom = document.querySelector('.hero-bottom');
   function sizeHero() {
+    const stack = document.querySelector('.hero-stack');
     const w30 = document.querySelector('.hero-stack .hero-30-wrap'), row = $('heroBadges');
-    if (!w30 || !row) return;
-    ['top', 'margin-bottom'].forEach((k) => w30.style.removeProperty(k));
-    ['top', 'margin-top', 'margin-bottom'].forEach((k) => row.style.removeProperty(k));
-    if (innerWidth > 640 || reduceMotion) return;
+    if (!stack || !w30 || !row || !heroIntro) return;
+    const mobile = innerWidth <= 640 && !reduceMotion;
+    if (mobile && heroIntro.parentNode !== stack) stack.appendChild(heroIntro);
+    if (!mobile && heroIntro.parentNode !== heroBottom) heroBottom.prepend(heroIntro);
+    const layers = [w30, row, heroIntro];
+    layers.forEach((el) => ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
+    if (!mobile) return;
     const navH = nav ? nav.offsetHeight : 90;
-    const t30 = navH + 6, h30 = w30.offsetHeight, hb = row.offsetHeight;
-    const tb = t30 + 4;                                // the row slides all the way up to the ceiling, over the 30
-    const travel = -28;                                // it starts slightly overlapping the bottom of the 30
-    const mb = Math.max(0, tb + hb - (t30 + h30));     // lets the 30 release exactly when the row lands
-    w30.style.top = t30 + 'px';
-    w30.style.setProperty('margin-bottom', mb + 'px', 'important');
-    row.style.top = tb + 'px';
-    row.style.setProperty('margin-top', travel - mb + 'px', 'important');
-    row.style.setProperty('margin-bottom', '0px', 'important');
+    const t30 = navH + 6;
+    const T = [t30, t30 + 4, t30 + 34];               // where each layer pins: 30, stickers at the ceiling, text just below
+    const G = [0, -28, 22];                           // resting gap before each layer (stickers overlap the 30 a bit)
+    const H = layers.map((el) => el.offsetHeight);
+    const R = Math.max(...T.map((t, i) => t + H[i]));
+    const MB = T.map((t, i) => R - t - H[i]);         // pads every layer so they all let go at the same moment
+    layers.forEach((el, i) => {
+      el.style.top = T[i] + 'px';
+      el.style.setProperty('margin-bottom', MB[i] + 'px', 'important');
+      if (i) el.style.setProperty('margin-top', G[i] - MB[i - 1] + 'px', 'important');
+    });
   }
-  window.restackLight = () => { sizeStacks(); sizeHero(); };
+  // whatever gets covered by the next stacked layer blurs and fades out
+  function coverFx() {
+    const pairs = [];
+    if (innerWidth <= 640 && !reduceMotion) {
+      const w30 = document.querySelector('.hero-stack .hero-30-wrap'), row = $('heroBadges');
+      if (w30 && heroIntro.parentNode === w30.parentNode) pairs.push([w30, row, 40], [row, heroIntro, 30]);
+      document.querySelectorAll('.stack').forEach((g) => {
+        const k = [...g.children];
+        k.slice(0, -1).forEach((c, i) => pairs.push([c, k[i + 1], 0]));
+      });
+    }
+    pairs.forEach(([below, above, rest]) => {
+      const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (a.height * .7)));
+      const v = Math.round(p * 20) / 20;
+      if (below._cv === v) return;
+      below._cv = v;
+      below.style.filter = v ? `blur(${(v * 6).toFixed(1)}px)` : '';
+      below.style.opacity = v ? (1 - v * .55).toFixed(2) : '';
+    });
+  }
+  let fxQ = false;
+  addEventListener('scroll', () => { if (!fxQ) { fxQ = true; requestAnimationFrame(() => { fxQ = false; coverFx(); }); } }, { passive: true });
+  window.restackLight = () => { sizeStacks(); sizeHero(); coverFx(); };
   addEventListener('resize', sizeHero);
   addEventListener('load', sizeHero);
   sizeHero();

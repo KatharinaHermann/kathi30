@@ -627,3 +627,10 @@ textarea.linput { resize: vertical; }
 
 /* deal cards float directly on the background, no glass panel */
 .glass.glass-bare { background: none; backdrop-filter: none; -webkit-backdrop-filter: none; border: 0; box-shadow: none; border-radius: 0; padding-top: clamp(24px,3vw,40px); padding-bottom: clamp(16px,2vw,24px); }
+
+/* phones: intro text is the third layer of the hero stack */
+@media (max-width: 640px) {
+  .hero-stack .hero-intro { position: sticky; z-index: 4; width: 100%; }
+  .hero-bottom { margin-top: 30px !important; }
+  .hero-stack .hero-30-wrap, .hero-stack #heroBadges, .stack > * { transition: filter .15s linear, opacity .15s linear; }
+}
