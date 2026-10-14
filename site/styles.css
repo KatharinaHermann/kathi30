@@ -634,3 +634,8 @@ textarea.linput { resize: vertical; }
   .hero-bottom { margin-top: 30px !important; }
   .hero-stack .hero-30-wrap, .hero-stack #heroBadges, .stack > * { transition: filter .15s linear, opacity .15s linear; }
 }
+
+/* intro line: no red, a size smaller */
+.hero-line em { color: inherit; }
+.hero-line { font-size: clamp(22px, 1.9vw, 27px); }
+@media (max-width: 640px) { .hero-line { font-size: 7.6vw; line-height: 1.06; } }
