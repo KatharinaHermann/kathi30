@@ -573,3 +573,8 @@ textarea.linput { resize: vertical; }
 /* hero top line in blue (deeper than --sky so it reads on the light glow) */
 :root { --sky-deep: #4f78aa; }
 .hero-top span, .hero-top .hero-date { color: var(--sky-deep); font-weight: 600; }
+
+/* intro line: editorial serif (option B) */
+.hero-line { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(28px, 2.6vw, 36px); line-height: 1.12; letter-spacing: -.01em; }
+.hero-line em { color: var(--red); font-style: italic; }
+@media (max-width: 640px) { .hero-line { font-size: 30px; } }
