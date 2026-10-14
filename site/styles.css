@@ -2,10 +2,11 @@
   --ink: #24221f;
   --paper: #f6f2ec;
   --sand: #efe7dd;
-  --accent: #e8764a;
+  --accent: #f26a3d;
   --accent-dark: #b9552f;
-  --red: #e3261f;
-  --red-dark: #b81a14;
+  --red: #f0231a;
+  --red-dark: #c0150e;
+  --sky: #9fb6d1;
   --peach: #f3b995;
   --dark2: #2a2622;
   --line: #3a3530;
@@ -47,11 +48,11 @@ img, video { display: block; max-width: 100%; }
 .sun { position: fixed; left: 62%; top: 0; z-index: -1; width: min(34vw,420px); aspect-ratio: 1; transform: translate(-50%,16vh); pointer-events: none; will-change: transform; }
 .sun-halo { position: absolute; inset: -60%; border-radius: 50%; background: radial-gradient(circle,rgba(243,185,149,.55),rgba(243,185,149,0) 62%); }
 .sun-disc { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(180deg,#ffe2c4,#f3b995 55%,#f2a26f); box-shadow: 0 0 80px 10px rgba(242,162,111,.35); }
-.sun-hot { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(180deg,#f7b98a,#e8764a 60%,#b9552f); opacity: 0; }
+.sun-hot { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(180deg,#f7b98a,#f26a3d 60%,#b9552f); opacity: 0; }
 .night { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; background: linear-gradient(180deg,#121836 0%,#262350 50%,#3d2a4c 100%); }
 .stars { position: absolute; inset: 0; opacity: 0; background-size: 420px 420px;
   background-image: radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 28% 42%,#fff,transparent),radial-gradient(1.5px 1.5px at 46% 12%,#fff,transparent),radial-gradient(1px 1px at 63% 30%,#fff,transparent),radial-gradient(2px 2px at 78% 14%,#fff,transparent),radial-gradient(1px 1px at 88% 46%,#fff,transparent),radial-gradient(1.5px 1.5px at 8% 62%,#fff,transparent),radial-gradient(1px 1px at 36% 74%,#fff,transparent),radial-gradient(1.5px 1.5px at 56% 58%,#fff,transparent),radial-gradient(1px 1px at 92% 78%,#fff,transparent); }
-.prog { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 40; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg,#e8764a,var(--red)); }
+.prog { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 40; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg,#f26a3d,var(--red)); }
 
 /* ---------- type helpers ---------- */
 .chrome-text { background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -94,7 +95,7 @@ img, video { display: block; max-width: 100%; }
 .submit { padding: 14px; border-radius: 999px; border: 0; cursor: pointer; color: var(--ink); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; transition: filter .2s, opacity .2s; }
 .submit:hover { filter: brightness(1.06); }
 .submit:disabled { opacity: .6; cursor: progress; }
-.tilt { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px; rotate: -3deg; background: var(--ink); color: var(--paper); font-family: var(--f-display); font-weight: 700; font-size: 15px; box-shadow: 0 8px 0 var(--red), 0 14px 24px rgba(20,12,8,.3); transition: rotate .25s var(--ease), background .2s, color .2s, box-shadow .2s; }
+.tilt { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px; rotate: -3deg; background: var(--ink); color: var(--paper); font-family: var(--f-display); font-weight: 700; font-size: 15px; box-shadow: 0 8px 0 var(--sky), 0 14px 24px rgba(20,12,8,.3); transition: rotate .25s var(--ease), background .2s, color .2s, box-shadow .2s; }
 .tilt:hover { rotate: 2deg; background: var(--red); color: #fff; box-shadow: 0 8px 0 var(--ink); }
 .tilt-wa { background: #25d366; color: #0b2a17; box-shadow: 0 8px 0 var(--ink), 0 14px 24px rgba(20,12,8,.3); }
 .tilt-wa:hover { background: #25d366; color: #0b2a17; box-shadow: 0 8px 0 var(--ink), 0 14px 24px rgba(20,12,8,.3); }
@@ -358,10 +359,10 @@ textarea.linput { resize: vertical; }
 }
 
 /* ---------- bright red accents ---------- */
-.sec-head > .mono, .sec-head > .mono-plain:not(.homework), .red-label { color: var(--red); font-weight: 600; }
-.deal-red { color: var(--red); }
-.btn-red { background: var(--red) !important; color: #fff !important; }
-.choice.on { background: var(--red); border-color: var(--red); color: #fff; }
+.sec-head > .mono, .sec-head > .mono-plain:not(.homework), .red-label { color: var(--red-dark); font-weight: 600; }
+.deal-red { color: var(--sky); }
+.btn-red { background: var(--sky) !important; color: var(--ink) !important; }
+.choice.on { background: var(--sky); border-color: var(--sky); color: var(--ink); }
 
 /* ---------- phones: hero stickers get their own row under the 30 ---------- */
 @media (max-width: 640px) {
@@ -374,3 +375,4 @@ textarea.linput { resize: vertical; }
   #heroBadges .badge:nth-child(2) { order: 1; }
   #heroBadges .badge:nth-child(3) { order: 3; }
 }
+.carpool .sec-head > .mono { color: var(--sky); }
