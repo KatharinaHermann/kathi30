@@ -523,3 +523,14 @@ textarea.linput { resize: vertical; }
   .carpool .hscroll > * { box-shadow: 0 8px 18px rgba(0,0,0,.3) !important; }
   .nav { background: rgba(246,242,236,.86); }
 }
+
+/* hero intro: plain bold line, no card */
+.hero-line { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(20px, 2.1vw, 26px); line-height: 1.22; letter-spacing: -.03em; color: var(--ink); text-wrap: balance; }
+@media (max-width: 640px) {
+  .hero-line { font-size: 22px; }
+  .hero-intro .row-wrap { flex-wrap: nowrap; }
+  .hero-intro .btn { flex: 1 1 auto; text-align: center; padding: 15px 14px; white-space: nowrap; }
+  .hero-bottom { gap: 22px; }
+  .countdown { width: 100%; }
+  .cd-box { flex: 1 1 0; min-width: 0; }
+}
