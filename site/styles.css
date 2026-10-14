@@ -419,3 +419,13 @@ textarea.linput { resize: vertical; }
 /* brushed light-blue metal */
 .card-bluemetal { background: linear-gradient(165deg,#f2f6fb 0%,#d3e1f0 32%,#93abcb 50%,#c6d6ea 66%,#eef3f9 100%); }
 .card3d.card-bluemetal { --edge: #7f97b8; }
+/* soundtrack: equal-height playlist cards, bigger polaroid in a brushed-silver frame */
+.music { align-items: stretch; }
+.music .playlist .self-start { margin-top: auto; }
+.music .polaroid { align-self: center; }
+@media (min-width: 1000px) { .music { grid-template-columns: minmax(0,1fr) minmax(0,1.12fr) minmax(0,1fr); } }
+.polaroid { width: min(100%, 380px); padding: 16px 16px 22px; border-radius: 6px;
+  background: linear-gradient(160deg,#fdfdfe 0%,#d9dce2 22%,#9da2ac 44%,#eef0f3 58%,#b4b9c2 78%,#f4f5f7 100%);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.95), inset 0 -2px 0 rgba(0,0,0,.18), inset 0 0 0 1px rgba(255,255,255,.5), 0 6px 0 #8e939d, 0 30px 60px rgba(20,12,8,.35); }
+.polaroid video { border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.2), 0 1px 0 rgba(255,255,255,.8); outline: 1px solid rgba(20,18,16,.25); }
+.polaroid-cap { font-size: 18px; text-shadow: 0 1px 0 rgba(255,255,255,.7); }
