@@ -497,3 +497,9 @@ textarea.linput { resize: vertical; }
     background: rgba(250,246,242,.78); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); }
   .stick-head .h2 { font-size: 34px; }
 }
+/* phones: venmo + paypal side by side */
+@media (max-width: 640px) {
+  .pay .row-wrap { flex-wrap: nowrap; gap: 8px; }
+  .pay .row-wrap .btn-sm { flex: 1 1 0; text-align: center; padding: 13px 10px; font-size: 12px; white-space: nowrap; }
+  .hscroll > .route { background: rgba(250,246,242,.6); }
+}
