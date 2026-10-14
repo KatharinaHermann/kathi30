@@ -586,4 +586,6 @@ textarea.linput { resize: vertical; }
 .nav { background: rgba(174,197,224,.9); border-bottom-color: rgba(79,120,170,.25); }
 .nav-links { font-family: var(--f-display); font-weight: 700; font-size: 12px; letter-spacing: .02em; }
 .nav-links a:hover { color: var(--red); }
-@media (max-width: 640px) { .nav { background: rgba(174,197,224,.94); } .nav-links { font-size: 12px; gap: 18px; } }
+@media (max-width: 640px) { .nav-links { font-size: 12px; gap: 18px; } }
+/* menu bar uses the same soft blue as the blue cards */
+.nav, .nav:where(*) { background: linear-gradient(180deg, rgba(230,238,247,.96) 0%, rgba(207,222,238,.96) 100%); }
