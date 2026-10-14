@@ -760,3 +760,7 @@ html.kicker-silver .hero-kicker { font-size: clamp(28px, 6.4vw, 92px); }
 
 /* carpool board lives inside "getting there" */
 .carpool-in-travel { margin-top: clamp(28px, 4vw, 48px); scroll-margin-top: 100px; }
+
+/* preview: solid black headline */
+html.kicker-black .hero-kicker { background: none !important; color: var(--ink) !important; -webkit-text-fill-color: var(--ink) !important; filter: none !important; }
+html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-text-fill-color: var(--ink) !important; }
