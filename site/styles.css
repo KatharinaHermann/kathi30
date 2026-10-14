@@ -612,3 +612,4 @@ textarea.linput { resize: vertical; }
 /* plan day names in black */
 .card-glass .day-name, .card-sand .day-name, .card-chrome .day-name { color: var(--ink); }
 .nav-when { color: var(--ink); }
+@media (max-width: 640px) { .hero-line { font-size: 10.2vw; line-height: 1.02; letter-spacing: -.02em; text-wrap: pretty; max-width: none; width: 100%; } }
