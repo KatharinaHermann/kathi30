@@ -592,7 +592,8 @@
 // The real text stays as the heading's accessible name; the images are decoration.
 (() => {
   const hosts = document.querySelectorAll('.hero-kicker, .h2, .h2-car, .rsvp-big');
-  const glyph = (c) => (/[A-Z0-9]/.test(c) ? `<img class="el" src="assets/etsy/${c}.webp" alt="">` : `<span class="el-p">${c}</span>`);
+  const GW = {'A':279,'B':195,'C':195,'D':186,'E':196,'F':156,'G':213,'H':211,'I':104,'J':184,'K':210,'L':188,'M':248,'N':217,'O':196,'P':175,'Q':198,'R':207,'S':215,'T':212,'U':206,'V':230,'W':280,'X':228,'Y':178,'Z':215,'0':208,'1':227,'2':253,'3':210,'4':251,'5':222,'6':218,'7':191,'8':231,'9':182}; // letter widths at 280px tall, so the layout is right before the images arrive
+  const glyph = (c) => (/[A-Z0-9]/.test(c) ? `<img class="el" src="assets/etsy/${c}.webp" alt="" width="${GW[c]}" height="280">` : `<span class="el-p">${c}</span>`);
   hosts.forEach((h) => {
     h.setAttribute('aria-label', h.textContent.replace(/\s+/g, ' ').trim());
     h.classList.add('etsy-type');
@@ -607,6 +608,24 @@
     });
     walk(h);
   });
+  // titles grow to fill the width (one line each), up to a cap
+  const fitTitles = () => {
+    const phone = innerWidth <= 640;
+    document.querySelectorAll('.etsy-type.h2, .etsy-type.h2-car, .etsy-type.rsvp-big').forEach((h) => {
+      const rsvp = h.classList.contains('rsvp-big');
+      if (!phone && !rsvp) { h.style.removeProperty('font-size'); return; }
+      const box = h.parentElement, cs = getComputedStyle(box);
+      const avail = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 4;
+      h.style.setProperty('font-size', '100px', 'important');
+      const w = [...h.querySelectorAll('.el-w, .el-sp, .kx')].reduce((t, e) => t + e.getBoundingClientRect().width, 0);
+      const cap = rsvp ? (phone ? 92 : 150) : 64;
+      h.style.setProperty('font-size', Math.min(cap, Math.floor(100 * avail / w)) + 'px', 'important');
+    });
+  };
+  fitTitles();
+  let fitW = innerWidth;
+  addEventListener('resize', () => { if (innerWidth !== fitW) { fitW = innerWidth; fitTitles(); if (window.restackLight) window.restackLight(); } });
+  if (window.restackLight) window.restackLight();
   // letters arrive after layout: re-measure the phone stacks once they are in
   let left = document.querySelectorAll('img.el').length;
   const done = () => { if (--left === 0 && window.restackLight) window.restackLight(); };

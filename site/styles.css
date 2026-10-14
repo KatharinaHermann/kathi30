@@ -716,3 +716,10 @@ textarea.linput { resize: vertical; }
 /* bigger hero headline */
 .hero-kicker { font-size: clamp(40px, 7.6vw, 116px); }
 @media (max-width: 640px) { .hero-kicker { font-size: 10.6vw; } }
+
+/* Etsy titles: one line each, bigger on desktop (phones are sized to fit in app.js) */
+.etsy-type.h2, .etsy-type.h2-car, .etsy-type.rsvp-big { white-space: nowrap; }
+.etsy-type.h2 { font-size: clamp(48px, 8.4vw, 124px); }
+.etsy-type.h2-car { font-size: clamp(44px, 7.2vw, 104px); }
+.etsy-type .el { flex-shrink: 0; max-width: none; }
+.carpool .etsy-type { filter: drop-shadow(0 0 1.5px rgba(255,255,255,.55)) drop-shadow(0 4px 14px rgba(255,255,255,.14)) !important; }
