@@ -600,3 +600,8 @@ textarea.linput { resize: vertical; }
 .nav-brand:hover { color: inherit; }
 .nav-when { font-size: 10.5px; font-weight: 600; letter-spacing: .08em; color: var(--red); white-space: nowrap; }
 @media (max-width: 640px) { .nw-long { display: none; } .nav-when { font-size: 10px; } .nav { flex-wrap: wrap; } .nav-brand { flex: 1 1 auto; min-width: 0; } }
+/* red "x" in the headline */
+.hero-kicker .kx { font-style: normal; color: var(--red); -webkit-text-fill-color: var(--red); }
+/* intro line a touch smaller */
+.hero-line { font-size: clamp(24px, 2.2vw, 31px); }
+@media (max-width: 640px) { .hero-line { font-size: 26px; } }
