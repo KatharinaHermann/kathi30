@@ -503,3 +503,15 @@ textarea.linput { resize: vertical; }
   .pay .row-wrap .btn-sm { flex: 1 1 0; text-align: center; padding: 13px 10px; font-size: 12px; white-space: nowrap; }
   .hscroll > .route { background: rgba(250,246,242,.6); }
 }
+
+/* phones: snappy sideways rows with dots */
+@media (max-width: 640px) {
+  .hscroll { scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-bottom: 10px !important; }
+  .hscroll > * { scroll-snap-align: center; scroll-snap-stop: always; }
+  .swipe-dots { display: flex; justify-content: center; gap: 7px; margin: 4px 0 6px; }
+  .swipe-dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px; background: rgba(20,18,16,.25); cursor: pointer; transition: width .25s, background .25s; }
+  .swipe-dots button.on { width: 24px; background: var(--red); }
+  .carpool .swipe-dots button { background: rgba(246,242,236,.3); }
+  .carpool .swipe-dots button.on { background: var(--sky); }
+  .stack.music > .polaroid { display: flex; flex-direction: column; justify-content: center; }
+}

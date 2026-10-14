@@ -437,7 +437,32 @@
       g.style.setProperty('--stack-top', navH + 10 + (head ? head.offsetHeight + 8 : 0) + 'px');
     });
   }
-  window.restackLight = sizeStacks;
+  // ---------- phones: dots under every sideways-swipe row ----------
+  function buildDots() {
+    document.querySelectorAll('.swipe-dots').forEach((d) => d.remove());
+    if (innerWidth > 640) return;
+    document.querySelectorAll('.hscroll').forEach((row) => {
+      const kids = [...row.children];
+      if (kids.length < 2) return;
+      const dots = document.createElement('div');
+      dots.className = 'swipe-dots';
+      dots.innerHTML = kids.map((_, i) => `<button type="button" aria-label="show card ${i + 1}"${i ? '' : ' class="on"'}></button>`).join('');
+      row.after(dots);
+      const btns = [...dots.children];
+      const sync = () => {
+        const mid = row.scrollLeft + row.clientWidth / 2;
+        let best = 0, dist = Infinity;
+        kids.forEach((k, i) => { const d = Math.abs(k.offsetLeft + k.offsetWidth / 2 - mid); if (d < dist) { dist = d; best = i; } });
+        btns.forEach((b, i) => b.classList.toggle('on', i === best));
+      };
+      btns.forEach((b, i) => { b.onclick = () => row.scrollTo({ left: kids[i].offsetLeft - parseFloat(getComputedStyle(row).paddingLeft || 0), behavior: 'smooth' }); });
+      if (!row.dataset.dots) { row.dataset.dots = 1; row.addEventListener('scroll', () => requestAnimationFrame(() => row._sync && row._sync()), { passive: true }); }
+      row._sync = sync; sync();
+    });
+  }
+  window.restackLight = () => { sizeStacks(); buildDots(); };
+  addEventListener('resize', buildDots);
+  addEventListener('load', buildDots);
   addEventListener('resize', sizeStacks);
   addEventListener('load', sizeStacks);
   sizeStacks();
