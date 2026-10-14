@@ -570,3 +570,6 @@ textarea.linput { resize: vertical; }
   .hero-stack #heroBadges { position: sticky; z-index: 3; }
   .hero-stack + .hero-bottom, .hero-bottom { margin-top: 26px; }
 }
+/* hero top line in blue (deeper than --sky so it reads on the light glow) */
+:root { --sky-deep: #4f78aa; }
+.hero-top span, .hero-top .hero-date { color: var(--sky-deep); font-weight: 600; }
