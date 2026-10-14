@@ -434,7 +434,7 @@
       const tallest = Math.max(0, ...kids.map((c) => c.offsetHeight));
       kids.forEach((c) => { c.style.minHeight = tallest + 'px'; });
       const head = g.closest('section') && g.closest('section').querySelector(':scope > .stick-head');
-      g.style.setProperty('--stack-top', navH + 10 + (head ? head.offsetHeight + 8 : 0) + 'px');
+      g.style.setProperty('--stack-top', navH + 10 + (head ? head.offsetHeight + 18 : 0) + 'px');
     });
   }
   // ---------- phones: dots under every sideways-swipe row ----------
