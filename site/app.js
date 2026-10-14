@@ -419,90 +419,28 @@
   onScroll();
 
   // ---------- phones: stacked cards ----------
-  // Sections that fit on one screen "pin": the section (title included) holds still while each
-  // card slides up from the bottom onto the stack; when the last card lands the page scrolls on.
-  // Taller sections fall back to sticky cards (CSS) that stack as you scroll.
+  // Pure CSS sticky stacking (no scroll handlers, so it stays smooth). JS only measures on load/resize:
+  // equal card heights per stack, and where each stack sticks (below the menu, and below the section
+  // title when the title sticks too).
   const nav = document.querySelector('.nav');
-  const GAP = 10;                       // how much of each card underneath peeks out
-  let pins = [], builtFor = null;
-  const clamp01 = (x) => Math.max(0, Math.min(1, x));
-  const ease = (t) => 1 - Math.pow(1 - t, 3);
-  function teardownPins() {
-    pins.forEach(({ wrap, section, group }) => {
-      wrap.replaceWith(section); section.classList.remove('pin-section'); group.classList.remove('pinned');
-      group.style.height = ''; [...group.children].forEach((c) => { c.style.transform = ''; c.style.top = ''; c.style.minHeight = ''; });
-    });
-    pins = [];
-  }
-  function sizeStacks() { // equal heights inside each stack, so no card peeks out under a shorter one
+  function sizeStacks() {
+    const mobile = innerWidth <= 640;
+    const navH = nav ? nav.offsetHeight : 90;
+    document.documentElement.style.setProperty('--nav-h', navH + 'px');
     document.querySelectorAll('.stack').forEach((g) => {
       const kids = [...g.children];
       kids.forEach((c, i) => { c.style.setProperty('--i', i); c.style.minHeight = ''; });
-      if (innerWidth > 640) return;
+      if (!mobile) return;
       const tallest = Math.max(0, ...kids.map((c) => c.offsetHeight));
       kids.forEach((c) => { c.style.minHeight = tallest + 'px'; });
+      const head = g.closest('section') && g.closest('section').querySelector(':scope > .stick-head');
+      g.style.setProperty('--stack-top', navH + 10 + (head ? head.offsetHeight + 8 : 0) + 'px');
     });
   }
-  function buildPins() {
-    teardownPins(); sizeStacks();
-    builtFor = innerWidth + 'x' + innerHeight;
-    const navH = nav ? nav.offsetHeight : 90;
-    document.documentElement.style.setProperty('--stack-top', Math.max(navH + 12, Math.round(innerHeight * 0.25)) + 'px');
-    if (innerWidth > 640 || reduceMotion) return;
-    document.querySelectorAll('section').forEach((section) => {
-      const groups = section.querySelectorAll('.stack');
-      if (groups.length !== 1) return;
-      const group = groups[0], kids = [...group.children];
-      if (kids.length < 2) return;
-      const cardH = kids[0].offsetHeight;
-      group.classList.add('pinned');
-      group.style.height = cardH + GAP * (kids.length - 1) + 'px';
-      kids.forEach((c, i) => { c.style.top = i * GAP + 'px'; });
-      const cs = getComputedStyle(section);
-      const fullH = section.offsetHeight + parseFloat(cs.marginTop) + parseFloat(cs.marginBottom);
-      if (section.offsetHeight > innerHeight - navH - 16) { // too tall to pin: undo, use sticky cards instead
-        group.classList.remove('pinned'); group.style.height = ''; kids.forEach((c) => { c.style.top = ''; });
-        return;
-      }
-      const D = Math.round(innerHeight * 0.5); // scroll distance per card
-      const wrap = document.createElement('div');
-      wrap.className = 'pin-wrap';
-      section.replaceWith(wrap); wrap.appendChild(section);
-      section.classList.add('pin-section');
-      section.style.top = navH + 8 + 'px';
-      wrap.style.height = fullH + D * (kids.length - 1) + 'px';
-      pins.push({ wrap, section, group, kids, D, navH });
-    });
-  }
-  function layoutStacks() {
-    if (builtFor !== innerWidth + 'x' + innerHeight) buildPins();
-    const mobile = innerWidth <= 640;
-    pins.forEach(({ wrap, kids, D, navH }) => {
-      const p = Math.max(0, (navH + 8 - wrap.getBoundingClientRect().top) / D); // 0 … n-1
-      kids.forEach((c, i) => {
-        const inT = i === 0 ? 1 : ease(clamp01(p - (i - 1)));   // card i slides in during step i
-        const covered = Math.max(0, Math.min(kids.length - 1 - i, p - i));
-        c.style.transform = `translateY(${(1 - inT) * innerHeight * 0.85}px) scale(${1 - covered * 0.04})`;
-      });
-    });
-    // sticky fallback groups: shrink cards that are covered
-    document.querySelectorAll('.stack:not(.pinned)').forEach((g) => {
-      const kids = [...g.children];
-      kids.forEach((c, i) => {
-        if (!mobile || reduceMotion) { c.style.transform = ''; return; }
-        const top = c.getBoundingClientRect().top;
-        let covered = 0;
-        for (let j = i + 1; j < kids.length; j++) if (kids[j].getBoundingClientRect().top - top < 40 * (j - i)) covered++;
-        c.style.transform = covered ? `scale(${1 - covered * 0.04})` : '';
-      });
-    });
-  }
-  window.restack = () => { builtFor = null; layoutStacks(); };
-  window.restackLight = () => { sizeStacks(); layoutStacks(); };
-  addEventListener('scroll', () => requestAnimationFrame(layoutStacks), { passive: true });
-  addEventListener('resize', () => { if (innerWidth > 640 || builtFor !== innerWidth + 'x' + innerHeight) window.restack(); });
-  addEventListener('load', window.restack);
-  layoutStacks();
+  window.restackLight = sizeStacks;
+  addEventListener('resize', sizeStacks);
+  addEventListener('load', sizeStacks);
+  sizeStacks();
 
   // ---------- reveal on scroll ----------
   if (!reduceMotion && 'IntersectionObserver' in window) {

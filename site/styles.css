@@ -481,11 +481,6 @@ textarea.linput { resize: vertical; }
   .carpool .board { margin-top: 20px; }
 }
 
-/* phones: pinned sections whose cards slide up into a stack */
-@media (max-width: 640px) {
-  .pin-section { position: sticky; z-index: 1; }
-  .stack.pinned { position: relative; display: block !important; }
-  .stack.pinned > * { position: absolute !important; left: 0; right: 0; margin: 0 !important; transition: none; }
 }
 @media (max-width: 640px) {
   .glass { padding-top: 36px; padding-bottom: 24px; }
@@ -493,4 +488,12 @@ textarea.linput { resize: vertical; }
   .stack > .day { padding: 20px; gap: 9px; }
   .stack > .day .emoji { font-size: 22px; }
   .stack > .day .dress { padding: 12px; }
+}
+
+/* ---------- phones: native sticky stacking (replaces the JS pinning) ---------- */
+@media (max-width: 640px) {
+  .stack > * { position: sticky; top: calc(var(--stack-top, 100px) + var(--i, 0) * 10px); transform: none !important; transition: none; will-change: auto; }
+  .stick-head { position: sticky; top: calc(var(--nav-h, 90px) + 6px); z-index: 5; padding: 10px 14px; margin-left: -14px; margin-right: -14px; border-radius: 18px;
+    background: rgba(250,246,242,.78); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); }
+  .stick-head .h2 { font-size: 34px; }
 }
