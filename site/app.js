@@ -590,7 +590,7 @@
 // liquid chrome headlines: every title is spelled with the Etsy chrome letter images.
 // The real text stays as the heading's accessible name; the images are decoration.
 (() => {
-  const hosts = document.querySelectorAll('.hero-kicker, .h2, .h2-car, .rsvp-big, .pay-title');
+  const hosts = document.querySelectorAll('.hero-kicker, .h2, .h2-car, .rsvp-big');
   const glyph = (c) => (/[A-Z0-9]/.test(c) ? `<img class="el" src="assets/etsy/${c}.webp" alt="">` : `<span class="el-p">${c}</span>`);
   hosts.forEach((h) => {
     h.setAttribute('aria-label', h.textContent.replace(/\s+/g, ' ').trim());
