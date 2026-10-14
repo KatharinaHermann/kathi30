@@ -586,7 +586,7 @@
 // liquid chrome headlines: puffy 3D metal letters drawn by an SVG lighting filter.
 // The bevel has to scale with the type, so each size gets its own filter.
 (() => {
-  const hosts = document.querySelectorAll('.hero-kicker, .h2, .h2-car');
+  const hosts = document.querySelectorAll('.hero-kicker, .h2, .h2-car, .big30');
   if (!hosts.length) return;
   const NS = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(NS, 'svg');
@@ -598,14 +598,15 @@
     const sd = Math.max(1.2, Math.round(fs * 0.068 * 2) / 2), id = 'lq' + String(sd).replace('.', '_');
     if (!made[id]) {
       made[id] = 1;
-      const ss = (sd * 2.2).toFixed(1);
+      const ss = (sd * 2.2).toFixed(1), sm = (sd > 8 ? sd * 0.09 : sd * 0.04).toFixed(2); // a soft pass hides contour steps on huge type
       svg.insertAdjacentHTML('beforeend', `<filter id="${id}" x="-5%" y="-15%" width="110%" height="130%" color-interpolation-filters="sRGB">
         <feMorphology in="SourceAlpha" operator="erode" radius="1" result="er"/>
         <feGaussianBlur in="er" stdDeviation="${sd}" result="bump"/>
         <feDiffuseLighting in="bump" surfaceScale="${ss}" diffuseConstant="1.05" lighting-color="#fff" result="dif"><feDistantLight azimuth="225" elevation="50"/></feDiffuseLighting>
         <feComponentTransfer in="dif" result="env"><feFuncR type="table" tableValues="0.1 0.6 0.28 0.82 0.42 0.9 0.97"/><feFuncG type="table" tableValues="0.11 0.61 0.29 0.83 0.43 0.91 0.97"/><feFuncB type="table" tableValues="0.14 0.65 0.33 0.87 0.48 0.94 1"/></feComponentTransfer>
         <feSpecularLighting in="bump" surfaceScale="${ss}" specularConstant="1.1" specularExponent="40" lighting-color="#fff" result="spec"><fePointLight x="-200" y="-300" z="300"/></feSpecularLighting>
-        <feComposite in="env" in2="spec" operator="arithmetic" k1="0" k2="1" k3=".75" k4="0" result="lit"/>
+        <feComposite in="env" in2="spec" operator="arithmetic" k1="0" k2="1" k3=".75" k4="0" result="lit0"/>
+        <feGaussianBlur in="lit0" stdDeviation="${sm}" result="lit"/>
         <feComposite in="lit" in2="SourceAlpha" operator="in"/>
       </filter>`);
     }

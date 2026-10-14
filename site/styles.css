@@ -662,3 +662,5 @@ textarea.linput { resize: vertical; }
 .liquid .lq { color: #c8ccd2; -webkit-text-fill-color: #c8ccd2; filter: var(--lqf); }
 .liquid .kx { font-style: normal; color: var(--red); -webkit-text-fill-color: var(--red); }
 .hero-kicker .lq { display: inline; }
+.big30.liquid { animation: none; line-height: 1; }
+.shimmer.liquid { filter: drop-shadow(0 30px 40px rgba(90,30,0,.35)); }
