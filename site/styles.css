@@ -508,11 +508,6 @@ textarea.linput { resize: vertical; }
 @media (max-width: 640px) {
   .hscroll { scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-bottom: 10px !important; }
   .hscroll > * { scroll-snap-align: center; scroll-snap-stop: always; }
-  .swipe-dots { display: flex; justify-content: center; gap: 7px; margin: 4px 0 6px; }
-  .swipe-dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px; background: rgba(20,18,16,.25); cursor: pointer; transition: width .25s, background .25s; }
-  .swipe-dots button.on { width: 24px; background: var(--red); }
-  .carpool .swipe-dots button { background: rgba(246,242,236,.3); }
-  .carpool .swipe-dots button.on { background: var(--sky); }
   .stack.music > .polaroid { display: flex; flex-direction: column; justify-content: center; }
 }
 @media (max-width: 640px) {
@@ -520,18 +515,3 @@ textarea.linput { resize: vertical; }
   .stick-head .h2 { font-size: clamp(40px,7vw,96px); }
 }
 @media (max-width: 640px) { .stick-head { top: calc(var(--nav-h, 90px) + 16px); } }
-/* phones: houses as two slim address tickets under the photos (no second swipe row) */
-@media (max-width: 640px) {
-  .houses { display: grid; grid-template-columns: minmax(0,1fr); gap: 10px; }
-  .houses .house { display: grid; grid-template-columns: minmax(0,1fr) auto; column-gap: 14px; row-gap: 2px; align-items: center; padding: 14px 14px 14px 18px; border-radius: 22px;
-    background: var(--chrome-card); box-shadow: inset 0 1px 0 #fff, 0 12px 30px rgba(20,12,8,.14); }
-  .houses .house + .house { background: linear-gradient(180deg,#e6eef7 0%,#cfdeee 50%,var(--sky) 100%); }
-  .houses .house > * { grid-column: 1; }
-  .houses .house .small { font-size: 11px; }
-  .houses .house .house-street { font-size: 19px; }
-  .houses .house > span:nth-child(3) { font-size: 14px; }
-  .houses .house .tiny-link { grid-column: 2; grid-row: 1 / span 3; width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    background: var(--red); color: #fff; text-decoration: none; font-size: 0; box-shadow: 0 6px 14px rgba(240,39,25,.35); }
-  .houses .house .tiny-link::before { content: "↗"; font-size: 20px; font-family: var(--f-body); }
-  .houses .house:hover .tiny-link { color: #fff; }
-}
