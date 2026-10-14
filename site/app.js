@@ -583,7 +583,7 @@
 // liquid chrome headlines: every title is spelled with the Etsy chrome letter images.
 // The real text stays as the heading's accessible name; the images are decoration.
 (() => {
-  const silverKicker = true; // headline uses the regular silver font
+  const silverKicker = !/(^|[?&])etsy\b/.test(location.search); // headline uses the regular silver font; ?etsy previews it in the Etsy letters
   // ?black previews the headline in solid black (?allblack also turns the x black)
   if (/(^|[?&])(all)?black\b/.test(location.search)) document.documentElement.classList.add('kicker-black');
   if (/(^|[?&])allblack\b/.test(location.search)) document.documentElement.classList.add('kicker-allblack');
