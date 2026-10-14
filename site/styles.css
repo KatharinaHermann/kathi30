@@ -579,3 +579,11 @@ textarea.linput { resize: vertical; }
 .hero-line em { color: var(--red); font-style: italic; }
 @media (max-width: 640px) { .hero-line { font-size: 30px; } }
 @media (max-width: 640px) { .stick-head:not(.is-sticky) { margin-bottom: 20px; } }
+
+/* top line back to black */
+.hero-top span, .hero-top .hero-date { color: var(--ink); }
+/* baby-blue menu bar with a chunkier link font */
+.nav { background: rgba(174,197,224,.9); border-bottom-color: rgba(79,120,170,.25); }
+.nav-links { font-family: var(--f-display); font-weight: 700; font-size: 12px; letter-spacing: .02em; }
+.nav-links a:hover { color: var(--red); }
+@media (max-width: 640px) { .nav { background: rgba(174,197,224,.94); } .nav-links { font-size: 12px; gap: 18px; } }
