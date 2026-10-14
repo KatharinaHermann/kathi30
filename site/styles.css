@@ -613,3 +613,14 @@ textarea.linput { resize: vertical; }
 .card-glass .day-name, .card-sand .day-name, .card-chrome .day-name { color: var(--ink); }
 .nav-when { color: var(--ink); }
 @media (max-width: 640px) { .hero-line { font-size: 10.2vw; line-height: 1.02; letter-spacing: -.02em; text-wrap: pretty; max-width: none; width: 100%; } }
+
+/* red sticker = RSVP button */
+.badge-rsvp { display: block; cursor: pointer; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+.badge-rsvp .badge-photo { transition: transform .25s cubic-bezier(.3,1.6,.5,1); }
+.badge-rsvp:hover .badge-photo, .badge-rsvp:focus-visible .badge-photo { transform: scale(1.06); }
+.badge-rsvp:active .badge-photo { transform: scale(.96); }
+.rsvp-pill { position: absolute; left: 50%; bottom: 9%; z-index: 2; translate: -50% 0; padding: .55em 1.1em; border-radius: 999px; background: #fff; color: var(--red); font: 700 clamp(11px,1.1vw,14px)/1 var(--f-mono); letter-spacing: .08em; white-space: nowrap; box-shadow: 0 8px 18px rgba(20,12,8,.3); transition: background .2s, color .2s; animation: rsvp-pulse 2.4s ease-in-out infinite; }
+.badge-rsvp:hover .rsvp-pill { background: var(--red); color: #fff; }
+@keyframes rsvp-pulse { 0%, 100% { scale: 1; } 50% { scale: 1.08; } }
+@media (max-width: 640px) { .rsvp-pill { font-size: 10px; bottom: 4%; } }
+@media (prefers-reduced-motion: reduce) { .rsvp-pill { animation: none; } }

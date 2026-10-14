@@ -147,10 +147,22 @@
   }
   const heroBadges = $('heroBadges');
   [
-    ['assets/kathi.jpg', '50% 45%', 'BIRTHDAY GIRL ✦ TURNING 30 ✦ BIRTHDAY GIRL ✦ TURNING 30 ✦', '#f02719', '#ffffff', 'right:5%;top:30%;width:clamp(150px,20vw,270px)', 0, 16],
+    ['assets/kathi.jpg', '50% 45%', 'TAP TO RSVP ✦ RSVP BY OCT 30 ✦ TAP TO RSVP ✦ RSVP BY OCT 30 ✦', '#f02719', '#ffffff', 'right:5%;top:30%;width:clamp(150px,20vw,270px)', 0, 16],
     ['assets/kathi-baby.jpg', '51% 18%', 'EST. 1997 ✦ BABY KATHI ✦ EST. 1997 ✦ BABY KATHI ✦', '#fbf8f4', '#24221f', 'left:4%;top:27%;width:clamp(130px,17vw,240px)', -1.7, -20],
     ['assets/kathi-bw.jpg', '58% 30%', 'CERTIFIED CHAOS ✦ 30 & THRIVING ✦ CERTIFIED CHAOS ✦ 30 & THRIVING ✦', '#24221f', '#f6f2ec', 'right:27%;top:55%;width:clamp(110px,13vw,190px)', -3.2, 12]
   ].forEach((b) => heroBadges.append(ringSticker('badge', ...b)));
+  // the red sticker doubles as the RSVP button
+  (() => {
+    const old = heroBadges.firstElementChild, a = document.createElement('a');
+    a.className = 'badge badge-rsvp';
+    a.setAttribute('style', old.getAttribute('style'));
+    a.href = cfg.partifulUrl || '#rsvp';
+    if (cfg.partifulUrl) { a.target = '_blank'; a.rel = 'noopener'; }
+    a.setAttribute('aria-label', 'RSVP on Partiful');
+    while (old.firstChild) a.appendChild(old.firstChild);
+    a.insertAdjacentHTML('beforeend', '<span class="rsvp-pill">RSVP →</span>');
+    old.replaceWith(a);
+  })();
 
   // group the 30 + photo stickers so they can stack on scroll on phones (display: contents on desktop)
   (() => {
