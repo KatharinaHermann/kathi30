@@ -586,7 +586,7 @@
 // liquid chrome headlines: puffy 3D metal letters drawn by an SVG lighting filter.
 // The bevel has to scale with the type, so each size gets its own filter.
 (() => {
-  const hosts = document.querySelectorAll('.hero-kicker, .h2, .h2-car, .big30');
+  const hosts = document.querySelectorAll('.hero-kicker, .h2, .h2-car, .big30, .rsvp-big, .pay-title');
   if (!hosts.length) return;
   const NS = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(NS, 'svg');
