@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#f0eee9}a{color:#1a1614}a:hover{color:#c9531c}</style>
+</helmet>
+<div style="display:flex;flex-wrap:wrap;gap:48px;padding:48px">
+
+<div id="cover-whatsapp" data-screen-label="WhatsApp group photo" style="width:1000px;height:1000px;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 42%,#f58a4a 0%,#e8692e 38%,#cf8253 62%,#d6d1e4 100%);color:#1a1614">
+  <div style="position:absolute;left:-200px;top:760px;width:1400px;height:520px;border-radius:50%;background:linear-gradient(180deg,#f6d3ac 0%,#f0c394 60%)"></div>
+  <svg viewBox="0 0 1000 1000" style="position:absolute;inset:0;width:1000px;height:1000px">
+    <defs><path id="wa-ring" d="M500,500 m-360,0 a360,360 0 1,1 720,0 a360,360 0 1,1 -720,0"></path></defs>
+    <text fill="#1a1614" style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:44px;letter-spacing:.04em"><textPath href="#wa-ring" textLength="2250" lengthAdjust="spacing">KATHI x JOSH ✦ TURNING 30 ✦ JOSHUA TREE ✦ JAN 15—18 ✦</textPath></text>
+  </svg>
+  <div style="position:absolute;left:50%;top:50%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;padding:16px;box-sizing:border-box;background:radial-gradient(circle at 32% 24%,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 22%),linear-gradient(165deg,#f7f8fb 0%,#b9bec8 30%,#3a3d45 48%,#1c1d21 52%,#b47d57 60%,#f3d2b0 78%,#ffffff 100%);box-shadow:0 30px 80px rgba(90,30,0,.45)">
+    <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;position:relative">
+      <div style="width:100%;height:100%;background-image:url(assets/kathi.jpeg);background-size:cover;background-position:50% 45%;filter:saturate(1.15) contrast(1.05)"></div>
+    </div>
+  </div>
+  <div style="position:absolute;right:250px;bottom:240px;width:160px;height:160px;border-radius:50%;background:#1a1614;rotate:-12deg;display:flex;align-items:center;justify-content:center;box-shadow:0 16px 36px rgba(26,22,20,.45)">
+    <span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:80px;letter-spacing:-.06em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#9c6f52 53%,#f0cfae 68%,#fff7ee 84%,#b3aca5 100%);-webkit-background-clip:text;background-clip:text;color:transparent">30</span>
+  </div>
+  <div style="position:absolute;left:265px;top:255px;width:96px;height:84px;rotate:-20deg;border-radius:58% 42% 63% 37% / 45% 55% 45% 55%;background:radial-gradient(circle at 32% 24%,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 22%),linear-gradient(165deg,#f7f8fb 0%,#b9bec8 30%,#3a3d45 48%,#1c1d21 52%,#b47d57 60%,#f3d2b0 78%,#ffffff 100%);box-shadow:inset -8px -12px 22px rgba(40,20,10,.35),0 18px 36px rgba(90,30,0,.3)"></div>
+</div>
+
+<div id="cover-day" data-screen-label="Day cover" style="width:1000px;height:1000px;position:relative;overflow:hidden;background:#e9a874;color:#1a1614">
+  <div style="position:absolute;inset:0;background-image:url(assets/jt-day.png);background-size:cover;background-position:50% 0%"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(246,195,154,0) 0%,rgba(246,195,154,0) 58%,rgba(233,168,116,.75) 76%,#e9a874 90%)"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(232,105,46,.22),rgba(232,105,46,0) 55%);mix-blend-mode:multiply"></div>
+  <div style="position:absolute;left:190px;top:160px;width:620px;height:620px;border-radius:50%;padding:12px;box-sizing:border-box;background:radial-gradient(circle at 32% 24%,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 22%),linear-gradient(165deg,#f7f8fb 0%,#b9bec8 30%,#3a3d45 48%,#1c1d21 52%,#b47d57 60%,#f3d2b0 78%,#ffffff 100%);box-shadow:0 0 120px rgba(245,138,74,.75),0 20px 50px rgba(90,30,0,.35)">
+    <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;position:relative"><img src="assets/kathi.jpeg" alt="Kathi" style="width:100%;height:100%;object-fit:cover;object-position:50% 45%;display:block;filter:saturate(1.1) sepia(.15)"></div>
+  </div>
+  <svg viewBox="0 0 1000 1000" style="position:absolute;inset:0;width:1000px;height:1000px;pointer-events:none">
+    <defs><path id="ring-day" d="M500,470 m-348,0 a348,348 0 1,1 696,0 a348,348 0 1,1 -696,0"></path></defs>
+    <text fill="#fff7ee" style="font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;letter-spacing:.3em"><textPath href="#ring-day" textLength="2120" lengthAdjust="spacing">KATHI x JOSH DAYS · JOSHUA TREE · CALIFORNIA · </textPath></text>
+  </svg>
+  <div style="position:absolute;left:64px;top:60px;display:flex;flex-direction:column;gap:6px;color:#fff7ee;font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:600;letter-spacing:.2em"><span>KATHI 30</span><span style="font-weight:400">VOL. DAY</span></div>
+  <div style="position:absolute;left:64px;right:64px;bottom:44px;display:flex;justify-content:space-between;padding-top:14px;border-top:1.5px solid #1a1614;font-family:'JetBrains Mono',monospace;font-size:16px;letter-spacing:.18em;white-space:nowrap"><span>34.13°N 116.31°W</span><span>JAN 15—18 · 2027</span></div>
+</div>
+
+<div id="cover-night" data-screen-label="Night cover" style="width:1000px;height:1000px;position:relative;overflow:hidden;background:#0e0a18;color:#efe9ff">
+  <div style="position:absolute;inset:0;background-image:url(assets/jt-night.png);background-size:cover;background-position:50% 10%"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,26,.3) 0%,rgba(11,10,26,0) 40%,rgba(14,10,24,.55) 68%,rgba(14,10,24,.94) 86%)"></div>
+  <div style="position:absolute;left:190px;top:160px;width:620px;height:620px;border-radius:50%;padding:11px;box-sizing:border-box;background:linear-gradient(135deg,#ffffff,#bcd7ff,#ff8fcf,#b9fff1,#ffffff);box-shadow:0 0 120px rgba(255,154,213,.45)">
+    <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;position:relative"><img src="assets/kathi.jpeg" alt="Kathi" style="width:100%;height:100%;object-fit:cover;object-position:50% 45%;display:block;filter:grayscale(1) contrast(1.2) brightness(1.05)"></div>
+  </div>
+  <svg viewBox="0 0 1000 1000" style="position:absolute;inset:0;width:1000px;height:1000px;pointer-events:none">
+    <defs><path id="ring-night" d="M500,470 m-348,0 a348,348 0 1,1 696,0 a348,348 0 1,1 -696,0"></path></defs>
+    <text fill="#efe9ff" style="font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;letter-spacing:.3em"><textPath href="#ring-night" textLength="2120" lengthAdjust="spacing">KATHI x JOSH NIGHTS · JOSHUA TREE · AFTER DARK · </textPath></text>
+  </svg>
+  <div style="position:absolute;right:64px;top:60px;display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:600;letter-spacing:.2em"><span>KATHI 30</span><span style="font-weight:400">VOL. NIGHT</span></div>
+  <div style="position:absolute;left:64px;right:64px;bottom:44px;display:flex;justify-content:space-between;padding-top:14px;border-top:1.5px solid rgba(239,233,255,.7);font-family:'JetBrains Mono',monospace;font-size:16px;letter-spacing:.18em;white-space:nowrap"><span>34.13°N 116.31°W</span><span>JAN 15—18 · 2027</span></div>
+</div>
+
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#f6f2ec}a{color:#24221f}a:hover{color:#b9552f}input,textarea,button{font:inherit}</style>
+</helmet>
+<div data-screen-label="Host sheet" style="min-height:100vh;padding:40px 5vw 80px;box-sizing:border-box;font-family:'Instrument Sans',sans-serif;color:#24221f;background:#f6f2ec">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:28px">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em">KATHI 30 · PRIVATE · HOST ONLY</span>
+      <h1 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,7vw,88px);letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#9c6f52 53%,#f0cfae 68%,#fff7ee 84%,#b3aca5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 8px rgba(90,40,10,.35))">host sheet</h1>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <button onClick="{{ exportCsv }}" style="padding:12px 20px;border-radius:999px;border:1.5px solid #24221f;background:transparent;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">export csv → sheets</button>
+      <a href="Kathi 30 Website.dc.html" style="padding:12px 20px;border-radius:999px;background:#24221f;color:#f6f2ec;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none">open site ↗</a>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px;margin-bottom:28px">
+    <div style="display:flex;flex-direction:column;gap:4px;padding:20px;border-radius:22px;background:#efe7dd"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">GOING</span><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:36px">{{ st.going }}</span><span style="font-size:13px">{{ st.goingSub }}</span></div>
+    <div style="display:flex;flex-direction:column;gap:4px;padding:20px;border-radius:22px;background:#efe7dd"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">HEADCOUNT</span><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:36px">{{ st.heads }}</span><span style="font-size:13px">incl. {{ st.plus }} plus-ones</span></div>
+    <div style="display:flex;flex-direction:column;gap:4px;padding:20px;border-radius:22px;background:linear-gradient(165deg,#f7f8fb 0%,#c9cdd5 34%,#8e939d 50%,#e8c7a5 66%,#fff6ec 100%)"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">COLLECTED</span><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:36px">{{ st.collected }}</span><span style="font-size:13px">of {{ st.expected }} expected</span></div>
+    <div style="display:flex;flex-direction:column;gap:4px;padding:20px;border-radius:22px;background:#24221f;color:#f6f2ec"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">CARPOOL</span><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:36px">{{ st.cars }} cars</span><span style="font-size:13px">{{ st.carSub }}</span></div>
+  </div>
+
+  <div style="margin-bottom:20px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:18px 20px;border-radius:22px;border:1.5px dashed #24221f">
+    <label style="cursor:pointer;padding:12px 20px;border-radius:999px;background:#24221f;color:#f6f2ec;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">import partiful csv<input type="file" accept=".csv,text/csv" onChange="{{ importCsv }}" style="display:none"></label>
+    <span style="font-size:14px;line-height:1.45;max-width:560px">Partiful → your event → Guest List → <b>Export CSV</b>, then drop it here. Re-import anytime; RSVPs + plus-ones update by name, payments stay.</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ importMsg }}</span>
+  </div>
+
+  <sc-if value="{{ hasClaims }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-bottom:28px;padding:20px;border-radius:22px;background:#e8764a;display:flex;flex-direction:column;gap:12px">
+      <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:18px">💸 payment claims to check</span>
+      <sc-for list="{{ claims }}" as="c" hint-placeholder-count="0">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:14px;background:rgba(255,246,236,.55)">
+          <span style="font-size:15px"><b>{{ c.name }}</b> says they paid via {{ c.method }} · {{ c.when }}</span>
+          <div style="display:flex;gap:6px">
+            <button onClick="{{ c.confirm }}" style="padding:8px 14px;border-radius:999px;border:0;background:#24221f;color:#f6f2ec;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px">confirm ✓</button>
+            <button onClick="{{ c.dismiss }}" style="padding:8px 14px;border-radius:999px;border:1.5px solid #24221f;background:transparent;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px">dismiss</button>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <div style="overflow-x:auto;border-radius:22px;border:1.5px solid #24221f;background:#fbf8f4">
+    <div style="min-width:860px;display:grid;grid-template-columns:minmax(140px,1.2fr) 250px minmax(130px,1fr) 120px minmax(170px,1.2fr) 40px">
+      <span style="padding:14px 16px;border-bottom:1.5px solid #24221f;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">GUEST</span>
+      <span style="padding:14px 16px;border-bottom:1.5px solid #24221f;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">RSVP</span>
+      <span style="padding:14px 16px;border-bottom:1.5px solid #24221f;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">+1</span>
+      <span style="padding:14px 16px;border-bottom:1.5px solid #24221f;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">PAID</span>
+      <span style="padding:14px 16px;border-bottom:1.5px solid #24221f;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">CARPOOL</span>
+      <span style="border-bottom:1.5px solid #24221f"></span>
+      <sc-for list="{{ rows }}" as="r" hint-placeholder-count="3">
+        <span style="padding:12px 16px;border-bottom:1px solid rgba(26,22,20,.15);font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center">{{ r.name }}</span>
+        <div style="padding:10px 16px;border-bottom:1px solid rgba(26,22,20,.15);display:flex;gap:4px;align-items:center">
+          <sc-for list="{{ r.rsvpOpts }}" as="o" hint-placeholder-count="4">
+            <button onClick="{{ o.pick }}" style="padding:6px 9px;border-radius:999px;border:1px solid #24221f;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;background:{{ o.bg }};color:{{ o.fg }}">{{ o.label }}</button>
+          </sc-for>
+        </div>
+        <div style="padding:8px 16px;border-bottom:1px solid rgba(26,22,20,.15);display:flex;align-items:center"><input value="{{ r.plusOne }}" onChange="{{ r.setPlus }}" placeholder="—" style="width:100%;padding:8px 10px;border-radius:10px;border:1px solid rgba(26,22,20,.25);background:transparent;color:#24221f;outline:none"></div>
+        <div style="padding:10px 16px;border-bottom:1px solid rgba(26,22,20,.15);display:flex;align-items:center"><button onClick="{{ r.togglePaid }}" style="padding:7px 12px;border-radius:999px;border:1.5px solid #24221f;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;background:{{ r.paidBg }};color:{{ r.paidFg }}">{{ r.paidLabel }}</button></div>
+        <span style="padding:12px 16px;border-bottom:1px solid rgba(26,22,20,.15);font-size:14px;display:flex;align-items:center">{{ r.carpool }}</span>
+        <button onClick="{{ r.remove }}" aria-label="remove" style="border:0;border-bottom:1px solid rgba(26,22,20,.15);background:transparent;cursor:pointer;color:#24221f;font-size:16px">×</button>
+      </sc-for>
+    </div>
+    <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}"><div style="padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:13px">no guests yet — paste your Partiful guest list below.</div></sc-if>
+  </div>
+
+  <div style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px;align-items:start">
+    <form onSubmit="{{ addGuests }}" style="display:flex;flex-direction:column;gap:10px;padding:20px;border-radius:22px;background:#efe7dd">
+      <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:17px">add guests</span>
+      <textarea value="{{ bulk }}" onChange="{{ setBulk }}" rows="4" placeholder="one name per line (paste from Partiful)" style="padding:12px 14px;border-radius:14px;border:1.5px solid #24221f;background:rgba(255,246,236,.6);color:#24221f;outline:none;resize:vertical"></textarea>
+      <button type="submit" style="align-self:flex-start;padding:12px 20px;border-radius:999px;border:0;background:#24221f;color:#f6f2ec;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">add</button>
+    </form>
+    <div style="display:flex;flex-direction:column;gap:10px;padding:20px;border-radius:22px;background:#24221f;color:#f6f2ec">
+      <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:17px">cars 🚙</span>
+      <sc-if value="{{ noCars }}" hint-placeholder-val="{{ true }}"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#cfc6bb">no drivers signed up yet</span></sc-if>
+      <sc-for list="{{ cars }}" as="c" hint-placeholder-count="0">
+        <div style="display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:14px;background:#2a2622"><span style="font-weight:600">{{ c.title }}</span><span style="font-size:13px;color:#cfc6bb">{{ c.sub }}</span></div>
+      </sc-for>
+      <sc-if value="{{ hasLooking }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#f3b995">still need a ride: {{ lookingText }}</span></sc-if>
+    </div>
+  </div>
+  <p style="margin:24px 0 0;max-width:640px;font-size:13px;line-height:1.55;font-family:'JetBrains Mono',monospace">Prototype note: Partiful has no live API, so RSVPs come in via its CSV export. Carpool + payment entries are saved in this browser only — to collect them from every guest, connect the site to a shared store (e.g. Google Sheets or Supabase).</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const uid = () => Math.random().toString(36).slice(2, 9);
+const norm = (s) => (s || '').trim().toLowerCase();
+const parseCsv = (txt) => {
+  const rows = []; let row = [], cur = '', q = false;
+  for (let i = 0; i < txt.length; i++) { const c = txt[i];
+    if (q) { if (c === '"' && txt[i + 1] === '"') { cur += '"'; i++; } else if (c === '"') q = false; else cur += c; }
+    else if (c === '"') q = true; else if (c === ',') { row.push(cur); cur = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && txt[i + 1] === '\n') i++; row.push(cur); rows.push(row); row = []; cur = ''; }
+    else cur += c; }
+  if (cur || row.length) { row.push(cur); rows.push(row); }
+  return rows.filter(r => r.some(x => x.trim()));
+};
+const mapStatus = (v) => { const s = norm(v); if (/going|yes|attend|accept|approved/.test(s) && !/not|can/.test(s)) return 'yes'; if (/maybe/.test(s)) return 'maybe'; if (/can.?t|not going|decline|no\b|^no$/.test(s)) return 'no'; return 'invited'; };
+const RSVP = [['invited', '?'], ['yes', 'yes'], ['maybe', 'maybe'], ['no', 'no']];
+class Component extends DCLogic {
+  state = this.read();
+  read() { return { guests: load('kathi30-guests', []), drivers: load('kathi30-drivers', []), riders: load('kathi30-riders', []), payments: load('kathi30-payments', []), dismissed: load('kathi30-dismissed', []), bulk: (this.state && this.state.bulk) || '' }; }
+  componentDidMount() { this.sync = () => this.setState(this.read()); window.addEventListener('storage', this.sync); window.addEventListener('focus', this.sync); }
+  componentWillUnmount() { window.removeEventListener('storage', this.sync); window.removeEventListener('focus', this.sync); }
+  set(k, v) { this.setState({ [k]: v }); save('kathi30-' + k, v); }
+  upd(id, patch) { this.set('guests', this.state.guests.map(g => g.id === id ? { ...g, ...patch } : g)); }
+  carpoolOf(name) {
+    const s = this.state, n = norm(name);
+    const d = s.drivers.find(x => norm(x.name) === n);
+    if (d) { const taken = s.riders.filter(r => r.driverId === d.id).length; return `🚙 driving from ${d.from} (${taken}/${d.seats})`; }
+    const r = s.riders.find(x => norm(x.name) === n);
+    if (r) { const dr = s.drivers.find(x => x.id === r.driverId); const det = r.details ? ` · ${r.details}` : ''; return (dr ? `🙋 riding w/ ${dr.name}` : `⚠️ needs a ride from ${r.from}`) + det; }
+    return '—';
+  }
+  renderVals() {
+    const s = this.state;
+    const rows = s.guests.map(g => ({
+      name: g.name, plusOne: g.plusOne || '', carpool: this.carpoolOf(g.name),
+      rsvpOpts: RSVP.map(([v, l]) => ({ label: l, bg: g.rsvp === v ? '#24221f' : 'transparent', fg: g.rsvp === v ? '#f6f2ec' : '#24221f', pick: () => this.upd(g.id, { rsvp: v }) })),
+      setPlus: e => this.upd(g.id, { plusOne: e.target.value }),
+      paidLabel: g.paid ? `$${300 * (g.plusOne ? 2 : 1)} ✓` : 'unpaid', paidBg: g.paid ? '#24221f' : 'transparent', paidFg: g.paid ? '#f6f2ec' : '#24221f',
+      togglePaid: () => this.upd(g.id, { paid: !g.paid }),
+      remove: () => this.set('guests', s.guests.filter(x => x.id !== g.id))
+    }));
+    const yes = s.guests.filter(g => g.rsvp === 'yes');
+    const plus = yes.filter(g => g.plusOne).length;
+    const due = (g) => 300 * (g.plusOne ? 2 : 1);
+    const collected = s.guests.filter(g => g.paid).reduce((a, g) => a + due(g), 0);
+    const expected = yes.reduce((a, g) => a + due(g), 0);
+    const openSeats = s.drivers.reduce((a, d) => a + Math.max(0, d.seats - s.riders.filter(r => r.driverId === d.id).length), 0);
+    const looking = s.riders.filter(r => !s.drivers.find(d => d.id === r.driverId));
+    const claims = s.payments.filter(p => !s.dismissed.includes(p.id) && !s.guests.find(g => norm(g.name) === norm(p.name) && g.paid));
+    return {
+      st: { going: yes.length, goingSub: `${s.guests.filter(g => g.rsvp === 'maybe').length} maybe · ${s.guests.filter(g => g.rsvp === 'invited').length} no reply`,
+        heads: yes.length + plus, plus, collected: '$' + collected.toLocaleString(), expected: '$' + expected.toLocaleString(),
+        cars: s.drivers.length, carSub: `${openSeats} open seats · ${looking.length} need a ride` },
+      rows, noRows: !rows.length,
+      claims: claims.map(p => ({ name: p.name, method: p.method, when: new Date(p.at).toLocaleDateString(),
+        confirm: () => { const g = s.guests.find(x => norm(x.name) === norm(p.name));
+          if (g) this.upd(g.id, { paid: true, method: p.method, rsvp: g.rsvp === 'invited' ? 'yes' : g.rsvp });
+          else this.set('guests', s.guests.concat({ id: uid(), name: p.name, rsvp: 'yes', plusOne: '', paid: true, method: p.method })); },
+        dismiss: () => this.set('dismissed', s.dismissed.concat(p.id)) })),
+      hasClaims: claims.length > 0,
+      cars: s.drivers.map(d => { const rs = s.riders.filter(r => r.driverId === d.id); return { title: `${d.name} · ${d.from} → JT${d.when ? ' · ' + d.when : ''}`, sub: `${rs.length}/${d.seats} seats · ${rs.map(r => r.name).join(', ') || 'no riders yet'}` }; }),
+      noCars: !s.drivers.length, hasLooking: looking.length > 0, lookingText: looking.map(r => `${r.name} (${r.from})`).join(', '),
+      importMsg: s.importMsg || '',
+      importCsv: e => { const f = e.target.files && e.target.files[0]; if (!f) return; const rd = new FileReader();
+        rd.onload = () => { const rows = parseCsv(String(rd.result)); if (rows.length < 2) return this.setState({ importMsg: 'couldn’t read that file' });
+          const h = rows[0].map(norm); const find = (re) => h.findIndex(x => re.test(x));
+          const iName = (() => { const i = h.findIndex(x => x === 'name' || x === 'guest name' || x === 'full name'); return i >= 0 ? i : find(/name/); })();
+          const iFirst = find(/first/), iLast = find(/last/), iStatus = find(/status|rsvp|response|going/), iPlus = find(/plus|\+1|additional|guest count|party size/);
+          let guests = s.guests.slice(), added = 0, updated = 0;
+          rows.slice(1).forEach(r => {
+            const name = (iName >= 0 && !/first|last/.test(h[iName]) ? r[iName] : [r[iFirst], r[iLast]].filter(Boolean).join(' ')) || '';
+            if (!name.trim()) return;
+            const rsvp = iStatus >= 0 ? mapStatus(r[iStatus]) : 'yes';
+            const pv = iPlus >= 0 ? (r[iPlus] || '').trim() : ''; const plusOne = pv && pv !== '0' ? (isNaN(+pv) ? pv : '+' + pv) : '';
+            const g = guests.find(x => norm(x.name) === norm(name));
+            if (g) { guests = guests.map(x => x === g ? { ...x, rsvp, plusOne: plusOne || x.plusOne } : x); updated++; }
+            else { guests.push({ id: uid(), name: name.trim(), rsvp, plusOne, paid: false, method: '' }); added++; }
+          });
+          this.set('guests', guests); this.setState({ importMsg: `✓ ${added} added · ${updated} updated` }); e.target.value = ''; };
+        rd.readAsText(f); },
+      bulk: s.bulk, setBulk: e => this.setState({ bulk: e.target.value }),
+      addGuests: e => { e.preventDefault(); const have = new Set(s.guests.map(g => norm(g.name)));
+        const add = s.bulk.split('\n').map(x => x.trim()).filter(x => x && !have.has(norm(x))).map(name => ({ id: uid(), name, rsvp: 'invited', plusOne: '', paid: false, method: '' }));
+        this.set('guests', s.guests.concat(add)); this.setState({ bulk: '' }); },
+      exportCsv: () => {
+        const q = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+        const lines = [['Name', 'RSVP', 'Plus one', 'Paid', 'Amount', 'Method', 'Carpool']].concat(s.guests.map(g => [g.name, g.rsvp, g.plusOne, g.paid ? 'yes' : 'no', g.paid ? due(g) : 0, g.method, this.carpoolOf(g.name)]));
+        const blob = new Blob([lines.map(l => l.map(q).join(',')).join('\n')], { type: 'text/csv' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'kathi30-guests.csv'; a.click();
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

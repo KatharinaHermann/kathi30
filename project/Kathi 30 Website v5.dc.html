@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Unbounded:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#f6f2ec}a{color:inherit;text-decoration:none}a:hover{color:#b9552f}
+input,select,textarea{font:inherit}
+@keyframes morph{0%,100%{border-radius:58% 42% 63% 37%/45% 55% 45% 55%}33%{border-radius:40% 60% 45% 55%/60% 40% 60% 40%}66%{border-radius:63% 37% 52% 48%/38% 62% 38% 62%}}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -26px}}
+@keyframes shimmer{0%{background-position:50% 0%}100%{background-position:50% 100%}}
+@keyframes haze{0%{transform:scaleY(-1) skewX(-8deg) scaleX(1)}100%{transform:scaleY(-1) skewX(6deg) scaleX(1.04)}}
+@keyframes spin{to{rotate:360deg}}
+@keyframes wobble{0%,100%{rotate:-6deg;translate:0 0}50%{rotate:6deg;translate:0 -14px}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+</helmet>
+<div style="font-family:'Instrument Sans',sans-serif;color:#24221f;background:transparent;position:relative;z-index:0">
+  <div id="v5bg" aria-hidden="true" style="position:fixed;inset:-6%;z-index:-1;overflow:hidden;background:#f3e7da;will-change:transform">
+    <div style="position:absolute;left:-12%;top:-14%;width:62vw;aspect-ratio:1;border-radius:50%;background:#9fb6d1;opacity:0.85;filter:blur(90px);animation:float 16s ease-in-out 0s infinite"></div>
+    <div style="position:absolute;right:-14%;top:18%;width:54vw;aspect-ratio:1;border-radius:50%;background:#f3b995;opacity:0.9;filter:blur(90px);animation:float 19s ease-in-out -4s infinite"></div>
+    <div style="position:absolute;right:6%;bottom:-18%;width:40vw;aspect-ratio:1;border-radius:50%;background:#e8764a;opacity:0.55;filter:blur(90px);animation:float 22s ease-in-out -8s infinite"></div>
+    <div style="position:absolute;left:-10%;bottom:-16%;width:44vw;aspect-ratio:1;border-radius:50%;background:#5c6b4c;opacity:0.28;filter:blur(90px);animation:float 25s ease-in-out -12s infinite"></div>
+    <div style="position:absolute;left:34%;top:38%;width:30vw;aspect-ratio:1;border-radius:50%;background:#f6dcc6;opacity:0.9;filter:blur(90px);animation:float 18s ease-in-out -6s infinite"></div>
+  </div>
+  <div id="v5sun" aria-hidden="true" style="position:fixed;left:62%;top:0;z-index:-1;width:min(34vw,420px);aspect-ratio:1;transform:translate(-50%,16vh);pointer-events:none;will-change:transform">
+    <div style="position:absolute;inset:-60%;border-radius:50%;background:radial-gradient(circle,rgba(243,185,149,.55),rgba(243,185,149,0) 62%)"></div>
+    <div style="position:absolute;inset:0;border-radius:50%;background:linear-gradient(180deg,#ffe2c4,#f3b995 55%,#f2a26f);box-shadow:0 0 80px 10px rgba(242,162,111,.35)"></div>
+    <div id="v5sunhot" style="position:absolute;inset:0;border-radius:50%;background:linear-gradient(180deg,#f7b98a,#e8764a 60%,#b9552f);opacity:0"></div>
+  </div>
+  <div id="v5night" aria-hidden="true" style="position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:linear-gradient(180deg,#121836 0%,#262350 50%,#3d2a4c 100%)">
+    <div id="v5stars" style="position:absolute;inset:0;opacity:0;background-image:radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 28% 42%,#fff,transparent),radial-gradient(1.5px 1.5px at 46% 12%,#fff,transparent),radial-gradient(1px 1px at 63% 30%,#fff,transparent),radial-gradient(2px 2px at 78% 14%,#fff,transparent),radial-gradient(1px 1px at 88% 46%,#fff,transparent),radial-gradient(1.5px 1.5px at 8% 62%,#fff,transparent),radial-gradient(1px 1px at 36% 74%,#fff,transparent),radial-gradient(1.5px 1.5px at 56% 58%,#fff,transparent),radial-gradient(1px 1px at 92% 78%,#fff,transparent);background-size:420px 420px"></div>
+  </div>
+  <div id="v5prog" aria-hidden="true" style="position:fixed;left:0;right:0;top:0;height:3px;z-index:40;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#5c6b4c,#e8764a)"></div>
+
+  <nav style="position:sticky;top:0;z-index:30;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;padding:14px 5vw;background:rgba(255,255,255,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(20,18,16,.12)">
+    <a href="#top" style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:20px;letter-spacing:-.04em;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#5a6170 53%,#dde1e8 68%,#fbf8f4 84%,#a7adb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent">KATHI 30</a>
+    <div style="display:flex;flex-wrap:wrap;gap:8px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase">
+      <a href="#plan">plan</a><a href="#stay">stay</a><a href="#travel">travel</a><a href="#carpool">carpool</a><a href="#music">soundtrack</a><a href="#guestbook">guest book</a><a href="#pack">pack</a>
+    </div>
+    <a href="#rsvp" style="padding:10px 18px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 40%,#8e939d 52%,#e9ecf0 100%);box-shadow:inset 0 1px 0 #fff,0 4px 12px rgba(20,12,8,.2);color:#24221f">rsvp by oct 30</a>
+  </nav>
+
+  <header id="top" data-screen-label="Hero" style="position:relative;overflow:hidden;min-height:max(820px,100vh);display:flex;flex-direction:column;padding:28px 5vw 0;box-sizing:border-box;background:transparent">
+    <div aria-hidden="true" style="position:absolute;left:50%;top:46%;width:min(1100px,130vw);aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:radial-gradient(circle,rgba(255,170,90,.75) 0%,rgba(232,110,60,.45) 32%,rgba(232,118,74,0) 66%);mix-blend-mode:screen;pointer-events:none"></div>
+    {{ heroBlobs }}
+    {{ kathiBadge }}
+    <div style="position:relative;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#24221f"><span>t-minus 3 months</span><span>jan 15—18, 2027</span><span>joshua tree, ca</span></div>
+    <div style="position:relative;margin-top:5vh;text-align:center;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(28px,6vw,84px);letter-spacing:-.04em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#5a6170 53%,#dde1e8 68%,#fbf8f4 84%,#a7adb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 8px 12px rgba(20,12,8,.3))">KATHI x JOSH — TURNING</div>
+    <div style="position:relative"><svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="inflate" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="9" result="b"></feGaussianBlur><feSpecularLighting in="b" surfaceScale="10" specularConstant="1.25" specularExponent="26" lighting-color="#ffffff" result="s"><feDistantLight azimuth="235" elevation="48"></feDistantLight></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="s2"></feComposite><feDiffuseLighting in="b" surfaceScale="10" diffuseConstant="1.05" lighting-color="#ffffff" result="d"><feDistantLight azimuth="235" elevation="38"></feDistantLight></feDiffuseLighting><feComposite in="d" in2="SourceAlpha" operator="in" result="d2"></feComposite><feBlend in="SourceGraphic" in2="d2" mode="multiply" result="m"></feBlend><feComposite in="m" in2="s2" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"></feComposite></filter></svg>{{ heroTitle }}</div>
+    <div aria-hidden="true" style="position:relative;height:clamp(60px,10vw,150px);overflow:hidden;opacity:.45;filter:blur(2px);-webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 80%);mask-image:linear-gradient(180deg,#000 0%,transparent 80%)">{{ heroReflect }}</div>
+    <div style="position:relative;margin-top:auto;padding-bottom:44px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:28px">
+      <div style="display:flex;flex-direction:column;gap:18px;max-width:440px">
+        <p style="margin:0;font-size:19px;line-height:1.45;text-wrap:pretty;padding:16px 20px;border-radius:22px;background:rgba(255,255,255,.42);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.6)">The desert is calling and the Airbnbs are <b>LOCKED</b> 🔐 Come join me for 3 nights under the stars.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <a href="{{ partifulUrl }}" target="_blank" style="padding:15px 26px;border-radius:999px;background:#24221f;color:#f6f2ec;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase" style-hover="background:#e8764a;color:#24221f">rsvp on partiful →</a>
+          <a href="#plan" style="padding:15px 26px;border-radius:999px;border:1.5px solid #24221f;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">the plan ↓</a>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;min-width:74px;padding:14px 10px;border-radius:20px;background:rgba(20,18,16,.9);color:#f6f2ec"><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:30px;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 30%,#8e939d 48%,#dde1e8 62%,#fbf8f4 100%);-webkit-background-clip:text;background-clip:text;color:transparent">{{ cd.d }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">DAYS</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;min-width:74px;padding:14px 10px;border-radius:20px;background:rgba(20,18,16,.9);color:#f6f2ec"><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:30px;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 30%,#8e939d 48%,#dde1e8 62%,#fbf8f4 100%);-webkit-background-clip:text;background-clip:text;color:transparent">{{ cd.h }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">HRS</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;min-width:74px;padding:14px 10px;border-radius:20px;background:rgba(20,18,16,.9);color:#f6f2ec"><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:30px;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 30%,#8e939d 48%,#dde1e8 62%,#fbf8f4 100%);-webkit-background-clip:text;background-clip:text;color:transparent">{{ cd.m }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">MIN</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;min-width:74px;padding:14px 10px;border-radius:20px;background:rgba(20,18,16,.9);color:#f6f2ec"><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:30px;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 30%,#8e939d 48%,#dde1e8 62%,#fbf8f4 100%);-webkit-background-clip:text;background-clip:text;color:transparent">{{ cd.s }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">SEC</span></div>
+      </div>
+    </div>
+  </header>
+
+  {{ marquee }}
+
+  <section data-reveal="" data-screen-label="The deal" style="padding:clamp(64px,9vw,112px) 5vw 0;margin:clamp(16px,3vw,32px) 3vw;padding-bottom:clamp(32px,5vw,64px);border-radius:36px;background:rgba(255,250,245,.5);backdrop-filter:blur(30px) saturate(1.9);-webkit-backdrop-filter:blur(30px) saturate(1.9);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 80px rgba(20,12,8,.18)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:16px">
+      <div style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:28px;background:#efe7dd;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-8px) rotate(-.4deg);box-shadow:0 30px 60px rgba(20,12,8,.28)"><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(34px,3.6vw,50px);letter-spacing:-.04em;line-height:1;overflow-wrap:anywhere">3 nights</span><span style="font-size:16px;line-height:1.5">Fri Jan 15 → Mon Jan 18. Under the stars.</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:28px;background:linear-gradient(165deg,#f7f8fb 0%,#c9cdd5 34%,#8e939d 50%,#d3d8df 66%,#f7f8fa 100%);box-shadow:inset 0 1px 0 #fff,0 24px 60px rgba(20,12,8,.25);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-8px) rotate(-.4deg);box-shadow:0 30px 60px rgba(20,12,8,.28)"><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(34px,3.6vw,50px);letter-spacing:-.04em;line-height:1;overflow-wrap:anywhere">$300</span><span style="font-size:16px;line-height:1.5">per person, all 3 nights. I'm covering part of the stay.</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:28px;background:#24221f;color:#f6f2ec;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-8px) rotate(-.4deg);box-shadow:0 30px 60px rgba(20,12,8,.28)"><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(34px,3.6vw,50px);letter-spacing:-.04em;line-height:1;overflow-wrap:anywhere">Oct 30</span><span style="font-size:16px;line-height:1.5">RSVP deadline so I know you're INN</span></div>
+    </div>
+  </section>
+
+  <section data-reveal="" id="plan" data-screen-label="Itinerary" style="padding:clamp(64px,9vw,112px) 5vw 0;margin:clamp(16px,3vw,32px) 3vw;padding-bottom:clamp(32px,5vw,64px);border-radius:36px;background:rgba(255,250,245,.5);backdrop-filter:blur(30px) saturate(1.9);-webkit-backdrop-filter:blur(30px) saturate(1.9);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 80px rgba(20,12,8,.18)">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:28px">
+      <h2 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,7vw,96px);letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#5a6170 53%,#dde1e8 68%,#fbf8f4 84%,#a7adb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 8px rgba(20,12,8,.35))">the plan</h2>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase">(preliminary) · subject to vibes</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;overflow-x:auto">
+      <div style="display:flex;flex-direction:column;gap:14px;padding:28px;border-radius:28px;background:#efe7dd;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-8px) rotate(-.4deg);box-shadow:0 30px 60px rgba(20,12,8,.28)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:36px;letter-spacing:-.04em">FRI</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px">JAN 15</span></div>
+        <span style="font-size:28px">🚗</span>
+        <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:20px;line-height:1.25">Arrival</span>
+        <span style="font-size:16px;line-height:1.5">Roll in, claim a bed, welcome snacks + drinks by the pool.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;padding:28px;border-radius:28px;background:#24221f;color:#f6f2ec;box-shadow:0 30px 70px rgba(120,50,10,.35);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-8px) rotate(-.4deg);box-shadow:0 30px 60px rgba(20,12,8,.28)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:36px;letter-spacing:-.04em;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 30%,#8e939d 48%,#f0cfae 62%,#fff7ee 100%);-webkit-background-clip:text;background-clip:text;color:transparent">SAT</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px">JAN 16 · THE BIG ONE</span></div>
+        <span style="font-size:28px">🏜️ 🪩</span>
+        <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:20px;line-height:1.25">Hike → dinner → PARTY</span>
+        <span style="font-size:16px;line-height:1.5">Early Joshua Tree National Park adventure, then dinner and the birthday party.</span>
+        <div style="display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:18px;background:linear-gradient(165deg,#f7f8fb 0%,#c9cdd5 34%,#8e939d 50%,#e8c7a5 66%,#fff6ec 100%);color:#24221f"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">DRESS CODE</span><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:17px">stargazing glam ✨</span><span style="font-size:14px">think sparkles, silver and gold</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;padding:28px;border-radius:28px;background:#efe7dd;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-8px) rotate(-.4deg);box-shadow:0 30px 60px rgba(20,12,8,.28)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:36px;letter-spacing:-.04em">SUN</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px">JAN 17</span></div>
+        <span style="font-size:28px">🥞 🌴</span>
+        <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:20px;line-height:1.25">Brunch → lounge</span>
+        <span style="font-size:16px;line-height:1.5">Pool, pickleball, horizontal time — or go explore on your own. Dinner + drinks after.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;padding:28px;border-radius:28px;background:#efe7dd;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-8px) rotate(-.4deg);box-shadow:0 30px 60px rgba(20,12,8,.28)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:36px;letter-spacing:-.04em">MON</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px">JAN 18</span></div>
+        <span style="font-size:28px">☕</span>
+        <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:20px;line-height:1.25">Breakfast → goodbyes</span>
+        <span style="font-size:16px;line-height:1.5">Coffee, breakfast and goodbyes.</span>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section data-reveal="" id="stay" data-screen-label="The stay" style="padding:clamp(64px,9vw,112px) 5vw 0;margin:clamp(16px,3vw,32px) 3vw;padding-bottom:clamp(32px,5vw,64px);border-radius:36px;background:rgba(255,250,245,.5);backdrop-filter:blur(30px) saturate(1.9);-webkit-backdrop-filter:blur(30px) saturate(1.9);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 80px rgba(20,12,8,.18)">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:28px">
+      <h2 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,7vw,96px);letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#5a6170 53%,#dde1e8 68%,#fbf8f4 84%,#a7adb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 8px rgba(20,12,8,.35))">the stay</h2>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase">two houses · locked in 🔐</span>
+    </div>
+    <div style="position:relative;aspect-ratio:16/9;max-height:78vh;width:100%;border-radius:28px;overflow:hidden;background:#24221f">
+      <sc-for list="{{ slides }}" as="sl" hint-placeholder-count="1">
+        <img src="{{ sl.src }}" alt="{{ sl.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity .7s ease, transform 6s ease;opacity:{{ sl.op }};transform:scale({{ sl.scale }})">
+      </sc-for>
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:60px 24px 20px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:flex-end;gap:12px;background:linear-gradient(180deg,transparent,rgba(20,18,16,.65));color:#fbf8f4;pointer-events:none">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px">{{ slideNum }}</span>
+      </div>
+      <button onClick="{{ prevSlide }}" aria-label="previous photo" style="position:absolute;left:16px;top:50%;translate:0 -50%;width:52px;height:52px;border-radius:50%;border:0;cursor:pointer;font-size:20px;color:#24221f;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 40%,#8e939d 52%,#e9ecf0 100%);box-shadow:0 8px 20px rgba(0,0,0,.3)">←</button>
+      <button onClick="{{ nextSlide }}" aria-label="next photo" style="position:absolute;right:16px;top:50%;translate:0 -50%;width:52px;height:52px;border-radius:50%;border:0;cursor:pointer;font-size:20px;color:#24221f;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 40%,#8e939d 52%,#e9ecf0 100%);box-shadow:0 8px 20px rgba(0,0,0,.3)">→</button>
+    </div>
+    <div style="margin-top:14px;display:flex;justify-content:center;gap:8px">
+      <sc-for list="{{ slides }}" as="sl" hint-placeholder-count="2">
+        <button onClick="{{ sl.go }}" aria-label="go to photo" style="height:10px;border-radius:999px;border:0;cursor:pointer;transition:width .3s;width:{{ sl.dotW }};background:{{ sl.dotBg }}"></button>
+      </sc-for>
+    </div>
+    <div style="margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+      <a href="https://www.google.com/maps/search/?api=1&amp;query=7670+Wilton+Rd,+Joshua+Tree,+CA+92252" target="_blank" style="display:flex;flex-direction:column;gap:8px;padding:24px 28px;border-radius:28px;background:#efe7dd;color:#24221f" style-hover="background:#f3b995">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em">🏡 HOUSE 01</span>
+        <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(18px,2.2vw,24px);line-height:1.2">7670 Wilton Rd</span>
+        <span style="font-size:15px">Joshua Tree, CA 92252</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;text-decoration:underline">open in maps ↗</span>
+      </a>
+      <a href="https://www.google.com/maps/search/?api=1&amp;query=6715+Juniper+Rd,+Joshua+Tree,+CA+92252" target="_blank" style="display:flex;flex-direction:column;gap:8px;padding:24px 28px;border-radius:28px;background:#efe7dd;color:#24221f" style-hover="background:#f3b995">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em">🏡 HOUSE 02</span>
+        <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(18px,2.2vw,24px);line-height:1.2">6715 Juniper Rd</span>
+        <span style="font-size:15px">Joshua Tree, CA 92252</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;text-decoration:underline">open in maps ↗</span>
+      </a>
+    </div>
+    <div id="pay" style="margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:28px;padding:clamp(24px,4vw,40px);border-radius:28px;background:#24221f;color:#f6f2ec">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(28px,4vw,44px);letter-spacing:-.03em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 30%,#8e939d 48%,#dde1e8 62%,#fbf8f4 100%);-webkit-background-clip:text;background-clip:text;color:transparent">pay your share 💸</span>
+        <span style="font-size:16px;line-height:1.55;max-width:420px">$300 per person covers all 3 nights. Send it with your RSVP by Oct 30 to be officially INN.</span>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <a href="{{ venmoUrl }}" target="_blank" style="padding:14px 24px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#24221f;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 40%,#8e939d 52%,#e9ecf0 100%)">venmo $300 →</a>
+          <a href="{{ paypalUrl }}" target="_blank" style="padding:14px 24px;border-radius:999px;border:1.5px solid #f6f2ec;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase" style-hover="background:#f6f2ec;color:#24221f">paypal $300 →</a>
+        </div>
+      </div>
+      <sc-if value="{{ notPaidThanks }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ sendPaid }}" style="display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:22px;background:#2a2622">
+          <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:18px">sent it? ✓</span>
+          <input value="{{ pName }}" onChange="{{ setPName }}" placeholder="your name" required="" style="padding:14px 18px;border-radius:14px;border:1px solid #3a3530;background:#24221f;color:#f6f2ec;outline:none">
+          <button type="submit" style="padding:14px;border-radius:999px;border:0;cursor:pointer;background:#e8764a;color:#24221f;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">I paid</button>
+        </form>
+      </sc-if>
+      <sc-if value="{{ hasPaidThanks }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;justify-content:center;gap:8px;padding:22px;border-radius:22px;background:#2a2622">
+          <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:22px">thank you, {{ paidThanks }} 🫶</span>
+          <span style="font-size:15px;color:#cfc6bb">Kathi will confirm once it lands.</span>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+
+
+  <section data-reveal="" id="travel" data-screen-label="Getting there" style="padding:clamp(64px,9vw,112px) 5vw 0;margin:clamp(16px,3vw,32px) 3vw;padding-bottom:clamp(32px,5vw,64px);border-radius:36px;background:rgba(255,250,245,.5);backdrop-filter:blur(30px) saturate(1.9);-webkit-backdrop-filter:blur(30px) saturate(1.9);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 80px rgba(20,12,8,.18)">
+    <h2 style="margin:0 0 28px;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,7vw,96px);letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#5a6170 53%,#dde1e8 68%,#fbf8f4 84%,#a7adb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 8px rgba(20,12,8,.35))">getting there</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px">
+      <div style="display:flex;flex-direction:column;gap:12px;padding:32px;border-radius:28px;border:1.5px solid #24221f;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-8px) rotate(-.4deg);box-shadow:0 30px 60px rgba(20,12,8,.28)">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">ROUTE 01 · ✈️ + 🚙</span>
+        <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:26px">Fly to LA, rent a car</span>
+        <span style="font-size:16px;line-height:1.55">Land at LAX (or Palm Springs PSP — about an hour out). It's ~2.5h east from LA. Aim to arrive Friday afternoon to dodge traffic, and split a rental with whoever lands around the same time.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;padding:32px;border-radius:28px;border:1.5px solid #24221f;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s" style-hover="transform:translateY(-8px) rotate(-.4deg);box-shadow:0 30px 60px rgba(20,12,8,.28)">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">ROUTE 02 · 🌉 → 🏜️</span>
+        <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:26px">Road trip from SF</span>
+        <span style="font-size:16px;line-height:1.55">~8h down I-5. Leave Thursday night or early Friday, queue the playlist, split the gas. Find your car crew on the carpool board below.</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal="" id="carpool" data-screen-label="Carpool" style="padding:clamp(64px,9vw,112px) 5vw 0;margin:clamp(16px,3vw,32px) 3vw;padding-bottom:clamp(32px,5vw,64px);border-radius:36px;background:rgba(255,250,245,.5);backdrop-filter:blur(30px) saturate(1.9);-webkit-backdrop-filter:blur(30px) saturate(1.9);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 80px rgba(20,12,8,.18)">
+    <div style="padding:clamp(24px,4vw,48px);border-radius:36px;background:#24221f;color:#f6f2ec">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:32px">
+        <h2 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(36px,6vw,80px);letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#5a6170 53%,#dde1e8 68%,#fbf8f4 84%,#a7adb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent">carpool board</h2>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase">{{ seatSummary }}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px">
+        <form onSubmit="{{ addDriver }}" style="display:flex;flex-direction:column;gap:14px;padding:24px;border-radius:24px;background:#2a2622">
+          <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:20px">🚙 I'm driving</span>
+          <input value="{{ dName }}" onChange="{{ setDName }}" placeholder="your name" required="" style="padding:14px 18px;border-radius:14px;border:1px solid #3a3530;background:#24221f;color:#f6f2ec;outline:none">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em">LEAVING FROM</span>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <sc-for list="{{ dFromOpts }}" as="o" hint-placeholder-count="3">
+              <button type="button" onClick="{{ o.pick }}" style="border:1px solid #3a3530;cursor:pointer;padding:9px 14px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:12px;background:{{ o.bg }};color:{{ o.fg }}">{{ o.label }}</button>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em">SEATS FOR FRIENDS</span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <button type="button" onClick="{{ seatsDown }}" style="width:40px;height:40px;border-radius:50%;border:1px solid #3a3530;background:transparent;color:#f6f2ec;font-size:18px;cursor:pointer">−</button>
+              <span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:24px;min-width:24px;text-align:center">{{ dSeats }}</span>
+              <button type="button" onClick="{{ seatsUp }}" style="width:40px;height:40px;border-radius:50%;border:1px solid #3a3530;background:transparent;color:#f6f2ec;font-size:18px;cursor:pointer">+</button>
+            </div>
+          </div>
+          <input value="{{ dWhen }}" onChange="{{ setDWhen }}" placeholder="leaving when? e.g. Fri 9am, or LAX pickup after 2pm" style="padding:14px 18px;border-radius:14px;border:1px solid #3a3530;background:#24221f;color:#f6f2ec;outline:none">
+          <button type="submit" style="padding:14px;border-radius:999px;border:0;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#24221f;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 40%,#8e939d 52%,#e9ecf0 100%)">add my car</button>
+        </form>
+        <form onSubmit="{{ addRider }}" style="display:flex;flex-direction:column;gap:14px;padding:24px;border-radius:24px;background:#2a2622">
+          <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:20px">🙋 I need a ride</span>
+          <input value="{{ rName }}" onChange="{{ setRName }}" placeholder="your name" required="" style="padding:14px 18px;border-radius:14px;border:1px solid #3a3530;background:#24221f;color:#f6f2ec;outline:none">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em">LEAVING FROM</span>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <sc-for list="{{ rFromOpts }}" as="o" hint-placeholder-count="3">
+              <button type="button" onClick="{{ o.pick }}" style="border:1px solid #3a3530;cursor:pointer;padding:9px 14px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:12px;background:{{ o.bg }};color:{{ o.fg }}">{{ o.label }}</button>
+            </sc-for>
+          </div>
+          <input value="{{ rDetails }}" onChange="{{ setRDetails }}" placeholder="flying into LAX? flight # + landing time — or when you can leave SF" style="padding:14px 18px;border-radius:14px;border:1px solid #3a3530;background:#24221f;color:#f6f2ec;outline:none">
+          <select value="{{ rDriver }}" onChange="{{ setRDriver }}" style="padding:14px 18px;border-radius:14px;border:1px solid #3a3530;background:#24221f;color:#f6f2ec;outline:none">
+            <sc-for list="{{ driverOpts }}" as="o" hint-placeholder-count="1"><option value="{{ o.id }}">{{ o.label }}</option></sc-for>
+          </select>
+          <button type="submit" style="margin-top:auto;padding:14px;border-radius:999px;border:0;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#24221f;background:#e8764a">hop in</button>
+        </form>
+      </div>
+      <div style="margin-top:28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:12px">
+        <sc-if value="{{ noDrivers }}" hint-placeholder-val="{{ true }}">
+          <div style="grid-column:1/-1;padding:28px;border-radius:24px;border:1.5px dashed #3a3530;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;color:#cfc6bb">no cars yet — first driver gets aux privileges 🎶</div>
+        </sc-if>
+        <sc-for list="{{ drivers }}" as="d" hint-placeholder-count="0">
+          <div style="display:flex;flex-direction:column;gap:12px;padding:20px;border-radius:24px;background:linear-gradient(165deg,#f7f8fb 0%,#c9cdd5 34%,#8e939d 50%,#d3d8df 66%,#f7f8fa 100%);color:#24221f">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:18px">{{ d.name }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ d.route }}</span></div>
+              <button onClick="{{ d.remove }}" aria-label="remove" style="border:0;background:transparent;cursor:pointer;font-size:16px;color:#24221f">×</button>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ d.dots }}" as="s" hint-placeholder-count="3"><span style="width:22px;height:22px;border-radius:50%;border:1.5px solid #24221f;background:{{ s.bg }}"></span></sc-for>
+            </div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ d.status }}</span>
+            <span style="font-size:14px;line-height:1.4">{{ d.riderText }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ hasLooking }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:20px;display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;margin-right:6px">STILL LOOKING:</span>
+          <sc-for list="{{ looking }}" as="r" hint-placeholder-count="0">
+            <span style="display:flex;align-items:center;gap:8px;padding:8px 8px 8px 14px;border-radius:999px;background:#e8764a;color:#24221f;font-size:14px;font-weight:600">{{ r.label }}<button onClick="{{ r.remove }}" aria-label="remove" style="border:0;background:rgba(20,18,16,.15);border-radius:50%;width:22px;height:22px;cursor:pointer;color:#24221f">×</button></span>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section data-reveal="" id="music" data-screen-label="Playlists" style="padding:clamp(64px,9vw,112px) 5vw 0;margin:clamp(16px,3vw,32px) 3vw;padding-bottom:clamp(32px,5vw,64px);border-radius:36px;background:rgba(255,250,245,.5);backdrop-filter:blur(30px) saturate(1.9);-webkit-backdrop-filter:blur(30px) saturate(1.9);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 80px rgba(20,12,8,.18)">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:28px">
+      <h2 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,7vw,96px);letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#5a6170 53%,#dde1e8 68%,#fbf8f4 84%,#a7adb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 8px rgba(20,12,8,.35))">the soundtrack</h2>
+      <span style="padding:10px 16px;border-radius:999px;background:#f2a26f;color:#24221f;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.04em">homework: add ≥1 song to EACH 🎧</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:16px;padding:28px;border-radius:28px;background:linear-gradient(180deg,#e9d6bf 0%,#eed9c2 45%,#e4a46a 100%)">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">☀️ DAY PLAYLIST</span>
+        <span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(26px,3.4vw,40px);letter-spacing:-.03em;line-height:1">kathi x josh days</span>
+        <span style="font-size:16px;line-height:1.5">Pool floats, hike playlists, golden hour. Think breezy, sunny, a little psychedelic.</span>
+        <a href="{{ dayUrl }}" target="_blank" style="display:block;border-radius:16px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.25)" style-hover="filter:brightness(1.06)"><img src="assets/cover-days-v5.jpg" alt="Day playlist cover" style="width:100%;aspect-ratio:1;object-fit:cover;display:block"></a>
+        <a href="{{ dayUrl }}" target="_blank" style="align-self:flex-start;padding:14px 24px;border-radius:999px;background:#24221f;color:#f6f2ec;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase" style-hover="background:#e8764a;color:#24221f">add your song →</a>
+      </div>
+      <div style="position:relative;justify-self:center;width:min(100%,300px);padding:14px 14px 18px;background:#ffffff;rotate:3deg;box-shadow:0 24px 50px rgba(20,12,8,.3);display:flex;flex-direction:column;gap:12px">
+        <span style="position:absolute;top:-16px;left:50%;translate:-50% 0;width:110px;height:30px;rotate:-4deg;background:rgba(232,118,74,.75)"></span>
+        <img src="assets/kathi-dance.gif" alt="Kathi dancing" style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 30%;display:block">
+        <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:16px;line-height:1.25">when the playlist hits</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;padding:28px;border-radius:28px;background:#24221f;color:#f6f2ec">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">🌙 NIGHT PLAYLIST</span>
+        <span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(26px,3.4vw,40px);letter-spacing:-.03em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 30%,#8e939d 48%,#dde1e8 62%,#fbf8f4 100%);-webkit-background-clip:text;background-clip:text;color:transparent">kathi x josh nights</span>
+        <span style="font-size:16px;line-height:1.5">Dinner → dance floor → 2am singalongs. Bangers only, guilty pleasures encouraged.</span>
+        <a href="{{ nightUrl }}" target="_blank" style="display:block;border-radius:16px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.25)" style-hover="filter:brightness(1.06)"><img src="assets/cover-nights-v5.jpg" alt="Night playlist cover" style="width:100%;aspect-ratio:1;object-fit:cover;display:block"></a>
+        <a href="{{ nightUrl }}" target="_blank" style="align-self:flex-start;padding:14px 24px;border-radius:999px;color:#24221f;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 40%,#8e939d 52%,#e9ecf0 100%);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">add your song →</a>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+  <section data-reveal="" id="guestbook" data-screen-label="Trailer and guest book" style="padding:clamp(64px,9vw,112px) 5vw 0;margin:clamp(16px,3vw,32px) 3vw;padding-bottom:clamp(32px,5vw,64px);border-radius:36px;background:rgba(255,250,245,.5);backdrop-filter:blur(30px) saturate(1.9);-webkit-backdrop-filter:blur(30px) saturate(1.9);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 80px rgba(20,12,8,.18)">
+    <h2 style="margin:0 0 28px;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,7vw,96px);letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#5a6170 53%,#dde1e8 68%,#fbf8f4 84%,#a7adb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 8px rgba(20,12,8,.35))">trailer &amp; guest book</h2>
+    <div style="position:relative;aspect-ratio:16/9;max-height:80vh;border-radius:32px;overflow:hidden;background:#24221f">
+      <sc-if value="{{ hasTrailer }}" hint-placeholder-val="{{ false }}">
+        <iframe src="{{ trailerUrl }}" title="Trailer" allow="autoplay; fullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+      </sc-if>
+      <sc-if value="{{ noTrailer }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:repeating-linear-gradient(135deg,#221f1c 0 12px,#2a2622 12px 24px);color:#f6f2ec">
+          <div style="width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 32% 24%,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 22%),linear-gradient(165deg,#f7f8fb 0%,#b9bec8 30%,#3a3d45 48%,#1c1d21 52%,#5e6575 60%,#e2e5ea 78%,#ffffff 100%);color:#24221f;font-size:30px">▶</div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase">the trailer — premiering soon</span>
+        </div>
+      </sc-if>
+    </div>
+    <div style="position:relative;margin-top:16px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:16px;align-content:center;transition:filter .6s;filter:{{ gbBlur }};min-height:{{ gbMinH }}">
+      <div style="aspect-ratio:4/5;rotate:-2deg"><image-slot id="gb-kathi-1" shape="rounded" radius="24" src="assets/kathi.jpeg" placeholder="photo — kathi &amp; friends"></image-slot></div>
+      <div style="aspect-ratio:4/5;rotate:1.5deg"><image-slot id="gb-kathi-2" shape="rounded" radius="24" src="assets/kathi-bw.jpeg" placeholder="photo — kathi &amp; friends"></image-slot></div>
+      <div style="aspect-ratio:4/5;rotate:-1deg"><image-slot id="gb-kathi-3" shape="rounded" radius="24" src="assets/kathi-baby.png" placeholder="photo — kathi &amp; friends"></image-slot></div>
+      <div style="aspect-ratio:4/5;rotate:2deg"><image-slot id="gb-kathi-4" shape="rounded" radius="24" src="assets/house-patio.png" placeholder="photo — kathi &amp; friends"></image-slot></div>
+    </div>
+    <sc-if value="{{ gbLocked }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;inset:-8px;display:flex;align-items:center;justify-content:center;padding:20px;border-radius:32px;background:rgba(20,18,16,.28);overflow:hidden">
+        {{ gbBadges }}
+        <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;max-width:560px;padding:clamp(28px,4vw,44px);border-radius:32px;background:#24221f;color:#f6f2ec;text-align:center;rotate:-1.5deg;box-shadow:0 30px 80px rgba(20,18,16,.45)">
+          {{ lockBadge }}
+          <span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(28px,4vw,48px);letter-spacing:-.04em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 30%,#8e939d 48%,#dde1e8 62%,#fbf8f4 100%);-webkit-background-clip:text;background-clip:text;color:transparent">the guest book<br>is locked</span>
+          <span style="font-size:16px;line-height:1.5;color:#ece6de;text-wrap:pretty">It unlocks at the party — Sat Jan 16, 8pm 🪩 Save your best wishes, roasts and chaotic photos for the night.</span>
+          <span style="padding:10px 18px;border-radius:999px;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 40%,#8e939d 52%,#e9ecf0 100%);color:#24221f;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600">opens in {{ gbCountdown }}</span>
+        </div>
+      </div>
+    </sc-if>
+    </div>
+    <sc-if value="{{ gbOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top:32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:24px;align-items:start">
+      <form onSubmit="{{ addNote }}" style="display:flex;flex-direction:column;gap:12px;padding:24px;border-radius:28px;background:#efe7dd">
+        <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:20px">sign the guest book ✍️</span>
+        <input value="{{ gName }}" onChange="{{ setGName }}" placeholder="your name" required="" style="padding:14px 18px;border-radius:14px;border:1.5px solid #24221f;background:rgba(255,255,255,.6);color:#24221f;outline:none">
+        <textarea value="{{ gMsg }}" onChange="{{ setGMsg }}" placeholder="a memory, a roast, a birthday wish…" required="" rows="3" style="padding:14px 18px;border-radius:14px;border:1.5px solid #24221f;background:rgba(255,255,255,.6);color:#24221f;outline:none;resize:vertical"></textarea>
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase">
+          <span style="padding:10px 16px;border-radius:999px;border:1.5px dashed #24221f">{{ photoLabel }}</span>
+          <input type="file" accept="image/*" onChange="{{ onPhoto }}" style="display:none">
+        </label>
+        <button type="submit" style="padding:14px;border-radius:999px;border:0;cursor:pointer;background:#24221f;color:#f6f2ec;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">post it</button>
+      </form>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:16px">
+        <sc-if value="{{ noNotes }}" hint-placeholder-val="{{ true }}">
+          <div style="grid-column:1/-1;padding:28px;border-radius:24px;border:1.5px dashed #24221f;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6">the guest book is empty. be the main character.</div>
+        </sc-if>
+        <sc-for list="{{ notes }}" as="n" hint-placeholder-count="0">
+          <div style="display:flex;flex-direction:column;gap:10px;padding:12px 12px 16px;background:#ffffff;box-shadow:0 14px 30px rgba(20,12,8,.2);rotate:{{ n.rot }}">
+            <sc-if value="{{ n.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ n.photo }}" alt="" style="width:100%;aspect-ratio:1;object-fit:cover;display:block"></sc-if>
+            <span style="font-size:15px;line-height:1.45">{{ n.msg }}</span>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:12px"><span>— {{ n.name }}</span><button onClick="{{ n.remove }}" aria-label="remove" style="border:0;background:transparent;cursor:pointer;color:#24221f">×</button></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+  </section>
+
+
+
+  <section data-reveal="" id="rsvp" data-screen-label="RSVP" style="position:relative;overflow:hidden;margin-top:clamp(64px,9vw,112px);padding:clamp(72px,10vw,128px) 5vw;background:linear-gradient(180deg,#f3b995 0%,#a8603c 100%);margin:clamp(16px,3vw,32px) 3vw;padding-bottom:clamp(32px,5vw,64px);border-radius:36px;background:rgba(255,250,245,.5);backdrop-filter:blur(30px) saturate(1.9);-webkit-backdrop-filter:blur(30px) saturate(1.9);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 80px rgba(20,12,8,.18)">
+    {{ rsvpBlobs }}
+    <div style="position:relative;display:flex;flex-direction:column;gap:28px;max-width:900px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">RSVP BY OCTOBER 30 📅</span>
+      <div style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(44px,9vw,132px);letter-spacing:-.05em;line-height:.95;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#5a6170 53%,#dde1e8 68%,#fbf8f4 84%,#a7adb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 10px 16px rgba(20,12,8,.35))">are you<br>INN? 🏡</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px">
+        <div style="display:flex;gap:12px;padding:18px;border-radius:20px;background:rgba(255,255,255,.5)"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600">01</span><span style="display:flex;flex-direction:column;align-items:flex-start;gap:12px"><span style="font-size:16px;line-height:1.45">RSVP on Partiful. Bringing someone? Add your +1 right in the RSVP.</span><a href="{{ partifulUrl }}" target="_blank" style="display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;rotate:-3deg;background:#24221f;color:#f6f2ec;font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;box-shadow:0 8px 0 #e8764a,0 14px 24px rgba(20,12,8,.3)" style-hover="rotate:2deg;background:#e8764a;color:#24221f;box-shadow:0 8px 0 #24221f">💌 tap to RSVP →</a></span></div>
+        <div style="display:flex;gap:12px;padding:18px;border-radius:20px;background:rgba(255,255,255,.5)"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600">02</span><span style="display:flex;flex-direction:column;align-items:flex-start;gap:12px"><span style="font-size:16px;line-height:1.45">Sort your ride on the carpool board.</span><a href="#carpool" style="display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;rotate:-3deg;background:#24221f;color:#f6f2ec;font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;box-shadow:0 8px 0 #e8764a,0 14px 24px rgba(20,12,8,.3)" style-hover="rotate:2deg;background:#e8764a;color:#24221f;box-shadow:0 8px 0 #24221f">🚙 find a ride →</a></span></div>
+        <div style="display:flex;gap:12px;padding:18px;border-radius:20px;background:rgba(255,255,255,.5)"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600">03</span><span style="display:flex;flex-direction:column;align-items:flex-start;gap:12px"><span style="font-size:16px;line-height:1.45">Send your $300 via Venmo or PayPal.</span><a href="#pay" style="display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;rotate:-3deg;background:#24221f;color:#f6f2ec;font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;box-shadow:0 8px 0 #e8764a,0 14px 24px rgba(20,12,8,.3)" style-hover="rotate:2deg;background:#e8764a;color:#24221f;box-shadow:0 8px 0 #24221f">💸 pay your share →</a></span></div>
+        <div style="display:flex;gap:12px;padding:18px;border-radius:20px;background:rgba(255,255,255,.5)"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600">04</span><span style="display:flex;flex-direction:column;align-items:flex-start;gap:12px"><span style="font-size:16px;line-height:1.45">Join the group chat 💬 for updates, rides and gc spam.</span>
+          <a href="{{ whatsappUrl }}" target="_blank" style="display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;rotate:-3deg;font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;cursor:pointer;border:0;background:#25d366;color:#0b2a17;box-shadow:0 8px 0 #24221f,0 14px 24px rgba(20,12,8,.3)" style-hover="rotate:2deg">💬 join WhatsApp →</a>
+        </span></div>
+      </div>
+    </div>
+  <div id="pack" style="position:relative;margin-top:56px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px;align-items:stretch">
+      <div style="display:flex;flex-direction:column;gap:18px;padding:28px;border-radius:28px;background:#efe7dd">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+          <h2 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(32px,4.5vw,56px);letter-spacing:-.04em;line-height:1">pack this</h2>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:13px">{{ packCount }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ packItems }}" as="p" hint-placeholder-count="4">
+            <button onClick="{{ p.toggle }}" style="all:unset;cursor:pointer;box-sizing:border-box;display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.55)">
+              <span style="flex:none;width:28px;height:28px;border-radius:9px;border:2px solid #24221f;display:flex;align-items:center;justify-content:center;font-size:15px;color:#f6f2ec;background:{{ p.box }}">{{ p.mark }}</span>
+              <span style="font-size:22px">{{ p.emoji }}</span>
+              <span style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:16px;text-decoration:{{ p.strike }}">{{ p.label }}</span><span style="font-size:14px">{{ p.why }}</span></span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:24px;padding:28px;border-radius:28px;background:#24221f;color:#f6f2ec">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">🎁 RE: GIFTS</span>
+        <span style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(48px,7vw,96px);letter-spacing:-.05em;line-height:.9">no gifts.<br>just you.</span>
+        <span style="font-size:18px;line-height:1.5;max-width:420px">Seriously — you showing up is the present ✨</span>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <footer style="padding:56px 5vw;background:#24221f;color:#f6f2ec;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:16px">
+    <span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(20px,3vw,32px)">Can't wait to celebrate with you 🥂</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase">— kathi · jan 15—18, 2027 · joshua tree</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;partifulUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://partiful.com/e/b0G4uDYWEsWA2FEgCho3?c=vCCWuPwC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Links&quot;},&quot;whatsappUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Links&quot;},&quot;venmoUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://venmo.com/u/Katharina-Hermann&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Links&quot;},&quot;paypalUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Links&quot;},&quot;dayPlaylistUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Links&quot;},&quot;nightPlaylistUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Links&quot;},&quot;trailerUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Links&quot;},&quot;lockGuestbook&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+const TEXT = 'linear-gradient(180deg,#ffffff 0%,#d4d7de 13%,#6d7280 23%,#1d1f24 25%,#5a6170 27%,#dde1e8 34%,#fbf8f4 42%,#a7adb8 50%,#ffffff 58%,#d4d7de 63%,#6d7280 73%,#1d1f24 75%,#5a6170 77%,#dde1e8 84%,#fbf8f4 92%,#a7adb8 100%)';
+const SURF = 'radial-gradient(circle at 32% 24%,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 22%),linear-gradient(165deg,#f7f8fb 0%,#b9bec8 30%,#3a3d45 48%,#1c1d21 52%,#5e6575 60%,#e2e5ea 78%,#ffffff 100%)';
+const TARGET = new Date(2027, 0, 15, 15, 0, 0).getTime();
+const FROM = ['SF', 'LAX'];
+const VENMO = 'https://venmo.com/u/Katharina-Hermann';
+const PAYPAL = 'https://www.paypal.com/myaccount/transfer/pay-request/preview?reference_data=dEJFODNKbDlpVGJiWHY4V3BBTFUzbWd0R1YrbjJ1SS80S24yQmNtZUxjaTVkSjgwd1l5RDBXQ0Fycmp5MUYydWl4M25ESnpZRDJ4bDRWT2xUUFY2V3hJTHMybktsek1tU3ZJMW1KSFBEM3JiYjFrQnA5VXZTWVNZemlLeVVzTnNRdkxCNWJyTjlwYkhmYkFPRXhLUDgxT0RuUjNWQkovckhWY1VaR2tqZ3l0b2s3S21Vb1gxMlBMQVQvamU0bWU4RFRwQmw2UUlHVFkyWHBoZFNFMzZsNC9tUk96RHN2eUtxanNOOFg1Zlh6Y1N4LzE2UHU5eEpHSlBMdWFuT2duSWtNSFdUbWxscFM3TE5BajR6NmpMbHI0MkNUejZ4YkgrdUVRc3JaZktMUFdYbFJsZUc3YkFPQnFYdmJVdVVFSWlHOGdrV1NSNUZGbXlPWE0yNVZXcTB3PT0=&intent=p2p_pay_request';
+const PARTY = new Date(2027, 0, 16, 20, 0, 0).getTime();
+const PARTIFUL = 'https://partiful.com/e/b0G4uDYWEsWA2FEgCho3?c=vCCWuPwC';
+const PACK = [
+  { emoji: '🩱', label: 'Swim suit', why: 'pool + hot desert sun' },
+  { emoji: '✨', label: 'Sparkly stargazing dress', why: 'Saturday night, silver & gold' },
+  { emoji: '👟', label: 'Running shoes + workout fit', why: 'for the Joshua Tree hike' },
+  { emoji: '🔮', label: 'Vibes', why: 'or wibes' }
+];
+const DAYP = 'https://open.spotify.com/playlist/1RwuGGzyj5nvkEFAkxj9Z1?si=69058dbe0c304ecb&pt=4e7a89d5b80ce366c5cc7f947a376722';
+const NIGHTP = 'https://open.spotify.com/playlist/396Zx7EtZEWKMUfFh9TPTZ?si=b1066a8e208c4370&pt=fedd51927c28bee6a49fb171d1844d70';
+const SLIDES = [
+  { src: 'assets/stay-01.png', alt: 'Patio opening onto the kitchen, with a pool in front', cap: 'indoor-outdoor everything, pool on the doorstep' },
+  { src: 'assets/stay-02.png', alt: 'Fire pit overlooking the pickleball court at sunset', cap: 'fire pit → pickleball → sunset, in that order' },
+  { src: 'assets/stay-03.png', alt: 'Resort-style pool with loungers and cabana', cap: 'resort-style pool with in-water loungers' },
+  { src: 'assets/stay-04.png', alt: 'Patio chairs, cabana and court under a pink sky', cap: 'golden hour lounge: cabana, court, fire table' },
+  { src: 'assets/stay-05.png', alt: 'Pool with loungers and a wooden cabana', cap: 'cabana naps + pool floats' },
+  { src: 'assets/stay-06.png', alt: 'Pickleball court with barrel sauna and clear dome', cap: 'pickleball, barrel sauna + stargazing dome' },
+  { src: 'assets/stay-07.png', alt: 'Aerial view of the whole property in the desert', cap: 'the whole compound, from up high' },
+  { src: 'assets/stay-08.png', alt: 'Top-down aerial of pool, court and putting green', cap: 'bird’s-eye: pool, court, putting green, fire pit' }
+];
+const embed = (u) => { const m = (u || '').match(/open\.spotify\.com\/(playlist\/[A-Za-z0-9]+)/); return m ? 'https://open.spotify.com/embed/' + m[1] : ''; };
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const uid = () => Math.random().toString(36).slice(2, 9);
+const SB_TABLES = { drivers: 'drivers', riders: 'riders', notes: 'notes', payments: 'payments' };
+const SB_MAP = {
+  drivers: [o => ({ id: o.id, name: o.name, origin: o.from, seats: o.seats, leaving: o.when || '' }), r => ({ id: r.id, name: r.name, from: r.origin, seats: r.seats, when: r.leaving || '' })],
+  riders: [o => ({ id: o.id, name: o.name, origin: o.from, details: o.details || '', driver_id: o.driverId || '' }), r => ({ id: r.id, name: r.name, from: r.origin, details: r.details || '', driverId: r.driver_id || '' })],
+  notes: [o => ({ id: o.id, name: o.name, msg: o.msg, photo: o.photo || '' }), r => ({ id: r.id, name: r.name, msg: r.msg, photo: r.photo || '' })],
+  payments: [o => ({ id: o.id, name: o.name, method: o.method, at: o.at }), r => ({ id: r.id, name: r.name, method: r.method, at: r.at })]
+};
+async function sbReq(cfg, path, opts = {}) { const r = await fetch(cfg.url.replace(/\/$/, '') + '/rest/v1/' + path, Object.assign({}, opts, { headers: Object.assign({ apikey: cfg.key, Authorization: 'Bearer ' + cfg.key, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, opts.headers || {}) })); if (!r.ok) throw new Error(await r.text()); return r.status === 204 || opts.method ? null : r.json(); }
+const pad = (n) => String(n).padStart(2, '0');
+class Component extends DCLogic {
+  state = { now: Date.now(), drivers: load('kathi30-drivers', []), riders: load('kathi30-riders', []), notes: load('kathi30-notes', []),
+    dName: '', dFrom: 'SF', dSeats: 3, dWhen: '', rName: '', rFrom: 'LAX', rDriver: '', rDetails: '', rsvpd: load('kathi30-rsvpd', false), gName: '', gMsg: '', gPhoto: '',
+    payments: load('kathi30-payments', []), packed: load('kathi30-packed', []), pName: '', pMethod: 'Venmo', paidThanks: '' };
+  componentDidMount() {
+    this.sbLoad(); this.sbT = setInterval(() => this.sbLoad(), 12000);
+    this.onScroll = () => { const y = window.scrollY, H = document.documentElement.scrollHeight - innerHeight; const bg = document.getElementById('v5bg'); if (bg) bg.style.transform = 'translate3d(0,' + (-y * 0.06) + 'px,0) scale(' + (1.06 + Math.min(y, 4000) * 0.00004) + ')'; const pp = H > 0 ? Math.min(1, y / H) : 0; const sn = document.getElementById('v5sun'); if (sn) sn.style.transform = 'translate(-50%,' + (16 + Math.min(1, pp * 1.25) * 78) + 'vh) scale(' + (1 + pp * .4) + ')'; const sh = document.getElementById('v5sunhot'); if (sh) sh.style.opacity = String(Math.min(1, pp * 1.4)); const nt = Math.max(0, Math.min(1, (pp - .25) / .55)); const ng = document.getElementById('v5night'); if (ng) ng.style.opacity = String(nt * .9); const st = document.getElementById('v5stars'); if (st) st.style.opacity = String(Math.max(0, (nt - .4) / .6)); const pr = document.getElementById('v5prog'); if (pr) pr.style.transform = 'scaleX(' + (H > 0 ? y / H : 0) + ')'; };
+    window.addEventListener('scroll', this.onScroll, { passive: true }); this.onScroll();
+    this.io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; this.io.unobserve(e.target); } }), { threshold: 0.08 });
+    this.rv = setTimeout(() => document.querySelectorAll('[data-reveal]').forEach(el => { el.style.transition = 'opacity 1.1s cubic-bezier(.2,.7,.2,1), transform 1.1s cubic-bezier(.2,.7,.2,1)'; el.style.opacity = '0'; el.style.transform = 'translateY(70px) scale(.97)'; this.io.observe(el); }), 200);
+    this.t = setInterval(() => this.setState({ now: Date.now() }), 1000);
+    this.c = setInterval(() => { if (this.motion && Date.now() - (this.lastNav || 0) > 8000) this.setState(s => ({ slide: ((s.slide || 0) + 1) % SLIDES.length })); }, 5000);
+  }
+  componentWillUnmount() { clearInterval(this.sbT); window.removeEventListener("scroll", this.onScroll); this.io && this.io.disconnect(); clearTimeout(this.rv); clearInterval(this.t); clearInterval(this.c); }
+  go(i) { this.lastNav = Date.now(); this.setState({ slide: (i + SLIDES.length) % SLIDES.length }); }
+  get motion() { return this.props.motion ?? true; }
+  anim(v) { return this.motion ? v : 'none'; }
+  get sb() { const url = this.props.supabaseUrl || '', key = this.props.supabaseKey || ''; return url && key ? { url, key } : null; }
+  get gs() { return this.props.sheetUrl || ''; }
+  async sbLoad() { if (this.gs) { try { const d = await (await fetch(this.gs + '?action=list')).json(); const upd = {}; for (const k of Object.keys(SB_TABLES)) { upd[k] = (d[k] || []).map(SB_MAP[k][1]); if (k === 'notes') upd[k].reverse(); } this.setState(upd); } catch (e) { console.warn('Sheet load failed', e); } return; } const cfg = this.sb; if (!cfg) return; try { const upd = {}; for (const k of Object.keys(SB_TABLES)) { const rows = await sbReq(cfg, SB_TABLES[k] + '?select=*&order=created_at.asc'); upd[k] = (rows || []).map(SB_MAP[k][1]); if (k === 'notes') upd[k].reverse(); } this.setState(upd); this.sbErr = null; } catch (e) { this.sbErr = e; console.warn('Supabase load failed', e); } }
+  set(k, v) {
+    const prev = this.state[k] || [];
+    this.setState({ [k]: v }, () => save('kathi30-' + k, this.state[k]));
+    const cfg = this.sb; if ((!cfg && !this.gs) || !SB_TABLES[k] || !Array.isArray(v)) return;
+    const tb = SB_TABLES[k], to = SB_MAP[k][0];
+    const added = v.filter(x => !prev.find(p => p.id === x.id)), removed = prev.filter(p => !v.find(x => x.id === p.id)), changed = v.filter(x => { const p = prev.find(q => q.id === x.id); return p && JSON.stringify(p) !== JSON.stringify(x); });
+    if (this.gs) { const post = (b) => fetch(this.gs, { method: 'POST', body: JSON.stringify(b) }); (async () => { try { for (const a of added) await post({ action: 'add', table: tb, row: to(a) }); for (const r of removed) await post({ action: 'delete', table: tb, id: r.id }); for (const c of changed) await post({ action: 'update', table: tb, row: to(c) }); } catch (e) { console.warn('Sheet write failed', e); } })(); return; }
+    (async () => { try {
+      if (added.length) await sbReq(cfg, tb, { method: 'POST', body: JSON.stringify(added.map(to)) });
+      for (const r of removed) await sbReq(cfg, tb + '?id=eq.' + encodeURIComponent(r.id), { method: 'DELETE' });
+      for (const c of changed) await sbReq(cfg, tb + '?id=eq.' + encodeURIComponent(c.id), { method: 'PATCH', body: JSON.stringify(to(c)) });
+    } catch (e) { console.warn('Supabase write failed', e); this.sbLoad(); } })();
+  }
+  blob(size, pos, delay, rot, k) {
+    return React.createElement('div', { key: k, 'aria-hidden': true, style: Object.assign({ position: 'absolute', width: size, height: size * 0.88, background: SURF, rotate: rot + 'deg',
+      borderRadius: '58% 42% 63% 37% / 45% 55% 45% 55%', boxShadow: 'inset -10px -16px 30px rgba(20,12,8,.35), inset 8px 10px 24px rgba(255,255,255,.7), 0 30px 60px rgba(20,12,8,.25)',
+      animation: this.anim(`morph ${8 + k}s ease-in-out ${delay}s infinite, float ${6 + k}s ease-in-out ${delay}s infinite`) }, pos) });
+  }
+  fromOpts(key, list = FROM) {
+    return list.map(f => ({ label: f, bg: this.state[key] === f ? '#f6f2ec' : 'transparent', fg: this.state[key] === f ? '#24221f' : '#f6f2ec', pick: () => this.setState({ [key]: f }) }));
+  }
+  onPhoto = (e) => {
+    const f = e.target.files && e.target.files[0]; if (!f) return;
+    const url = URL.createObjectURL(f); const img = new Image();
+    img.onload = () => { const s = Math.min(1, 800 / Math.max(img.width, img.height)); const c = document.createElement('canvas');
+      c.width = Math.round(img.width * s); c.height = Math.round(img.height * s); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      this.setState({ gPhoto: c.toDataURL('image/jpeg', 0.8) }); URL.revokeObjectURL(url); };
+    img.src = url;
+  };
+  renderVals() {
+    const s = this.state;
+    const left = Math.max(0, TARGET - s.now);
+    const cd = { d: Math.floor(left / 864e5), h: pad(Math.floor(left / 36e5) % 24), m: pad(Math.floor(left / 6e4) % 60), s: pad(Math.floor(left / 1e3) % 60) };
+    const big = { fontFamily: "'Unbounded',sans-serif", fontWeight: 900, textAlign: 'center', fontSize: 'clamp(200px,44vw,600px)', lineHeight: .9, letterSpacing: '-.08em',
+      background: TEXT, backgroundSize: '100% 200%', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' };
+    const mq = 'KATHI x JOSH (TURNING 30) ✦ JAN 15—18 ✦ JOSHUA TREE ✦ RSVP BY OCT 30 ✦ ';
+    const seg = (k) => React.createElement('span', { key: k }, mq.repeat(3));
+    const ridersOf = (id) => s.riders.filter(r => r.driverId === id);
+    const drivers = s.drivers.map(d => {
+      const rs = ridersOf(d.id); const open = d.seats - rs.length;
+      return { name: d.name, route: `from ${d.from} → JT${d.when ? ' · ' + d.when : ''}`,
+        dots: Array.from({ length: d.seats }, (_, i) => ({ bg: i < rs.length ? '#e8764a' : 'transparent' })),
+        status: open > 0 ? `${open} of ${d.seats} seat${d.seats > 1 ? 's' : ''} open` : 'car full 🎉',
+        riderText: rs.length ? 'riding: ' + rs.map(r => r.name + (r.details ? ` (${r.details})` : '')).join(', ') : 'no riders yet',
+        remove: () => { this.set('drivers', s.drivers.filter(x => x.id !== d.id)); this.set('riders', s.riders.map(r => r.driverId === d.id ? { ...r, driverId: '' } : r)); } };
+    });
+    const openDrivers = s.drivers.filter(d => ridersOf(d.id).length < d.seats);
+    const looking = s.riders.filter(r => !r.driverId || !s.drivers.find(d => d.id === r.driverId));
+    const totalOpen = s.drivers.reduce((a, d) => a + Math.max(0, d.seats - ridersOf(d.id).length), 0);
+    return {
+      slides: SLIDES.map((sl, i) => { const on = i === (s.slide || 0); return { ...sl, op: on ? 1 : 0, scale: on ? 1.04 : 1, dotW: on ? '28px' : '10px', dotBg: on ? '#24221f' : 'rgba(20,18,16,.3)', go: () => this.go(i) }; }),
+      slideCap: SLIDES[s.slide || 0].cap, slideNum: `${(s.slide || 0) + 1} / ${SLIDES.length}`,
+      prevSlide: () => this.go((s.slide || 0) - 1), nextSlide: () => this.go((s.slide || 0) + 1),
+      cd, partifulUrl: this.props.partifulUrl || PARTIFUL,
+      venmoUrl: this.props.venmoUrl || VENMO, paypalUrl: this.props.paypalUrl || PAYPAL,
+      whatsappUrl: this.props.whatsappUrl || 'https://chat.whatsapp.com/Ko56P8Tn8C963EZoKYfPw3?mode=gi_t',
+      rsvpd: s.rsvpd, notRsvpd: !s.rsvpd, markRsvpd: () => this.set('rsvpd', true),
+      rDetails: s.rDetails, setRDetails: e => this.setState({ rDetails: e.target.value }),
+      payOpts: this.fromOpts('pMethod', ['Venmo', 'PayPal']),
+      pName: s.pName, setPName: e => this.setState({ pName: e.target.value }),
+      sendPaid: e => { e.preventDefault(); const n = s.pName.trim(); if (!n) return; this.set('payments', s.payments.concat({ id: uid(), name: n, method: s.pMethod, at: Date.now() })); this.setState({ pName: '', paidThanks: n }); },
+      paidThanks: s.paidThanks, hasPaidThanks: !!s.paidThanks, notPaidThanks: !s.paidThanks,
+      packItems: PACK.map((p, i) => { const on = s.packed.includes(i); return { ...p, mark: on ? '✓' : '', box: on ? '#e8764a' : 'transparent', strike: on ? 'line-through' : 'none',
+        toggle: () => this.set('packed', on ? s.packed.filter(x => x !== i) : s.packed.concat(i)) }; }),
+      packCount: `${s.packed.length}/${PACK.length} packed`,
+      dayUrl: (this.props.dayPlaylistUrl || DAYP) || 'https://open.spotify.com', nightUrl: (this.props.nightPlaylistUrl || NIGHTP) || 'https://open.spotify.com',
+      dayEmbed: embed((this.props.dayPlaylistUrl || DAYP)), hasDayEmbed: !!embed((this.props.dayPlaylistUrl || DAYP)), noDayEmbed: !embed((this.props.dayPlaylistUrl || DAYP)),
+      nightEmbed: embed((this.props.nightPlaylistUrl || NIGHTP)), hasNightEmbed: !!embed((this.props.nightPlaylistUrl || NIGHTP)), noNightEmbed: !embed((this.props.nightPlaylistUrl || NIGHTP)),
+      gbLocked: (this.props.lockGuestbook ?? true) && s.now < PARTY, gbBlur: ((this.props.lockGuestbook ?? true) && s.now < PARTY) ? 'blur(14px) saturate(1.2)' : 'none', gbMinH: ((this.props.lockGuestbook ?? true) && s.now < PARTY) ? 'clamp(600px,54vw,700px)' : '0px', gbOpen: !((this.props.lockGuestbook ?? true) && s.now < PARTY),
+      gbCountdown: (() => { const l = Math.max(0, PARTY - s.now); return `${Math.floor(l / 864e5)}d ${pad(Math.floor(l / 36e5) % 24)}h ${pad(Math.floor(l / 6e4) % 60)}m`; })(),
+      heroTitle: React.createElement('div', { style: Object.assign({ filter: 'drop-shadow(0 30px 40px rgba(90,30,0,.4))', animation: this.anim('shimmer 5s ease-in-out infinite alternate') }, big) }, '30'),
+      heroReflect: React.createElement('div', { style: Object.assign({ transformOrigin: '50% 0', marginTop: '-4%', transform: 'scaleY(-1)', animation: this.anim('haze 2.6s ease-in-out infinite alternate') }, big) }, '30'),
+      gbBadges: [
+        ['assets/gb-01.jpeg', '35% 28%', '#24221f', '#f6f2ec', { left: '3%', top: '6%' }, 'clamp(96px,13vw,170px)', 0, 16],
+        ['assets/gb-02.jpeg', '55% 35%', '#fbf8f4', '#24221f', { left: '6%', bottom: '8%' }, 'clamp(90px,12vw,160px)', -1.3, -18],
+        ['assets/gb-03.jpeg', '40% 30%', '#e8764a', '#24221f', { left: '19%', top: '40%' }, 'clamp(70px,8vw,110px)', -2.1, 14],
+        ['assets/gb-04.jpeg', '62% 58%', '#f6f2ec', '#24221f', { right: '4%', top: '5%' }, 'clamp(96px,13vw,170px)', -0.7, -20],
+        ['assets/gb-05.jpeg', '45% 25%', '#24221f', '#f6f2ec', { right: '18%', top: '42%' }, 'clamp(70px,8vw,110px)', -2.8, 17],
+        ['assets/gb-06.jpeg', '45% 55%', '#e8764a', '#24221f', { right: '5%', bottom: '7%' }, 'clamp(90px,12vw,160px)', -3.5, -15],
+        ['assets/gb-07.jpeg', '60% 55%', '#fbf8f4', '#24221f', { left: '30%', bottom: '2%' }, 'clamp(70px,8vw,110px)', -4.4, 13]
+      ].map(([src, op, ring, ink, pos, size, delay, dur], i) => React.createElement('div', { key: 'gb' + i, 'aria-hidden': true, style: Object.assign({ position: 'absolute', zIndex: 2, width: size, aspectRatio: '1', pointerEvents: 'none', filter: 'drop-shadow(0 16px 30px rgba(20,18,16,.45))', animation: this.anim(`wobble ${5 + Math.abs(delay)}s ease-in-out ${delay}s infinite`) }, pos) },
+        React.createElement('div', { key: 'r', style: { position: 'absolute', inset: 0, borderRadius: '50%', background: `repeating-conic-gradient(${ring} 0 8deg, ${ink} 8deg 10deg)`, animation: this.anim(`spin ${Math.abs(dur)}s linear infinite${dur < 0 ? ' reverse' : ''}`) } }),
+        React.createElement('div', { key: 'p', style: { position: 'absolute', inset: '15%', borderRadius: '50%', padding: 4, background: SURF } },
+          React.createElement('img', { src, alt: '', style: { width: '100%', height: '100%', objectFit: 'cover', objectPosition: op, borderRadius: '50%', display: 'block' } })))),
+      lockBadge: React.createElement('div', { style: { position: 'relative', width: 150, height: 150, flex: 'none', animation: this.anim('wobble 5s ease-in-out infinite') } },
+        React.createElement('svg', { key: 'r', viewBox: '0 0 200 200', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'visible', animation: this.anim('spin 14s linear infinite') } },
+          React.createElement('defs', { key: 'd' }, React.createElement('path', { id: 'ring-lock', d: 'M100,100 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0' })),
+          React.createElement('circle', { key: 'c', cx: 100, cy: 100, r: 99, fill: '#e8764a' }),
+          React.createElement('text', { key: 't', fill: '#24221f', style: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: '.03em' } },
+            React.createElement('textPath', { href: '#ring-lock', textLength: 548, lengthAdjust: 'spacing' }, 'NO PEEKING ✦ LOCKED TILL THE PARTY ✦ NO PEEKING ✦ LOCKED ✦'))),
+        React.createElement('div', { key: 'p', style: { position: 'absolute', inset: '17%', borderRadius: '50%', padding: 4, background: SURF } },
+          React.createElement('img', { src: 'assets/kathi.jpeg', alt: 'Kathi', style: { width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 45%', borderRadius: '50%', display: 'block' } })),
+        React.createElement('span', { key: 'l', style: { position: 'absolute', right: -4, bottom: -4, width: 48, height: 48, borderRadius: '50%', background: '#f6f2ec', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, boxShadow: '0 6px 14px rgba(0,0,0,.35)' } }, '🔒')),
+      kathiBadge: [
+        ['k1', 'assets/kathi.jpeg', '50% 45%', 'BIRTHDAY GIRL ✦ TURNING 30 ✦ BIRTHDAY GIRL ✦ TURNING 30 ✦', '#e8764a', '#24221f', { right: '5%', top: '30%' }, 'clamp(150px,20vw,270px)', 0, 16],
+        ['k2', 'assets/kathi-baby.png', '51% 18%', 'EST. 1997 ✦ BABY KATHI ✦ EST. 1997 ✦ BABY KATHI ✦', '#fbf8f4', '#24221f', { left: '4%', top: '27%' }, 'clamp(130px,17vw,240px)', -1.7, -20],
+        ['k3', 'assets/kathi-bw.jpeg', '58% 30%', 'CERTIFIED CHAOS ✦ 30 & THRIVING ✦ CERTIFIED CHAOS ✦ 30 & THRIVING ✦', '#24221f', '#f6f2ec', { right: '27%', top: '55%' }, 'clamp(110px,13vw,190px)', -3.2, 12]
+      ].map(([id, src, op, txt, ring, ink, pos, size, delay, dur]) => React.createElement('div', { key: id, style: Object.assign({ position: 'absolute', zIndex: 3, width: size, aspectRatio: '1', animation: this.anim(`wobble ${5 + Math.abs(delay)}s ease-in-out ${delay}s infinite`) }, pos) },
+        React.createElement('svg', { key: 'r', viewBox: '0 0 200 200', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'visible', animation: this.anim(`spin ${Math.abs(dur)}s linear infinite${dur < 0 ? ' reverse' : ''}`) } },
+          React.createElement('defs', { key: 'd' }, React.createElement('path', { id: 'ring-' + id, d: 'M100,100 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0' })),
+          React.createElement('circle', { key: 'c', cx: 100, cy: 100, r: 99, fill: ring }),
+          React.createElement('text', { key: 't', fill: ink, style: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: '.03em' } },
+            React.createElement('textPath', { href: '#ring-' + id, textLength: 548, lengthAdjust: 'spacing' }, txt))),
+        React.createElement('div', { key: 'p', style: { position: 'absolute', inset: '17%', borderRadius: '50%', padding: 5, background: SURF, boxShadow: '0 18px 40px rgba(20,12,8,.4)' } },
+          React.createElement('img', { src, alt: 'Kathi', style: { width: '100%', height: '100%', objectFit: 'cover', objectPosition: op, borderRadius: '50%', display: 'block' } })))),
+      heroBlobs: [],
+      rsvpBlobs: [],
+      marquee: React.createElement('div', { style: { overflow: 'hidden', background: '#24221f', padding: '18px 0', color: '#f6f2ec' } },
+        React.createElement('div', { style: { display: 'flex', width: 'max-content', whiteSpace: 'nowrap', fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 22, animation: this.anim('marquee 36s linear infinite') } }, seg(1), seg(2))),
+      seatSummary: s.drivers.length ? `${s.drivers.length} car${s.drivers.length > 1 ? 's' : ''} · ${totalOpen} open seat${totalOpen === 1 ? '' : 's'}` : 'drivers + riders, find each other',
+      dName: s.dName, dSeats: s.dSeats, dWhen: s.dWhen, rName: s.rName, rDriver: s.rDriver,
+      setDName: e => this.setState({ dName: e.target.value }), setDWhen: e => this.setState({ dWhen: e.target.value }),
+      setRName: e => this.setState({ rName: e.target.value }), setRDriver: e => this.setState({ rDriver: e.target.value }),
+      seatsDown: () => this.setState({ dSeats: Math.max(1, s.dSeats - 1) }), seatsUp: () => this.setState({ dSeats: Math.min(7, s.dSeats + 1) }),
+      dFromOpts: this.fromOpts('dFrom'), rFromOpts: this.fromOpts('rFrom'),
+      driverOpts: [{ id: '', label: 'no preference — match me later' }].concat(openDrivers.map(d => ({ id: d.id, label: `ride with ${d.name} (${d.from}, ${d.seats - ridersOf(d.id).length} open)` }))),
+      addDriver: e => { e.preventDefault(); if (!s.dName.trim()) return; this.set('drivers', s.drivers.concat({ id: uid(), name: s.dName.trim(), from: s.dFrom, seats: s.dSeats, when: s.dWhen.trim() })); this.setState({ dName: '', dWhen: '' }); },
+      addRider: e => { e.preventDefault(); if (!s.rName.trim()) return; this.set('riders', s.riders.concat({ id: uid(), name: s.rName.trim(), from: s.rFrom, details: s.rDetails.trim(), driverId: s.rDriver })); this.setState({ rName: '', rDriver: '', rDetails: '' }); },
+      drivers, noDrivers: !s.drivers.length,
+      looking: looking.map(r => ({ label: `${r.name} · from ${r.from}${r.details ? ' · ' + r.details : ''}`, remove: () => this.set('riders', s.riders.filter(x => x.id !== r.id)) })), hasLooking: looking.length > 0,
+      trailerUrl: this.props.trailerUrl || '', hasTrailer: !!this.props.trailerUrl, noTrailer: !this.props.trailerUrl,
+      gName: s.gName, gMsg: s.gMsg, setGName: e => this.setState({ gName: e.target.value }), setGMsg: e => this.setState({ gMsg: e.target.value }),
+      onPhoto: this.onPhoto, photoLabel: s.gPhoto ? 'photo added ✓' : '+ add a photo',
+      addNote: e => { e.preventDefault(); if (!s.gName.trim() || !s.gMsg.trim()) return; this.set('notes', [{ id: uid(), name: s.gName.trim(), msg: s.gMsg.trim(), photo: s.gPhoto }].concat(s.notes)); this.setState({ gName: '', gMsg: '', gPhoto: '' }); },
+      notes: s.notes.map((n, i) => ({ ...n, hasPhoto: !!n.photo, rot: [-2, 1.5, -1, 2.5][i % 4] + 'deg', remove: () => this.set('notes', s.notes.filter(x => x.id !== n.id)) })),
+      noNotes: !s.notes.length
+    };
+  }
+}
+</script>
+</body>
+</html>

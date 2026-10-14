@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1a1614}a{color:inherit;text-decoration:none}a:hover{opacity:.75}
+@keyframes morph{0%,100%{border-radius:58% 42% 63% 37%/45% 55% 45% 55%}33%{border-radius:40% 60% 45% 55%/60% 40% 60% 40%}66%{border-radius:63% 37% 52% 48%/38% 62% 38% 62%}}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -26px}}
+@keyframes shimmer{0%{background-position:50% 0%}100%{background-position:50% 100%}}
+@keyframes haze{0%{transform:scaleY(-1) skewX(-8deg) scaleX(1)}100%{transform:scaleY(-1) skewX(6deg) scaleX(1.04)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes twinkle{0%,100%{opacity:1;scale:1}50%{opacity:.25;scale:.6}}
+@keyframes spin{to{rotate:360deg}}
+</style>
+</helmet>
+<div style="font-family:'Instrument Sans',sans-serif">
+
+<sc-if value="{{ isA }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="A Heat Mirage" style="color:#1a1614;background:#f6d3ac">
+  <header style="position:relative;overflow:hidden;min-height:max(760px,100vh);display:flex;flex-direction:column;padding:28px 5vw 0;box-sizing:border-box;background:linear-gradient(180deg,#d6d1e4 0%,#ecd3c6 30%,#f6c39a 55%,#e9a874 100%)">
+    <div style="position:absolute;left:50%;top:22%;width:min(680px,84vw);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle at 50% 40%,#f58a4a 0%,#e8692e 70%);box-shadow:0 0 160px rgba(232,105,46,.55)"></div>
+    {{ aBlobs }}
+    <div style="position:absolute;left:-20%;bottom:-300px;width:110%;height:540px;border-radius:50%;background:linear-gradient(180deg,#e09a66 0%,#cf8253 60%)"></div>
+    <div style="position:absolute;right:-25%;bottom:-330px;width:90%;height:520px;border-radius:50%;background:linear-gradient(180deg,#eeb683 0%,#e0a06e 60%)"></div>
+    <div style="position:absolute;left:-30%;bottom:-460px;width:160%;height:640px;border-radius:50%;background:linear-gradient(180deg,#f6d3ac 0%,#f0c394 50%)"></div>
+    <div style="position:relative;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase"><span>you're invited</span><span>sat 14.11.2026</span><span>joshua tree, ca</span></div>
+    <div style="position:relative;margin-top:6vh;text-align:center;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(28px,6vw,84px);letter-spacing:-.04em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#9c6f52 53%,#f0cfae 68%,#fff7ee 84%,#b3aca5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 8px 12px rgba(90,40,10,.3))">SAM IS TURNING</div>
+    <div style="position:relative">{{ aTitle }}</div>
+    <div aria-hidden="true" style="position:relative;height:clamp(80px,14vw,200px);overflow:hidden;opacity:.45;filter:blur(2px);-webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 80%);mask-image:linear-gradient(180deg,#000 0%,transparent 80%)">{{ aReflect }}</div>
+    <div style="position:relative;margin-top:auto;padding-bottom:48px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px">
+      <p style="margin:0;max-width:400px;font-size:18px;line-height:1.45;text-wrap:pretty">Golden hour, a pool, a DJ and everyone I love in one desert house. Come shiny.</p>
+      <a href="#a-details" style="padding:16px 28px;border-radius:999px;background:#1a1614;color:#f6d3ac;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">the details ↓</a>
+    </div>
+  </header>
+  {{ aMarquee }}
+  <section id="a-details" style="padding:clamp(64px,10vw,120px) 5vw;background:#f6d3ac">
+    <h2 style="margin:0 0 40px;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,7vw,96px);letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#9c6f52 53%,#f0cfae 68%,#fff7ee 84%,#b3aca5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 8px rgba(90,40,10,.35))">date &amp; location</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:28px;background:#f0c394"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">WHEN</span><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:28px">Sat 14 Nov 2026</span><span style="font-size:16px;line-height:1.5">4pm arrivals · sunset 4:47pm · dancing till late</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:28px;background:#f0c394"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">WHERE</span><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:28px">Casa Mirage</span><span style="font-size:16px;line-height:1.5">Joshua Tree, CA · exact address goes out with your RSVP confirmation</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:28px;background:#f0c394"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">DRESS</span><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:28px">Liquid metal</span><span style="font-size:16px;line-height:1.5">Silver, chrome, sequins, foil. Flat shoes — it's sand.</span></div>
+      </div>
+      <div style="min-height:420px;border-radius:28px;display:flex;align-items:flex-end;padding:24px;background:repeating-linear-gradient(135deg,#e7b588 0 10px,#ecbd92 10px 20px);font-family:'JetBrains Mono',monospace;font-size:13px">map — casa mirage, joshua tree</div>
+    </div>
+  </section>
+  <section style="padding:0 5vw clamp(64px,10vw,120px);background:#f6d3ac">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:40px">
+      <h2 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,7vw,96px);letter-spacing:-.05em;line-height:1">faq</h2>
+      <div style="display:flex;flex-direction:column;border-bottom:1.5px solid #1a1614">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+          <div style="border-top:1.5px solid #1a1614">
+            <button onClick="{{ f.toggle }}" style="all:unset;cursor:pointer;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 0;font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(16px,1.8vw,20px)"><span>{{ f.q }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:22px">{{ f.sign }}</span></button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><p style="margin:0 0 22px;max-width:560px;font-size:17px;line-height:1.55;text-wrap:pretty">{{ f.a }}</p></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  <footer style="padding:clamp(64px,10vw,120px) 5vw 96px;background:linear-gradient(180deg,#e8b487 0%,#cf8253 100%);display:flex;flex-direction:column;gap:20px">
+    <div style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,8vw,120px);letter-spacing:-.05em;line-height:.95;background:linear-gradient(180deg,#ffffff 0%,#d4d7de 26%,#6d7280 46%,#1d1f24 50%,#9c6f52 53%,#f0cfae 68%,#fff7ee 84%,#b3aca5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 10px 16px rgba(90,40,10,.3))">see you in<br>the desert</div>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.06em;text-transform:uppercase">rsvp by 31.10 — text sam</span>
+  </footer>
+</div>
+</sc-if>
+
+<sc-if value="{{ isB }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="B Desert Night" style="color:#efe9ff;background:#0e0a18">
+  <header style="position:relative;overflow:hidden;min-height:max(760px,100vh);display:flex;flex-direction:column;padding:28px 5vw 0;box-sizing:border-box;background:linear-gradient(180deg,#0b0a1a 0%,#1b1438 45%,#4a2353 72%,#ff8a5c 88%,#ffb27a 92%)">
+    {{ bStars }}
+    <div style="position:absolute;right:8%;top:12%;width:min(260px,34vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 22%),linear-gradient(165deg,#ffffff 0%,#bcd7ff 28%,#3b3c6b 47%,#0f0f22 52%,#ff8fcf 62%,#ffe1f3 76%,#b9fff1 90%,#ffffff 100%);box-shadow:0 0 120px rgba(255,154,213,.45),inset -14px -20px 40px rgba(10,8,30,.4)"></div>
+    {{ bBlobs }}
+    <div style="position:absolute;left:-15%;bottom:-260px;width:80%;height:460px;border-radius:50%;background:#1e1530"></div>
+    <div style="position:absolute;right:-20%;bottom:-280px;width:90%;height:500px;border-radius:50%;background:#170f26"></div>
+    <div style="position:absolute;left:-30%;bottom:-420px;width:160%;height:600px;border-radius:50%;background:#0e0a18"></div>
+    <div style="position:relative;display:flex;flex-direction:column;gap:6px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase"><span>you're invited</span><span style="color:#bdb3e6">sat 14.11.2026 · joshua tree</span></div>
+    <div style="position:relative;margin-top:14vh;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(64px,17vw,260px);line-height:.9;letter-spacing:-.05em;background:linear-gradient(180deg,#ffffff 0%,#cfe6ff 22%,#7a7fa8 44%,#14142a 50%,#ff9ad5 54%,#ffd9f0 66%,#c8fff4 82%,#ffffff 100%);-webkit-background-clip:text;background-clip:text;color:transparent">SAM'S</div>
+    <div style="position:relative">{{ bTitle }}</div>
+    <p style="position:relative;margin:24px 0 0;max-width:520px;font-family:'Unbounded',sans-serif;font-size:clamp(18px,2.2vw,26px);line-height:1.3">a night of desert disco under very real stars</p>
+    <div style="position:relative;margin-top:auto;padding:48px 0;display:flex;flex-wrap:wrap;gap:12px">
+      <a href="#b-details" style="padding:16px 28px;border-radius:999px;color:#140e26;background:linear-gradient(120deg,#ffffff 0%,#cfe6ff 30%,#ffd9f0 60%,#c8fff4 100%);box-shadow:0 0 30px rgba(255,154,213,.45);font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">the details ↓</a>
+    </div>
+  </header>
+  {{ bMarquee }}
+  <section id="b-details" style="padding:clamp(64px,10vw,120px) 5vw;background:#0e0a18">
+    <h2 style="margin:0 0 40px;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,7vw,96px);letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#cfe6ff 22%,#7a7fa8 44%,#14142a 50%,#ff9ad5 54%,#ffd9f0 66%,#c8fff4 82%,#ffffff 100%);-webkit-background-clip:text;background-clip:text;color:transparent">date &amp; location</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:28px;border:2px solid transparent;background:linear-gradient(#140e26,#140e26) padding-box,linear-gradient(120deg,#ffffff,#bcd7ff,#ff8fcf,#b9fff1,#ffffff) border-box"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em;color:#bdb3e6">WHEN</span><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:28px">Sat 14 Nov 2026</span><span style="font-size:16px;line-height:1.5;color:#d8d0f5">4pm arrivals · sunset 4:47pm · stargazing at 9 · dancing till late</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:28px;border:2px solid transparent;background:linear-gradient(#140e26,#140e26) padding-box,linear-gradient(120deg,#ffffff,#bcd7ff,#ff8fcf,#b9fff1,#ffffff) border-box"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em;color:#bdb3e6">WHERE</span><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:28px">Casa Mirage</span><span style="font-size:16px;line-height:1.5;color:#d8d0f5">Joshua Tree, CA · exact address goes out with your RSVP confirmation</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;padding:28px;border-radius:28px;border:2px solid transparent;background:linear-gradient(#140e26,#140e26) padding-box,linear-gradient(120deg,#ffffff,#bcd7ff,#ff8fcf,#b9fff1,#ffffff) border-box"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em;color:#bdb3e6">DRESS</span><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:28px">Liquid metal</span><span style="font-size:16px;line-height:1.5;color:#d8d0f5">Holo, chrome, glitter. It drops to 5°C — bring a jacket.</span></div>
+      </div>
+      <div style="min-height:420px;border-radius:28px;display:flex;align-items:flex-end;padding:24px;background:repeating-linear-gradient(135deg,#1b1430 0 10px,#211a3a 10px 20px);border:1px solid #3a2f5c;font-family:'JetBrains Mono',monospace;font-size:13px;color:#d8d0f5">map — casa mirage, joshua tree</div>
+    </div>
+  </section>
+  <section style="padding:0 5vw clamp(64px,10vw,120px);background:#0e0a18">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:40px">
+      <h2 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,7vw,96px);letter-spacing:-.05em;line-height:1">faq</h2>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+          <div style="border-radius:24px;background:#1a1330;border:1px solid #3a2f5c;padding:0 24px">
+            <button onClick="{{ f.toggle }}" style="all:unset;cursor:pointer;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(16px,1.8vw,19px)"><span>{{ f.q }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:22px;color:#ff9ad5">{{ f.sign }}</span></button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><p style="margin:0 0 20px;max-width:560px;font-size:17px;line-height:1.55;color:#d8d0f5;text-wrap:pretty">{{ f.a }}</p></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  <footer style="padding:clamp(64px,10vw,120px) 5vw 96px;background:linear-gradient(180deg,#0e0a18 0%,#4a2353 100%);display:flex;flex-direction:column;gap:20px">
+    <div style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,8vw,120px);letter-spacing:-.05em;line-height:.95;background:linear-gradient(180deg,#ffffff 0%,#cfe6ff 22%,#7a7fa8 44%,#14142a 50%,#ff9ad5 54%,#ffd9f0 66%,#c8fff4 82%,#ffffff 100%);-webkit-background-clip:text;background-clip:text;color:transparent">see you under<br>the stars</div>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.06em;text-transform:uppercase">rsvp by 31.10 — text sam</span>
+  </footer>
+</div>
+</sc-if>
+
+<sc-if value="{{ isC }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="C Bone Silver" style="color:#141210;background:#ebe3d4">
+  <header style="position:relative;overflow:hidden;min-height:max(760px,100vh);display:flex;flex-direction:column;padding:28px 5vw 0;box-sizing:border-box">
+    <div style="position:relative;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:2px solid #141210;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase"><span>invitation / no. 030</span><span>a desert affair</span><span>14.11.26</span></div>
+    <div style="position:relative;margin-top:5vh">{{ cTitle }}</div>
+    {{ cBlobs }}
+    <div style="position:relative;margin-top:3vh;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:40px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <p style="margin:0;font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(22px,3vw,40px);line-height:1.15">Sam's birthday,<br>in the desert.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+          <a href="#c-details" style="padding:16px 28px;border-radius:999px;background:#2b3cff;color:#ffffff;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">the details ↓</a>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase">rsvp by 31.10</span>
+        </div>
+      </div>
+      <div style="position:relative;justify-self:end;width:min(380px,100%)">
+        <div style="aspect-ratio:4/5;rotate:3deg;border-radius:24px;display:flex;align-items:flex-end;padding:20px;box-sizing:border-box;background:repeating-linear-gradient(135deg,#d9cfbd 0 10px,#e2d9c8 10px 20px);border:2px solid #141210;font-family:'JetBrains Mono',monospace;font-size:14px">baby photo of sam</div>
+        {{ cSticker }}
+      </div>
+    </div>
+    <div style="height:64px"></div>
+  </header>
+  {{ cMarquee }}
+  <section id="c-details" style="padding:clamp(64px,10vw,120px) 5vw">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:48px">
+      <div style="display:flex;flex-direction:column">
+        <h2 style="margin:0 0 32px;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,6vw,80px);letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#e3e5e8 24%,#7b818a 45%,#16181b 50%,#5b6068 55%,#c9ced4 70%,#ffffff 86%,#9aa0a7 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 8px rgba(20,18,16,.35))">date &amp; location</h2>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:baseline;padding:16px 0;border-top:2px solid #141210"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">DATE</span><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(18px,2vw,24px)">Sat 14 Nov 2026</span></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:baseline;padding:16px 0;border-top:2px solid #141210"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">TIME</span><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(18px,2vw,24px)">4pm → late</span></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:baseline;padding:16px 0;border-top:2px solid #141210"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">PLACE</span><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(18px,2vw,24px)">Casa Mirage, Joshua Tree</span></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:baseline;padding:16px 0;border-top:2px solid #141210"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">COORDS</span><span style="font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(16px,1.8vw,20px)">34.13°N 116.31°W</span></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:baseline;padding:16px 0;border-top:2px solid #141210;border-bottom:2px solid #141210"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em">DRESS</span><span style="font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(18px,2vw,24px)">Liquid metal</span></div>
+      </div>
+      <div style="min-height:420px;border-radius:24px;border:2px solid #141210;display:flex;align-items:flex-end;padding:24px;background:repeating-linear-gradient(135deg,#d9cfbd 0 10px,#e2d9c8 10px 20px);font-family:'JetBrains Mono',monospace;font-size:13px">map — casa mirage, joshua tree</div>
+    </div>
+  </section>
+  <section style="padding:0 5vw clamp(64px,10vw,120px)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:40px">
+      <h2 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,6vw,80px);letter-spacing:-.05em;line-height:1">faq</h2>
+      <div style="display:flex;flex-direction:column;border-bottom:2px solid #141210">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+          <div style="border-top:2px solid #141210">
+            <button onClick="{{ f.toggle }}" style="all:unset;cursor:pointer;box-sizing:border-box;width:100%;display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:12px;padding:20px 0;font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(16px,1.8vw,19px)"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#2b3cff">{{ f.num }}</span><span>{{ f.q }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:22px">{{ f.sign }}</span></button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><p style="margin:0 0 20px 60px;max-width:540px;font-size:17px;line-height:1.55;text-wrap:pretty">{{ f.a }}</p></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  <footer style="position:relative;overflow:hidden;padding:clamp(64px,10vw,120px) 5vw 96px;background:#141210;color:#ebe3d4;display:flex;flex-direction:column;gap:20px">
+    <div style="font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,8vw,120px);letter-spacing:-.05em;line-height:.95;background:linear-gradient(180deg,#ffffff 0%,#e3e5e8 24%,#7b818a 45%,#16181b 50%,#5b6068 55%,#c9ced4 70%,#ffffff 86%,#9aa0a7 100%);-webkit-background-clip:text;background-clip:text;color:transparent">see you<br>out there</div>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.06em;text-transform:uppercase">rsvp by 31.10 — sam30.party</span>
+  </footer>
+</div>
+</sc-if>
+
+<div style="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;display:flex;gap:4px;padding:5px;border-radius:999px;background:rgba(20,18,16,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 8px 24px rgba(0,0,0,.3)">
+  <sc-for list="{{ switcher }}" as="s" hint-placeholder-count="3">
+    <button onClick="{{ s.pick }}" style="border:0;cursor:pointer;padding:9px 16px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:{{ s.bg }};color:{{ s.fg }}">{{ s.label }}</button>
+  </sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;direction&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;],&quot;default&quot;:&quot;a&quot;,&quot;tsType&quot;:&quot;'a'|'b'|'c'&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const G = {
+  a: { text: 'linear-gradient(180deg,#ffffff 0%,#d4d7de 13%,#6d7280 23%,#1d1f24 25%,#9c6f52 27%,#f0cfae 34%,#fff7ee 42%,#b3aca5 50%,#ffffff 58%,#d4d7de 63%,#6d7280 73%,#1d1f24 75%,#9c6f52 77%,#f0cfae 84%,#fff7ee 92%,#b3aca5 100%)',
+       surf: 'radial-gradient(circle at 32% 24%,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 22%),linear-gradient(165deg,#f7f8fb 0%,#b9bec8 30%,#3a3d45 48%,#1c1d21 52%,#b47d57 60%,#f3d2b0 78%,#ffffff 100%)',
+       shadow: 'inset -10px -16px 30px rgba(40,20,10,.35), inset 8px 10px 24px rgba(255,255,255,.7), 0 30px 60px rgba(120,60,20,.25)', drop: 'drop-shadow(0 30px 40px rgba(90,30,0,.4))',
+       strip: '#1a1614', marquee: 'SAM TURNS 30 ✦ SAT 14.11 ✦ JOSHUA TREE ✦ THIRTY, FLIRTY & HYDRATED ✦ ' },
+  b: { text: 'linear-gradient(180deg,#ffffff 0%,#cfe6ff 11%,#7a7fa8 22%,#14142a 25%,#ff9ad5 27%,#ffd9f0 33%,#c8fff4 41%,#ffffff 50%,#cfe6ff 61%,#7a7fa8 72%,#14142a 75%,#ff9ad5 77%,#ffd9f0 83%,#c8fff4 91%,#ffffff 100%)',
+       surf: 'radial-gradient(circle at 30% 22%,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 22%),linear-gradient(165deg,#ffffff 0%,#bcd7ff 28%,#3b3c6b 47%,#0f0f22 52%,#ff8fcf 62%,#ffe1f3 76%,#b9fff1 90%,#ffffff 100%)',
+       shadow: 'inset -10px -16px 30px rgba(10,8,30,.45), inset 8px 10px 24px rgba(255,255,255,.6), 0 0 60px rgba(200,255,244,.25)', drop: 'drop-shadow(0 0 30px rgba(255,154,213,.35))',
+       strip: '#ff9ad5', marquee: 'DESERT DISCO ✦ SAM’S 30TH ✦ 14.11.26 ✦ REAL STARS ✦ BRING A JACKET ✦ ' },
+  c: { text: 'linear-gradient(180deg,#ffffff 0%,#e3e5e8 12%,#7b818a 22%,#16181b 25%,#5b6068 27%,#c9ced4 35%,#ffffff 43%,#9aa0a7 50%,#ffffff 57%,#e3e5e8 62%,#7b818a 72%,#16181b 75%,#5b6068 77%,#c9ced4 85%,#ffffff 93%,#9aa0a7 100%)',
+       surf: 'radial-gradient(circle at 30% 22%,#fff 0%,rgba(255,255,255,0) 24%),linear-gradient(160deg,#ffffff 0%,#c4c9cf 30%,#2b2e33 48%,#111214 52%,#8a9098 64%,#eef0f2 82%,#ffffff 100%)',
+       shadow: 'inset -8px -12px 22px rgba(0,0,0,.35), inset 6px 8px 18px rgba(255,255,255,.7), 0 20px 40px rgba(20,18,16,.25)', drop: 'drop-shadow(0 20px 26px rgba(20,18,16,.3))',
+       strip: '#2b3cff', marquee: 'INVITATION NO. 030 ✦ EST. 1996 ✦ CASA MIRAGE ✦ 34.13°N 116.31°W ✦ LIQUID METAL ONLY ✦ ' }
+};
+const FAQS = [
+  { q: 'Can I bring a plus-one?', a: 'Yes if they’re on your RSVP. Space at the house is limited, so let Sam know by 31.10.' },
+  { q: 'Where should I stay?', a: 'The house sleeps 12 (first come, first served). There are plenty of rentals and two motels within 10 minutes.' },
+  { q: 'How do I get there?', a: 'About 2.5h from LA. Carpool if you can — there’s a group chat for rides. Parking is on the gravel lot by the gate.' },
+  { q: 'What do I wear?', a: 'Liquid metal: silver, chrome, sequins, holo. Flat shoes for the sand and a warm layer for after sunset.' },
+  { q: 'Gifts?', a: 'Your presence. Truly. If you insist: a disposable camera roll of the night.' }
+];
+const STARS = [[8,18,10],[22,10,6],[38,22,12],[52,8,5],[64,30,7],[12,48,6],[86,46,10],[46,40,5],[74,14,6],[30,60,8],[92,28,5],[58,55,7]];
+class Component extends DCLogic {
+  state = { dir: null, open: 0 };
+  get motion() { return this.props.motion ?? true; }
+  anim(v) { return this.motion ? v : 'none'; }
+  blob(d, size, pos, delay, rot, k) {
+    return React.createElement('div', { key: k, 'aria-hidden': true, style: Object.assign({
+      position: 'absolute', width: size, height: size * 0.88, background: G[d].surf, rotate: rot + 'deg', borderRadius: '58% 42% 63% 37% / 45% 55% 45% 55%',
+      boxShadow: G[d].shadow, animation: this.anim(`morph ${8 + k}s ease-in-out ${delay}s infinite, float ${6 + k}s ease-in-out ${delay}s infinite`)
+    }, pos) });
+  }
+  chrome(d, text, style) {
+    return React.createElement('div', { style: Object.assign({
+      fontFamily: "'Unbounded',sans-serif", fontWeight: 900, background: G[d].text, backgroundSize: '100% 200%',
+      WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', filter: G[d].drop,
+      animation: this.anim('shimmer 5s ease-in-out infinite alternate')
+    }, style) }, text);
+  }
+  marquee(d, color) {
+    const seg = (k) => React.createElement('span', { key: k }, G[d].marquee.repeat(3));
+    return React.createElement('div', { style: { overflow: 'hidden', background: G[d].strip, padding: '18px 0', color } },
+      React.createElement('div', { style: { display: 'flex', width: 'max-content', whiteSpace: 'nowrap', fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 22, animation: this.anim('marquee 36s linear infinite') } }, seg(1), seg(2)));
+  }
+  renderVals() {
+    const dir = this.state.dir ?? this.props.direction ?? 'a';
+    const big = { textAlign: 'center', fontSize: 'clamp(200px,46vw,640px)', lineHeight: .9, letterSpacing: '-.08em' };
+    const stars = STARS.map(([x, y, s], i) => React.createElement('div', { key: i, style: {
+      position: 'absolute', left: x + '%', top: y + '%', width: s, height: s, rotate: '45deg', background: i % 3 ? '#fff' : '#ffd9f0',
+      boxShadow: s > 7 ? '0 0 14px #ff9ad5' : 'none', animation: this.anim(`twinkle ${2 + (i % 4)}s ease-in-out ${i * -0.4}s infinite`) } }));
+    const sticker = React.createElement('div', { style: { position: 'absolute', left: -50, bottom: -40, width: 150, height: 150, borderRadius: '50%', background: '#2b3cff', color: '#fff',
+      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 2, animation: this.anim('spin 18s linear infinite'), rotate: '-10deg' } },
+      React.createElement('span', { key: 1, style: { fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: '.1em' } }, 'EST.'),
+      React.createElement('span', { key: 2, style: { fontFamily: "'Unbounded',sans-serif", fontWeight: 900, fontSize: 36 } }, '1996'));
+    const labels = { a: 'A · heat', b: 'B · night', c: 'C · bone' };
+    return {
+      isA: dir === 'a', isB: dir === 'b', isC: dir === 'c',
+      aTitle: this.chrome('a', '30', big),
+      aReflect: React.createElement('div', { style: { transformOrigin: '50% 0', marginTop: '-4%', textAlign: 'center', fontFamily: "'Unbounded',sans-serif", fontWeight: 900, fontSize: 'clamp(200px,46vw,640px)', lineHeight: .9, letterSpacing: '-.08em', background: G.a.text, backgroundSize: '100% 200%', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', transform: 'scaleY(-1)', animation: this.anim('haze 2.6s ease-in-out infinite alternate') } }, '30'),
+      aBlobs: [this.blob('a', 180, { left: '6%', top: '30%' }, 0, -18, 1), this.blob('a', 120, { right: '8%', top: '18%' }, -3, 24, 2), this.blob('a', 60, { left: '18%', top: '62%' }, -5, 0, 3), this.blob('a', 90, { right: '16%', top: '60%' }, -2, 40, 4)],
+      aMarquee: this.marquee('a', '#f6d3ac'),
+      bTitle: this.chrome('b', '30TH', { fontSize: 'clamp(64px,17vw,260px)', lineHeight: .9, letterSpacing: '-.05em' }),
+      bStars: stars,
+      bBlobs: [this.blob('b', 200, { right: '22%', top: '46%' }, 0, 20, 1), this.blob('b', 80, { right: '40%', top: '20%' }, -2, -14, 2), this.blob('b', 120, { left: '60%', top: '70%' }, -4, 30, 3)],
+      bMarquee: this.marquee('b', '#140e26'),
+      cTitle: this.chrome('c', 'THIRTY', { textAlign: 'center', fontSize: 'clamp(56px,17vw,260px)', lineHeight: 1, letterSpacing: '-.06em' }),
+      cBlobs: [this.blob('c', 130, { right: '6%', top: '14%' }, 0, -20, 1), this.blob('c', 160, { left: '4%', bottom: '8%' }, -3, 16, 2), this.blob('c', 70, { left: '46%', top: '40%' }, -5, 0, 3)],
+      cSticker: sticker,
+      cMarquee: this.marquee('c', '#ffffff'),
+      faqs: FAQS.map((f, i) => ({ ...f, num: '0' + (i + 1), open: this.state.open === i, sign: this.state.open === i ? '−' : '+',
+        toggle: () => this.setState(s => ({ open: s.open === i ? -1 : i })) })),
+      switcher: ['a', 'b', 'c'].map(k => ({ label: labels[k], bg: k === dir ? '#f6d3ac' : 'transparent', fg: k === dir ? '#1a1614' : '#f6d3ac',
+        pick: () => { this.setState({ dir: k }); window.scrollTo(0, 0); } }))
+    };
+  }
+}
+</script>
+</body>
+</html>
