@@ -644,3 +644,9 @@ textarea.linput { resize: vertical; }
   .hero-stack .hero-intro { transition: filter .15s linear, opacity .15s linear; }
   .hero-bottom:empty { display: none; }
 }
+
+/* phones: banner sits right under the hero stack, no empty space */
+@media (max-width: 640px) {
+  .hero { min-height: 0; padding-bottom: 30px; }
+  .hero-bottom[hidden] { display: none !important; }
+}

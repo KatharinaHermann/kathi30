@@ -495,6 +495,7 @@
     const mobile = innerWidth <= 640 && !reduceMotion;
     if (mobile && heroIntro.parentNode !== stack) stack.append(heroIntro, heroCd);
     if (!mobile && heroIntro.parentNode !== heroBottom) heroBottom.append(heroIntro, heroCd);
+    heroBottom.hidden = mobile;
     const layers = [w30, row, heroIntro, heroCd];
     layers.forEach((el) => ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
     if (!mobile) return;
