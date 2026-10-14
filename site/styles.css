@@ -611,3 +611,4 @@ textarea.linput { resize: vertical; }
 .marquee-track { animation-duration: 80s; }
 /* plan day names in black */
 .card-glass .day-name, .card-sand .day-name, .card-chrome .day-name { color: var(--ink); }
+.nav-when { color: var(--ink); }
