@@ -127,13 +127,19 @@
 
   // ---------- hero stickers ----------
   let ringN = 0;
+  // metallic ring fills for the stickers
+  const METAL = {
+    silver: '<stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#c9cdd5"/><stop offset=".5" stop-color="#8e939d"/><stop offset=".66" stop-color="#d3d8df"/><stop offset="1" stop-color="#f7f8fa"/>',
+    blue: '<stop offset="0" stop-color="#eef4fb"/><stop offset=".45" stop-color="#c4d6ec"/><stop offset="1" stop-color="#aec5e0"/>',
+    gunmetal: '<stop offset="0" stop-color="#5b606b"/><stop offset=".45" stop-color="#1c1d21"/><stop offset=".7" stop-color="#2f3238"/><stop offset="1" stop-color="#4d525d"/>'
+  };
   function ringSticker(cls, src, objPos, text, ring, ink, style, delay, dur) {
     const id = 'ring' + (ringN++);
     const anim = (d) => `${d}s linear infinite${dur < 0 ? ' reverse' : ''}`;
     return h(`<div class="${cls}" aria-hidden="true" style="${style};animation-duration:${5 + Math.abs(delay)}s;animation-delay:${delay}s">
       <svg viewBox="0 0 200 200" style="animation:spin ${anim(Math.abs(dur))}">
-        <defs><path id="${id}" d="M100,100 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"/></defs>
-        <circle cx="100" cy="100" r="99" fill="${ring}"/>
+        <defs><path id="${id}" d="M100,100 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"/>${METAL[ring] ? `<linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1">${METAL[ring]}</linearGradient>` : ''}</defs>
+        <circle cx="100" cy="100" r="99" fill="${METAL[ring] ? `url(#${id}g)` : ring}"/>
         <text fill="${ink}"><textPath href="#${id}" textLength="548" lengthAdjust="spacing">${esc(text)}</textPath></text>
       </svg>
       <div class="badge-photo"><img src="${src}" alt="" style="object-position:${objPos}"></div>
@@ -141,7 +147,7 @@
   }
   const heroBadges = $('heroBadges');
   [
-    ['assets/kathi.jpg', '50% 45%', 'BIRTHDAY GIRL ✦ TURNING 30 ✦ BIRTHDAY GIRL ✦ TURNING 30 ✦', '#e3261f', '#ffffff', 'right:5%;top:30%;width:clamp(150px,20vw,270px)', 0, 16],
+    ['assets/kathi.jpg', '50% 45%', 'BIRTHDAY GIRL ✦ TURNING 30 ✦ BIRTHDAY GIRL ✦ TURNING 30 ✦', '#f02719', '#ffffff', 'right:5%;top:30%;width:clamp(150px,20vw,270px)', 0, 16],
     ['assets/kathi-baby.jpg', '51% 18%', 'EST. 1997 ✦ BABY KATHI ✦ EST. 1997 ✦ BABY KATHI ✦', '#fbf8f4', '#f02719', 'left:4%;top:27%;width:clamp(130px,17vw,240px)', -1.7, -20],
     ['assets/kathi-bw.jpg', '58% 30%', 'CERTIFIED CHAOS ✦ 30 & THRIVING ✦ CERTIFIED CHAOS ✦ 30 & THRIVING ✦', '#24221f', '#f6f2ec', 'right:27%;top:55%;width:clamp(110px,13vw,190px)', -3.2, 12]
   ].forEach((b) => heroBadges.append(ringSticker('badge', ...b)));
@@ -175,19 +181,14 @@
   // ---------- guest book lock stickers ----------
   const gbBadges = $('gbBadges');
   [
-    ['assets/gb-01.jpg', '35% 28%', '#24221f', '#f6f2ec', 'left:3%;top:6%', 'clamp(96px,13vw,170px)', 0, 16],
-    ['assets/gb-02.jpg', '55% 35%', '#fbf8f4', '#24221f', 'left:6%;bottom:8%', 'clamp(90px,12vw,160px)', -1.3, -18],
-    ['assets/gb-03.jpg', '40% 30%', '#f02719', '#ffffff', 'left:19%;top:40%', 'clamp(70px,8vw,110px)', -2.1, 14],
-    ['assets/gb-04.jpg', '62% 58%', '#f6f2ec', '#24221f', 'right:4%;top:5%', 'clamp(96px,13vw,170px)', -0.7, -20],
-    ['assets/gb-05.jpg', '45% 25%', '#24221f', '#f6f2ec', 'right:18%;top:42%', 'clamp(70px,8vw,110px)', -2.8, 17],
-    ['assets/gb-06.jpg', '45% 55%', '#f02719', '#ffffff', 'right:5%;bottom:7%', 'clamp(90px,12vw,160px)', -3.5, -15],
-    ['assets/gb-07.jpg', '60% 55%', '#fbf8f4', '#24221f', 'left:30%;bottom:2%', 'clamp(70px,8vw,110px)', -4.4, 13]
-  ].forEach(([src, op, ring, ink, pos, size, delay, dur]) => {
-    gbBadges.append(h(`<div class="gb-badge" style="${pos};width:${size};animation-duration:${5 + Math.abs(delay)}s;animation-delay:${delay}s">
-      <div class="ring" style="background:repeating-conic-gradient(${ring} 0 8deg, ${ink} 8deg 10deg);animation-duration:${Math.abs(dur)}s;animation-direction:${dur < 0 ? 'reverse' : 'normal'}"></div>
-      <div class="ph"><img src="${src}" alt="" loading="lazy" style="object-position:${op}"></div>
-    </div>`));
-  });
+    ['assets/gb-01.jpg', '35% 28%', 'KATHI 30 ✦ JOSHUA TREE ✦ KATHI 30 ✦ JOSHUA TREE ✦', 'gunmetal', '#d4d7de', 'left:3%;top:6%;width:clamp(110px,14vw,180px)', 0, 16],
+    ['assets/gb-02.jpg', '55% 35%', 'MAIN CHARACTERS ✦ MAIN CHARACTERS ✦', 'silver', '#f02719', 'left:6%;bottom:8%;width:clamp(100px,13vw,170px)', -1.3, -18],
+    ['assets/gb-03.jpg', '40% 30%', 'DESERT CREW ✦ DESERT CREW ✦', '#f02719', '#ffffff', 'left:19%;top:40%;width:clamp(84px,9vw,124px)', -2.1, 14],
+    ['assets/gb-04.jpg', '62% 58%', 'JAN 15—18 ✦ 2027 ✦ JAN 15—18 ✦ 2027 ✦', 'blue', '#24221f', 'right:4%;top:5%;width:clamp(110px,14vw,180px)', -0.7, -20],
+    ['assets/gb-05.jpg', '45% 25%', 'STARGAZING GLAM ✦ STARGAZING GLAM ✦', 'silver', '#24221f', 'right:18%;top:42%;width:clamp(84px,9vw,124px)', -2.8, 17],
+    ['assets/gb-06.jpg', '45% 55%', '30 & THRIVING ✦ 30 & THRIVING ✦', '#f02719', '#ffffff', 'right:5%;bottom:7%;width:clamp(100px,13vw,170px)', -3.5, -15],
+    ['assets/gb-07.jpg', '60% 55%', 'NO PEEKING ✦ NO PEEKING ✦ NO PEEKING ✦', 'blue', '#f02719', 'left:30%;bottom:2%;width:clamp(84px,9vw,124px)', -4.4, 13]
+  ].forEach(([src, op, text, ring, ink, style, delay, dur]) => gbBadges.append(ringSticker('gb-badge', src, op, text, ring, ink, style, delay, dur)));
   const lock = ringSticker('lock-badge', 'assets/kathi.jpg', '50% 45%', 'NO PEEKING ✦ LOCKED TILL THE PARTY ✦ NO PEEKING ✦ LOCKED ✦', '#f02719', '#ffffff', '', 0, 14);
   lock.firstElementChild.append(h('<span class="lock-icon">🔒</span>'));
   $('lockBadge').replaceWith(lock);

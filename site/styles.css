@@ -447,3 +447,10 @@ textarea.linput { resize: vertical; }
 .card-glass-dark { position: relative; color: var(--paper); background: linear-gradient(170deg, rgba(36,34,31,.82), rgba(20,18,16,.72)); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); box-shadow: 0 20px 50px rgba(20,12,8,.22); }
 .card-glass-dark::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 2px; background: linear-gradient(165deg, rgba(255,255,255,.7), rgba(142,147,157,.35) 45%, rgba(255,255,255,.55) 70%, rgba(167,173,184,.4)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
 .card-glass-dark.day-sat { box-shadow: 0 20px 50px rgba(20,12,8,.22); }
+
+/* guest-book stickers: same spinning text-ring style as the hero */
+.gb-badge svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; animation: spin 16s linear infinite; }
+.gb-badge svg text { font-family: var(--f-display); font-weight: 700; font-size: 13px; letter-spacing: .04em; }
+.gb-badge .badge-photo { position: absolute; inset: 17%; border-radius: 50%; padding: 4px; background: var(--surf); box-shadow: 0 10px 24px rgba(20,12,8,.35); }
+.gb-badge .badge-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.gb-badge { filter: drop-shadow(0 18px 30px rgba(20,18,16,.4)); }
