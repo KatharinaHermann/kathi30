@@ -550,17 +550,6 @@ textarea.linput { resize: vertical; }
 
 /* hero stack wrapper: invisible on desktop */
 .hero-stack { display: contents; }
-@media (max-width: 640px) {
-  .hero-stack { display: block; order: 2; position: relative; }
-  .hero-stack .hero-30-wrap { position: sticky; top: calc(var(--nav-h, 90px) + 4px); z-index: 1; }
-  .hero-stack .hero-reflect { display: none; }
-  .hero-stack #heroBadges { display: flex; flex-direction: column; margin: -10px 0 26px; position: relative; z-index: 3; }
-  .hero-stack #heroBadges .badge { position: sticky !important; left: auto !important; right: auto !important; bottom: auto !important; flex: none; width: 168px !important; margin: 0 0 30vh !important; }
-  .hero-stack #heroBadges .badge:nth-child(2) { order: 1; align-self: flex-start; margin-left: 4% !important; top: calc(var(--nav-h, 90px) + 40px) !important; }
-  .hero-stack #heroBadges .badge:nth-child(1) { order: 2; align-self: center; width: 188px !important; top: calc(var(--nav-h, 90px) + 60px) !important; }
-  .hero-stack #heroBadges .badge:nth-child(3) { order: 3; align-self: flex-end; margin-right: 4% !important; margin-bottom: 0 !important; top: calc(var(--nav-h, 90px) + 80px) !important; }
-  .hero { min-height: 0; }
-}
 @media (max-width: 640px) { .hero { overflow: clip; } }
 
 /* phones: stack sections pin title + cards together; spacing tweaks */
