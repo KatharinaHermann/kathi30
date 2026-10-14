@@ -764,3 +764,6 @@ html.kicker-silver .hero-kicker { font-size: clamp(28px, 6.4vw, 92px); }
 /* preview: solid black headline */
 html.kicker-black .hero-kicker { background: none !important; color: var(--ink) !important; -webkit-text-fill-color: var(--ink) !important; filter: none !important; }
 html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-text-fill-color: var(--ink) !important; }
+
+/* carpool title matches "pay a share for the stay" */
+.h2-car.pay-title { font-size: clamp(28px, 4vw, 44px); letter-spacing: -.03em; filter: none; }
