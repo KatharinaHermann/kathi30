@@ -378,3 +378,17 @@ textarea.linput { resize: vertical; }
   #heroBadges .badge:nth-child(3) { order: 3; }
 }
 .carpool .sec-head > .mono { color: var(--sky); }
+
+/* ---------- more red, only on light / silver surfaces ---------- */
+.red-text { color: var(--red); }
+.hero-date { color: var(--red); font-weight: 600; }
+.glass-pill b { color: var(--red); }
+.card-sand .day-name { color: var(--red); }
+.house > .mono-plain.small, .route > .mono-plain:first-child { color: var(--red-dark); font-weight: 600; }
+.house .tiny-link { color: var(--red); }
+.house:hover .tiny-link { color: var(--ink); }
+.step-n { color: var(--red); font-size: 15px; }
+#packCount, #bringCount { color: var(--red-dark); font-weight: 600; }
+.car-name { color: var(--red); }
+.marquee { background: var(--red); color: #fff; }
+.polaroid-cap::after { content: " ♥"; color: var(--red); }
