@@ -177,10 +177,10 @@
   [
     ['assets/gb-01.jpg', '35% 28%', '#24221f', '#f6f2ec', 'left:3%;top:6%', 'clamp(96px,13vw,170px)', 0, 16],
     ['assets/gb-02.jpg', '55% 35%', '#fbf8f4', '#24221f', 'left:6%;bottom:8%', 'clamp(90px,12vw,160px)', -1.3, -18],
-    ['assets/gb-03.jpg', '40% 30%', '#f26a3d', '#24221f', 'left:19%;top:40%', 'clamp(70px,8vw,110px)', -2.1, 14],
+    ['assets/gb-03.jpg', '40% 30%', '#f0231a', '#ffffff', 'left:19%;top:40%', 'clamp(70px,8vw,110px)', -2.1, 14],
     ['assets/gb-04.jpg', '62% 58%', '#f6f2ec', '#24221f', 'right:4%;top:5%', 'clamp(96px,13vw,170px)', -0.7, -20],
     ['assets/gb-05.jpg', '45% 25%', '#24221f', '#f6f2ec', 'right:18%;top:42%', 'clamp(70px,8vw,110px)', -2.8, 17],
-    ['assets/gb-06.jpg', '45% 55%', '#f26a3d', '#24221f', 'right:5%;bottom:7%', 'clamp(90px,12vw,160px)', -3.5, -15],
+    ['assets/gb-06.jpg', '45% 55%', '#f0231a', '#ffffff', 'right:5%;bottom:7%', 'clamp(90px,12vw,160px)', -3.5, -15],
     ['assets/gb-07.jpg', '60% 55%', '#fbf8f4', '#24221f', 'left:30%;bottom:2%', 'clamp(70px,8vw,110px)', -4.4, 13]
   ].forEach(([src, op, ring, ink, pos, size, delay, dur]) => {
     gbBadges.append(h(`<div class="gb-badge" style="${pos};width:${size};animation-duration:${5 + Math.abs(delay)}s;animation-delay:${delay}s">
@@ -188,7 +188,7 @@
       <div class="ph"><img src="${src}" alt="" loading="lazy" style="object-position:${op}"></div>
     </div>`));
   });
-  const lock = ringSticker('lock-badge', 'assets/kathi.jpg', '50% 45%', 'NO PEEKING ✦ LOCKED TILL THE PARTY ✦ NO PEEKING ✦ LOCKED ✦', '#f26a3d', '#24221f', '', 0, 14);
+  const lock = ringSticker('lock-badge', 'assets/kathi.jpg', '50% 45%', 'NO PEEKING ✦ LOCKED TILL THE PARTY ✦ NO PEEKING ✦ LOCKED ✦', '#f0231a', '#ffffff', '', 0, 14);
   lock.firstElementChild.append(h('<span class="lock-icon">🔒</span>'));
   $('lockBadge').replaceWith(lock);
 
