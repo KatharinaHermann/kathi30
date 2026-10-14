@@ -483,7 +483,7 @@
     const navH = nav ? nav.offsetHeight : 90;
     const t30 = navH + 6, h30 = w30.offsetHeight, hb = row.offsetHeight;
     const tb = t30 + 4;                                // the row slides all the way up to the ceiling, over the 30
-    const travel = 6;                                  // it starts right under the 30
+    const travel = -28;                                // it starts slightly overlapping the bottom of the 30
     const mb = Math.max(0, tb + hb - (t30 + h30));     // lets the 30 release exactly when the row lands
     w30.style.top = t30 + 'px';
     w30.style.setProperty('margin-bottom', mb + 'px', 'important');
