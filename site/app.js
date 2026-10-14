@@ -530,3 +530,16 @@
     console.info('KATHI30: no sheetUrl in config.js — carpool + guest book save in this browser only.');
   }
 })();
+
+// deal cards start on the middle (RSVP) card on phones
+(() => {
+  const row = document.getElementById('dealRow');
+  if (!row) return;
+  const center = () => {
+    const mid = row.children[1];
+    if (!mid || row.scrollWidth <= row.clientWidth) return;
+    row.scrollLeft = mid.offsetLeft - (row.clientWidth - mid.offsetWidth) / 2;
+  };
+  center();
+  addEventListener('load', center);
+})();
