@@ -478,7 +478,7 @@
         if (i) c.style.setProperty('margin-top', FLOW - STEP * (n - i) + 'px', 'important');
       });
       const headTop = navH + 10;
-      const fits = head && head.offsetHeight + GAP + cardH + STEP * (n - 1) <= innerHeight - headTop - 8;
+      const fits = head && head.offsetHeight + GAP + cardH + STEP * (n - 1) <= document.documentElement.clientHeight - headTop - 8;
       let stackTop = headTop;
       if (fits) {
         head.classList.add('is-sticky');
@@ -537,20 +537,21 @@
     pairs.forEach(([below, above, rest, span]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (a.height * span)));
-      const v = Math.round(p * 20) / 20;
+      const v = Math.round(p * 40) / 40;
       if (below._cv === v) return;
       below._cv = v;
-      below.style.filter = v ? `blur(${(v * 6).toFixed(1)}px)` : '';
-      below.style.opacity = v ? (1 - v * .55).toFixed(2) : '';
+      if (v) below.style.setProperty('filter', `blur(${(v * 5).toFixed(2)}px)`, 'important'); else below.style.removeProperty('filter');
+      below.style.opacity = v ? (1 - v * .55).toFixed(3) : '';
     });
   }
   let fxQ = false;
   addEventListener('scroll', () => { if (!fxQ) { fxQ = true; requestAnimationFrame(() => { fxQ = false; coverFx(); }); } }, { passive: true });
   window.restackLight = () => { sizeStacks(); sizeHero(); coverFx(); };
-  addEventListener('resize', sizeHero);
+  // iPhone fires resize whenever the toolbar slides in/out while scrolling; only re-measure on a real width change
+  let lastW = innerWidth;
+  addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; sizeHero(); sizeStacks(); coverFx(); });
   addEventListener('load', sizeHero);
   sizeHero();
-  addEventListener('resize', sizeStacks);
   addEventListener('load', sizeStacks);
   sizeStacks();
 

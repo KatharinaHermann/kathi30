@@ -707,3 +707,8 @@ textarea.linput { resize: vertical; }
 .dress { background: var(--chrome-card); }
 .chrome-warm { background: var(--chrome-soft); -webkit-background-clip: text; background-clip: text; }
 .nav { background: linear-gradient(100deg,#eceef1 0%,#b3b8c1 30%,#868b95 48%,#c7b3a1 70%,#ece4dc 100%); }
+
+/* phones: the hero blur follows the finger directly (no easing lag) on its own GPU layer */
+@media (max-width: 640px) {
+  .hero-stack .hero-kicker, .hero-stack .hero-30-wrap, .hero-stack #heroBadges, .hero-stack .hero-intro, .hero-stack .countdown { transition: none !important; will-change: filter, opacity; }
+}
