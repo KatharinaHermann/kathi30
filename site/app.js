@@ -136,8 +136,8 @@
   function ringSticker(cls, src, objPos, text, ring, ink, style, delay, dur) {
     const id = 'ring' + (ringN++);
     const anim = (d) => `${d}s linear infinite${dur < 0 ? ' reverse' : ''}`;
-    return h(`<div class="${cls}" aria-hidden="true" style="${style};animation-duration:${5 + Math.abs(delay)}s;animation-delay:${delay}s">
-      <svg viewBox="0 0 200 200" style="animation:spin ${anim(Math.abs(dur))}">
+    return h(`<div class="${cls}" aria-hidden="true" style="${style};animation-duration:${(5 + Math.abs(delay)) * 1.8}s;animation-delay:${delay}s">
+      <svg viewBox="0 0 200 200" style="animation:spin ${anim(Math.abs(dur) * 2.2)}">
         <defs><path id="${id}" d="M100,100 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"/>${METAL[ring] ? `<linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1">${METAL[ring]}</linearGradient>` : ''}</defs>
         <circle cx="100" cy="100" r="99" fill="${METAL[ring] ? `url(#${id}g)` : ring}"/>
         <text fill="${ink}"><textPath href="#${id}" textLength="548" lengthAdjust="spacing">${esc(text)}</textPath></text>

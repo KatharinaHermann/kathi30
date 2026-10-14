@@ -605,3 +605,9 @@ textarea.linput { resize: vertical; }
 /* intro line a touch smaller */
 .hero-line { font-size: clamp(24px, 2.2vw, 31px); }
 @media (max-width: 640px) { .hero-line { font-size: 26px; } }
+
+/* banner: brushed silver, black type, slower */
+.marquee { background: var(--chrome-card); color: var(--ink); border-block: 1px solid rgba(255,255,255,.7); box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 rgba(0,0,0,.12); }
+.marquee-track { animation-duration: 80s; }
+/* plan day names in black */
+.card-glass .day-name, .card-sand .day-name, .card-chrome .day-name { color: var(--ink); }
