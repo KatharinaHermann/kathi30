@@ -2,12 +2,12 @@
   --ink: #24221f;
   --paper: #f6f2ec;
   --sand: #efe7dd;
-  --accent: #f26a3d;
+  --accent: #ff5f42;
   --accent-dark: #b9552f;
   --red: #f0231a;
-  --red-dark: #c0150e;
-  --sky: #9fb6d1;
-  --peach: #f3b995;
+  --red-dark: #f0231a;
+  --sky: #aec5e0;
+  --peach: #ffd6cc;
   --dark2: #2a2622;
   --line: #3a3530;
   --muted: #cfc6bb;
@@ -46,13 +46,13 @@ img, video { display: block; max-width: 100%; }
 .bg { position: fixed; inset: -6%; z-index: -1; overflow: hidden; background: #f3e7da; will-change: transform; }
 .glow { position: absolute; aspect-ratio: 1; border-radius: 50%; filter: blur(90px); animation: float 16s ease-in-out infinite; }
 .sun { position: fixed; left: 62%; top: 0; z-index: -1; width: min(34vw,420px); aspect-ratio: 1; transform: translate(-50%,16vh); pointer-events: none; will-change: transform; }
-.sun-halo { position: absolute; inset: -60%; border-radius: 50%; background: radial-gradient(circle,rgba(243,185,149,.55),rgba(243,185,149,0) 62%); }
-.sun-disc { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(180deg,#ffe2c4,#f3b995 55%,#f2a26f); box-shadow: 0 0 80px 10px rgba(242,162,111,.35); }
-.sun-hot { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(180deg,#f7b98a,#f26a3d 60%,#b9552f); opacity: 0; }
+.sun-halo { position: absolute; inset: -60%; border-radius: 50%; background: radial-gradient(circle,rgba(255,214,204,.55),rgba(255,214,204,0) 62%); }
+.sun-disc { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(180deg,#ffe2c4,#ffd6cc 55%,#f2a26f); box-shadow: 0 0 80px 10px rgba(242,162,111,.35); }
+.sun-hot { position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(180deg,#f7b98a,#ff5f42 60%,#b9552f); opacity: 0; }
 .night { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; background: linear-gradient(180deg,#121836 0%,#262350 50%,#3d2a4c 100%); }
 .stars { position: absolute; inset: 0; opacity: 0; background-size: 420px 420px;
   background-image: radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 28% 42%,#fff,transparent),radial-gradient(1.5px 1.5px at 46% 12%,#fff,transparent),radial-gradient(1px 1px at 63% 30%,#fff,transparent),radial-gradient(2px 2px at 78% 14%,#fff,transparent),radial-gradient(1px 1px at 88% 46%,#fff,transparent),radial-gradient(1.5px 1.5px at 8% 62%,#fff,transparent),radial-gradient(1px 1px at 36% 74%,#fff,transparent),radial-gradient(1.5px 1.5px at 56% 58%,#fff,transparent),radial-gradient(1px 1px at 92% 78%,#fff,transparent); }
-.prog { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 40; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg,#f26a3d,var(--red)); }
+.prog { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 40; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg,#ff5f42,var(--red)); }
 
 /* ---------- type helpers ---------- */
 .chrome-text { background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; }
