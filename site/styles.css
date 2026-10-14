@@ -668,3 +668,13 @@ textarea.linput { resize: vertical; }
 /* banner closer to the countdown */
 @media (max-width: 640px) { .hero { padding-bottom: 0; } }
 @media (min-width: 641px) { .hero-bottom { padding-bottom: 20px; } .hero { min-height: 0; } }
+
+/* the 30 drawn with the Etsy liquid-chrome numbers */
+.big30.etsy30 { display: flex; justify-content: center; align-items: flex-end; background: none; font-size: 0; line-height: 0; letter-spacing: 0; animation: none; }
+.etsy30 img { height: clamp(320px, 44vw, 640px); width: auto; display: block; }
+.etsy30 img + img { margin-left: -3%; }
+.hero-30-wrap .etsy30 { filter: drop-shadow(0 26px 36px rgba(20,12,8,.35)); }
+.big30.haze.etsy30 { animation: haze 2.6s ease-in-out infinite alternate; }
+@media (max-width: 640px) {
+  .etsy30 img { height: min(62vw, 330px); }
+}
