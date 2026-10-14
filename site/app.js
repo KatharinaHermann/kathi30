@@ -145,10 +145,6 @@
     ['assets/kathi-baby.jpg', '51% 18%', 'EST. 1997 ✦ BABY KATHI ✦ EST. 1997 ✦ BABY KATHI ✦', '#fbf8f4', '#24221f', 'left:4%;top:27%;width:clamp(130px,17vw,240px)', -1.7, -20],
     ['assets/kathi-bw.jpg', '58% 30%', 'CERTIFIED CHAOS ✦ 30 & THRIVING ✦ CERTIFIED CHAOS ✦ 30 & THRIVING ✦', '#24221f', '#f6f2ec', 'right:27%;top:55%;width:clamp(110px,13vw,190px)', -3.2, 12]
   ].forEach((b) => heroBadges.append(ringSticker('badge', ...b)));
-  if (innerWidth <= 640) { // keep the stickers from swallowing the phone screen
-    const w = ['118px', '104px', '92px'], pos = [['right', '2%', 'top', '30%'], ['left', '2%', 'top', '24%'], ['right', '10%', 'top', '46%']];
-    heroBadges.querySelectorAll('.badge').forEach((el, i) => { el.style.width = w[i]; el.style[pos[i][0]] = pos[i][1]; el.style[pos[i][2]] = pos[i][3]; });
-  }
 
   // ---------- marquee ----------
   const mq = 'KATHI x JOSHUA (TURNING 30) ✦ JAN 15—18 ✦ JOSHUA TREE ✦ RSVP BY OCT 30 ✦ ';
@@ -239,7 +235,7 @@
       ? `<div class="pay-thanks"><span class="form-title" style="font-size:22px">thank you, ${esc(thanks)} 🫶</span><span style="font-size:15px;color:var(--muted)">Kathi will confirm once it lands.</span></div>`
       : `<form class="pay-form" id="payForm"><span class="form-title">sent it? ✓</span>
           <input name="name" class="dinput" placeholder="your name" required maxlength="80" aria-label="your name">
-          <button type="submit" class="submit mono" style="background:var(--accent)">I paid</button></form>`;
+          <button type="submit" class="submit mono btn-red">I paid</button></form>`;
     const f = $('payForm');
     if (f) f.onsubmit = async (e) => {
       e.preventDefault();

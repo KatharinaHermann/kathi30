@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=8">
-<script src="config.js?v=8"></script>
-<script src="app.js?v=8" defer></script>
+<link rel="stylesheet" href="styles.css?v=9">
+<script src="config.js?v=9"></script>
+<script src="app.js?v=9" defer></script>
 </head>
 <body>
 <div class="page">
@@ -75,7 +75,7 @@
     <div class="hscroll grid-auto" style="--min:230px">
       <div class="card card-sand lift"><span class="deal-big">3 nights</span><span class="body16">Fri Jan 15 → Mon Jan 18. Under the stars.</span></div>
       <div class="card card-chrome lift"><span class="deal-big">$300</span><span class="body16">per person, all 3 nights. I'm covering part of the stay.</span></div>
-      <div class="card card-dark lift"><span class="deal-big">Oct 30</span><span class="body16">RSVP deadline so I know you're INN</span></div>
+      <div class="card card-dark lift"><span class="deal-big deal-red">Oct 30</span><span class="body16">RSVP deadline so I know you're INN</span></div>
     </div>
   </section>
 
@@ -198,7 +198,7 @@
           <div class="row-wrap gap6" data-choice="rFrom"></div>
           <input name="details" class="dinput" placeholder="flying into LAX? flight # + landing time — or when you can leave SF" maxlength="200" aria-label="flight or timing details">
           <select name="driver" class="dinput" id="driverSelect" aria-label="pick a car"></select>
-          <button type="submit" class="submit mono" style="margin-top:auto;background:var(--accent)">hop in</button>
+          <button type="submit" class="submit mono btn-red" style="margin-top:auto">hop in</button>
         </form>
       </div>
       <div class="hscroll board" id="board"></div>
@@ -270,7 +270,7 @@
 
   <section id="rsvp" class="glass glass-rsvp reveal">
     <div class="col gap28" style="position:relative">
-      <span class="mono-plain ls1">RSVP BY OCTOBER 30 📅</span>
+      <span class="mono-plain ls1 red-label">RSVP BY OCTOBER 30 📅</span>
       <div class="rsvp-big chrome-text">are you<br>INN? 🏡</div>
       <div class="hscroll grid-auto gap12 steps" style="--min:220px">
         <div class="step"><span class="mono-plain step-n">01</span><span class="step-body"><span class="body16 lh145">RSVP on Partiful. Bringing someone? Add your +1 right in the RSVP.</span><a data-href="partifulUrl" target="_blank" rel="noopener" class="tilt">💌 tap to RSVP →</a></span></div>
