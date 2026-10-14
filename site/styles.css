@@ -480,3 +480,17 @@ textarea.linput { resize: vertical; }
   .carpool .stack > * { box-shadow: 0 -8px 24px rgba(0,0,0,.35), 0 14px 30px rgba(0,0,0,.3); }
   .carpool .board { margin-top: 20px; }
 }
+
+/* phones: pinned sections whose cards slide up into a stack */
+@media (max-width: 640px) {
+  .pin-section { position: sticky; z-index: 1; }
+  .stack.pinned { position: relative; display: block !important; }
+  .stack.pinned > * { position: absolute !important; left: 0; right: 0; margin: 0 !important; transition: none; }
+}
+@media (max-width: 640px) {
+  .glass { padding-top: 36px; padding-bottom: 24px; }
+  .glass .sec-head { margin-bottom: 16px; }
+  .stack > .day { padding: 20px; gap: 9px; }
+  .stack > .day .emoji { font-size: 22px; }
+  .stack > .day .dress { padding: 12px; }
+}
