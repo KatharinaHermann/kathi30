@@ -578,3 +578,4 @@ textarea.linput { resize: vertical; }
 .hero-line { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(28px, 2.6vw, 36px); line-height: 1.12; letter-spacing: -.01em; }
 .hero-line em { color: var(--red); font-style: italic; }
 @media (max-width: 640px) { .hero-line { font-size: 30px; } }
+@media (max-width: 640px) { .stick-head:not(.is-sticky) { margin-bottom: 20px; } }
