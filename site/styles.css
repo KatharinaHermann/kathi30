@@ -119,6 +119,7 @@ img, video { display: block; max-width: 100%; }
 .hero-glow { position: absolute; left: 50%; top: 46%; width: min(1100px,130vw); aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; background: radial-gradient(circle,rgba(255,170,90,.75) 0%,rgba(232,110,60,.45) 32%,rgba(232,118,74,0) 66%); mix-blend-mode: screen; pointer-events: none; }
 .hero-top { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 .hero-kicker { position: relative; margin: 5vh 0 0; text-align: center; font-family: var(--f-display); font-weight: 900; font-size: clamp(28px,6vw,84px); letter-spacing: -.04em; line-height: 1; filter: drop-shadow(0 8px 12px rgba(20,12,8,.3)); }
+.hero-kicker span { display: block; white-space: nowrap; }
 .hero-30-wrap { position: relative; }
 .big30 { font-family: var(--f-display); font-weight: 900; text-align: center; font-size: clamp(200px,44vw,600px); line-height: .9; letter-spacing: -.08em; background: var(--chrome-30); background-size: 100% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; }
 .shimmer { filter: drop-shadow(0 30px 40px rgba(90,30,0,.4)); animation: shimmer 5s ease-in-out infinite alternate; }
