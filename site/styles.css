@@ -664,3 +664,7 @@ textarea.linput { resize: vertical; }
 .hero-kicker .lq { display: inline; }
 .big30.liquid { animation: none; line-height: 1; }
 .shimmer.liquid { filter: drop-shadow(0 30px 40px rgba(90,30,0,.35)); }
+
+/* banner closer to the countdown */
+@media (max-width: 640px) { .hero { padding-bottom: 0; } }
+@media (min-width: 641px) { .hero-bottom { padding-bottom: 20px; } .hero { min-height: 0; } }

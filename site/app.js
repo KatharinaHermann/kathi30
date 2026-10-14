@@ -509,6 +509,7 @@
     heroBottom.hidden = mobile;
     const layers = [w30, row, heroIntro, heroCd];
     layers.forEach((el) => ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
+    stack.style.removeProperty('margin-bottom');
     if (!mobile) return;
     const navH = nav ? nav.offsetHeight : 90;
     const t30 = navH + 6;
@@ -522,6 +523,7 @@
       el.style.setProperty('margin-bottom', MB[i] + 'px', 'important');
       if (i) el.style.setProperty('margin-top', G[i] - MB[i - 1] + 'px', 'important');
     });
+    stack.style.marginBottom = 18 - MB[MB.length - 1] + 'px';  // banner sits 18px under the countdown; the release padding below it stays invisible
   }
   // hero only: whatever gets covered by the next stacked layer blurs and fades out
   function coverFx() {
