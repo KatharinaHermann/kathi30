@@ -678,3 +678,6 @@ textarea.linput { resize: vertical; }
 @media (max-width: 640px) {
   .etsy30 img { height: min(62vw, 330px); }
 }
+
+/* header: silver-to-gold like the stargazing glam card */
+.nav { background: linear-gradient(100deg,#f7f8fb 0%,#c9cdd5 30%,#9ea3ad 48%,#e8c7a5 70%,#fff6ec 100%); border-bottom-color: rgba(36,34,31,.12); }
