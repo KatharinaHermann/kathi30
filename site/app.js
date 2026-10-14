@@ -459,30 +459,41 @@
   function sizeStacks() {
     const mobile = innerWidth <= 640;
     const navH = nav ? nav.offsetHeight : 90;
-    const GAP = 14, STEP = 10;
+    const GAP = 14, STEP = 10, FLOW = 16;
     document.documentElement.style.setProperty('--nav-h', navH + 'px');
     document.querySelectorAll('.stack').forEach((g) => {
       const kids = [...g.children];
       const head = g.previousElementSibling && g.previousElementSibling.classList.contains('stick-head') ? g.previousElementSibling : null;
-      kids.forEach((c, i) => { c.style.setProperty('--i', i); c.style.minHeight = ''; });
+      kids.forEach((c, i) => { c.style.setProperty('--i', i); c.style.minHeight = ''; ['top', 'margin-top', 'margin-bottom'].forEach((k) => c.style.removeProperty(k)); });
       if (head) { head.style.removeProperty('margin-bottom'); head.classList.remove('is-sticky'); }
       g.style.removeProperty('margin-top');
       if (!mobile) return;
-      const cardH = Math.max(0, ...kids.map((c) => c.offsetHeight));
+      const n = kids.length, cardH = Math.max(0, ...kids.map((c) => c.offsetHeight));
       kids.forEach((c) => { c.style.minHeight = cardH + 'px'; });
+      // every card gets exactly enough bottom margin to stay pinned until the last card lands,
+      // and the next card pulls back up by the extra so the resting gap stays FLOW
+      kids.forEach((c, i) => {
+        const mb = STEP * (n - 1 - i);
+        c.style.setProperty('margin-bottom', mb + 'px', 'important');
+        if (i) c.style.setProperty('margin-top', FLOW - STEP * (n - i) + 'px', 'important');
+      });
       const headTop = navH + 10;
-      const fits = head && head.offsetHeight + GAP + cardH + STEP * (kids.length - 1) <= innerHeight - headTop - 8;
+      const fits = head && head.offsetHeight + GAP + cardH + STEP * (n - 1) <= innerHeight - headTop - 8;
+      let stackTop = headTop;
       if (fits) {
         head.classList.add('is-sticky');
         head.style.top = headTop + 'px';
-        const padB = parseFloat(getComputedStyle(g.parentNode).paddingBottom) || 0;
-        const mb = GAP + STEP * (kids.length - 1) + cardH + padB;
+        // space between the stack and the end of the box the title is pinned in
+        const par = g.parentNode, pcs = getComputedStyle(par);
+        const contentBottom = par.getBoundingClientRect().bottom - (parseFloat(pcs.paddingBottom) || 0) - (parseFloat(pcs.borderBottomWidth) || 0);
+        const extra = Math.max(0, contentBottom - g.getBoundingClientRect().bottom);
+        const mb = GAP + STEP * (n - 1) + cardH + extra;   // title lets go exactly when the last card lands
         head.style.setProperty('margin-bottom', mb + 'px', 'important');
         g.style.setProperty('margin-top', GAP - mb + 'px', 'important');
-        g.style.setProperty('--stack-top', headTop + head.offsetHeight + GAP + 'px');
-      } else {
-        g.style.setProperty('--stack-top', headTop + 'px');
+        stackTop = headTop + head.offsetHeight + GAP;
       }
+      g.style.setProperty('--stack-top', stackTop + 'px');
+      kids.forEach((c, i) => c.style.setProperty('top', stackTop + STEP * i + 'px', 'important'));
     });
   }
   // hero on phones: the 30 pins, the sticker row slides onto it, then the intro text slides onto the stickers;
