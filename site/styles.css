@@ -589,3 +589,8 @@ textarea.linput { resize: vertical; }
 @media (max-width: 640px) { .nav-links { font-size: 12px; gap: 18px; } }
 /* menu bar uses the same soft blue as the blue cards */
 .nav, .nav:where(*) { background: linear-gradient(180deg, rgba(230,238,247,.96) 0%, rgba(207,222,238,.96) 100%); }
+/* countdown back to black with chrome numbers */
+.cd-box { background: rgba(20,18,16,.92); color: var(--paper); box-shadow: 0 10px 24px rgba(20,12,8,.18); }
+.cd-num { background: var(--chrome-soft); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* ticker band in the soft card blue */
+.marquee { background: linear-gradient(180deg,#e6eef7 0%,#cfdeee 55%,var(--sky) 100%); color: var(--ink); border-block: 1px solid rgba(79,120,170,.2); }
