@@ -712,3 +712,7 @@ textarea.linput { resize: vertical; }
 @media (max-width: 640px) {
   .hero-stack .hero-kicker, .hero-stack .hero-30-wrap, .hero-stack #heroBadges, .hero-stack .hero-intro, .hero-stack .countdown { transition: none !important; will-change: filter, opacity; }
 }
+
+/* bigger hero headline */
+.hero-kicker { font-size: clamp(40px, 7.6vw, 116px); }
+@media (max-width: 640px) { .hero-kicker { font-size: 10.6vw; } }
