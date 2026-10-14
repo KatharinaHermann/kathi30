@@ -152,6 +152,15 @@
     ['assets/kathi-bw.jpg', '58% 30%', 'CERTIFIED CHAOS ✦ 30 & THRIVING ✦ CERTIFIED CHAOS ✦ 30 & THRIVING ✦', '#24221f', '#f6f2ec', 'right:27%;top:55%;width:clamp(110px,13vw,190px)', -3.2, 12]
   ].forEach((b) => heroBadges.append(ringSticker('badge', ...b)));
 
+  // group the 30 + photo stickers so they can stack on scroll on phones (display: contents on desktop)
+  (() => {
+    const hero = document.querySelector('.hero'), wrap = document.createElement('div');
+    wrap.className = 'hero-stack';
+    const kicker = hero.querySelector('.hero-kicker');
+    hero.insertBefore(wrap, kicker);
+    [kicker, hero.querySelector('.hero-30-wrap'), hero.querySelector('.hero-reflect'), $('heroBadges')].forEach((el) => wrap.appendChild(el));
+  })();
+
   // ---------- marquee ----------
   const mq = 'KATHI x JOSHUA (TURNING 30) ✦ JAN 15—18 ✦ JOSHUA TREE ✦ RSVP BY OCT 30 ✦ ';
   $('marquee').innerHTML = `<span>${esc(mq.repeat(3))}</span><span>${esc(mq.repeat(3))}</span>`;
