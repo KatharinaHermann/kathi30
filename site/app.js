@@ -432,18 +432,45 @@
   // equal card heights per stack, and where each stack sticks (below the menu, and below the section
   // title when the title sticks too).
   const nav = document.querySelector('.nav');
+  // On phones a stack section pins as a whole: whatever sits above the cards (title, labels) is
+  // wrapped in .stick-head and sticks under the menu, the cards stick right below it, and a margin
+  // trick makes the title let go at exactly the moment the last card does, so they leave together.
+  document.querySelectorAll('.stack').forEach((g) => {
+    const before = [];
+    for (let el = g.previousElementSibling; el; el = el.previousElementSibling) before.unshift(el);
+    if (!before.length || before[0].classList.contains('stick-head')) return;
+    const head = document.createElement('div');
+    head.className = 'stick-head';
+    g.parentNode.insertBefore(head, before[0]);
+    before.forEach((el) => head.appendChild(el));
+  });
   function sizeStacks() {
     const mobile = innerWidth <= 640;
     const navH = nav ? nav.offsetHeight : 90;
+    const GAP = 14, STEP = 10;
     document.documentElement.style.setProperty('--nav-h', navH + 'px');
     document.querySelectorAll('.stack').forEach((g) => {
       const kids = [...g.children];
+      const head = g.previousElementSibling && g.previousElementSibling.classList.contains('stick-head') ? g.previousElementSibling : null;
       kids.forEach((c, i) => { c.style.setProperty('--i', i); c.style.minHeight = ''; });
+      if (head) { head.style.removeProperty('margin-bottom'); head.classList.remove('is-sticky'); }
+      g.style.removeProperty('margin-top');
       if (!mobile) return;
-      const tallest = Math.max(0, ...kids.map((c) => c.offsetHeight));
-      kids.forEach((c) => { c.style.minHeight = tallest + 'px'; });
-      const head = g.closest('section') && g.closest('section').querySelector(':scope > .stick-head');
-      g.style.setProperty('--stack-top', navH + 10 + (head ? head.offsetHeight + 18 : 0) + 'px');
+      const cardH = Math.max(0, ...kids.map((c) => c.offsetHeight));
+      kids.forEach((c) => { c.style.minHeight = cardH + 'px'; });
+      const headTop = navH + 10;
+      const fits = head && head.offsetHeight + GAP + cardH + STEP * (kids.length - 1) <= innerHeight - headTop - 8;
+      if (fits) {
+        head.classList.add('is-sticky');
+        head.style.top = headTop + 'px';
+        const padB = parseFloat(getComputedStyle(g.parentNode).paddingBottom) || 0;
+        const mb = GAP + STEP * (kids.length - 1) + cardH + padB;
+        head.style.setProperty('margin-bottom', mb + 'px', 'important');
+        g.style.setProperty('margin-top', GAP - mb + 'px', 'important');
+        g.style.setProperty('--stack-top', headTop + head.offsetHeight + GAP + 'px');
+      } else {
+        g.style.setProperty('--stack-top', headTop + 'px');
+      }
     });
   }
   window.restackLight = sizeStacks;

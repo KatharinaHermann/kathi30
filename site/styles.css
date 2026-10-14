@@ -562,3 +562,13 @@ textarea.linput { resize: vertical; }
   .hero { min-height: 0; }
 }
 @media (max-width: 640px) { .hero { overflow: clip; } }
+
+/* phones: stack sections pin title + cards together; spacing tweaks */
+@media (max-width: 640px) {
+  .stick-head { position: static; background: none; padding: 0; margin: 0; }
+  .stick-head.is-sticky { position: sticky; z-index: 2; }
+  .stick-head .sec-head { margin-bottom: 0; }
+  .glass, .glass.glass-rsvp { padding-top: 26px; }
+  #stay .hscroll { margin-top: 4px !important; }
+  #rsvp .col.gap28 { gap: 14px; }
+}
