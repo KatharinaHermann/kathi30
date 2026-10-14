@@ -561,3 +561,12 @@ textarea.linput { resize: vertical; }
   #stay .hscroll { margin-top: 4px !important; }
   #rsvp .col.gap28 { gap: 14px; }
 }
+
+/* phones: the 30 pins, the sticker row slides up onto it as one group, then both leave together */
+@media (max-width: 640px) {
+  .hero-stack { display: block; order: 2; position: relative; }
+  .hero-stack .hero-reflect { display: none; }
+  .hero-stack .hero-30-wrap { position: sticky; z-index: 1; }
+  .hero-stack #heroBadges { position: sticky; z-index: 3; }
+  .hero-stack + .hero-bottom, .hero-bottom { margin-top: 26px; }
+}
