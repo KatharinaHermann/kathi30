@@ -575,10 +575,12 @@
       const v = Math.round(p * 50) / 50;
       targets.forEach((el) => {
         const t = el._twin; if (!t || t.v === v) return;
-        t.v = v; t.sharp.style.opacity = String(1 - v); t.blur.style.opacity = String(v * .85);
+        t.v = v; t.sharp.style.opacity = String(1 - v); t.blur.style.opacity = String(Math.max(.01, v * .95));
       });
     });
   }
+  addEventListener('load', () => { sizeHero(); coverFx(); });
+  if (document.fonts) document.fonts.ready.then(() => { sizeHero(); coverFx(); });
   let fxQ = false;
   addEventListener('scroll', () => { if (!fxQ) { fxQ = true; requestAnimationFrame(() => { fxQ = false; coverFx(); }); } }, { passive: true });
   window.restackLight = () => { sizeStacks(); sizeHero(); coverFx(); };
@@ -626,8 +628,9 @@
 // liquid chrome headlines: every title is spelled with the Etsy chrome letter images.
 // The real text stays as the heading's accessible name; the images are decoration.
 (() => {
-  const silverKicker = /(^|[?&])silver\b/.test(location.search); // headline: Etsy letters with the Etsy X (?silver previews the regular silver font)
-  const etsyX = !/(^|[?&])redx\b/.test(location.search);         // ?redx previews the red x instead
+  const silverKicker = !/(^|[?&])etsy/.test(location.search); // headline: solid black type (?etsyx previews the Etsy letters)
+  if (silverKicker && !/(^|[?&])silver\b/.test(location.search)) document.documentElement.classList.add('kicker-black', 'kicker-allblack');
+  const etsyX = /(^|[?&])etsyx\b/.test(location.search);         // ?redx previews the red x instead
   // ?black previews the headline in solid black (?allblack also turns the x black)
   if (/(^|[?&])(all)?black\b/.test(location.search)) document.documentElement.classList.add('kicker-black');
   if (/(^|[?&])allblack\b/.test(location.search)) document.documentElement.classList.add('kicker-allblack');

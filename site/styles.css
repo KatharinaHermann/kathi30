@@ -791,3 +791,10 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
   .hero.hero-stacked #heroBadges .badge:nth-child(2) { top: calc(min(38vw, 48vh) * .02) !important; }
   .hero.hero-stacked #heroBadges .badge:nth-child(3) { top: calc(min(38vw, 48vh) * .55) !important; }
 }
+
+/* stronger blur on covered layers; copies stay rasterized (near-zero opacity) so the first fade is instant on iPhone */
+.lyr-blur { filter: blur(14px); opacity: .01; transform: translateZ(0); }
+.lyr-sharp { transform: translateZ(0); }
+/* banner: its own GPU layer so the scrolling text doesn't shimmer while it is pinned */
+.marquee { transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; contain: paint; }
+.marquee-track { will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden; -webkit-font-smoothing: antialiased; }
