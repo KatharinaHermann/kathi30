@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=34">
+<link rel="stylesheet" href="styles.css?v=36">
 <script src="config.js?v=26"></script>
-<script src="app.js?v=35" defer></script>
+<script src="app.js?v=36" defer></script>
 </head>
 <body>
 <div class="page">
@@ -174,7 +174,7 @@
         <h2 class="h2-car chrome-text">carpool board</h2>
         <span class="mono" id="seatSummary">drivers + riders, find each other</span>
       </div>
-      <div class="grid-auto" style="--min:320px">
+      <div class="stack grid-auto" style="--min:320px">
         <form id="driverForm" class="dform">
           <span class="form-title">🚙 I'm driving</span>
           <input name="name" class="dinput" placeholder="your name" required maxlength="60" autocomplete="given-name" aria-label="your name">
@@ -201,7 +201,7 @@
           <button type="submit" class="submit mono btn-red" style="margin-top:auto">hop in</button>
         </form>
       </div>
-      <div class="board" id="board"></div>
+      <div class="stack board" id="board"></div>
       <div class="looking" id="looking" hidden></div>
     </div>
   </section>
@@ -211,7 +211,7 @@
       <h2 class="h2 chrome-text">the soundtrack</h2>
       <span class="homework mono-plain">homework: add ≥1 song to EACH 🎧</span>
     </div>
-    <div class="stack grid-auto music" style="--min:280px">
+    <div class="grid-auto music" style="--min:280px">
       <div class="playlist pl-day">
         <span class="mono-plain ls1">☀️ DAY PLAYLIST</span>
         <span class="pl-title">kathi x joshua days</span>

@@ -397,7 +397,7 @@
     remove(table, id);
   });
 
-  function renderData() { renderCarpool(); renderNotes(); renderBring(); }
+  function renderData() { renderCarpool(); renderNotes(); renderBring(); if (window.restack) window.restack(); }
 
   // ---------- scroll: parallax, setting sun, night, progress ----------
   const bg = $('bg'), sun = $('sun'), sunhot = $('sunhot'), night = $('night'), stars = $('stars'), prog = $('prog');
@@ -419,27 +419,38 @@
   onScroll();
 
   // ---------- phones: stacked cards ----------
-  const stackGroups = [...document.querySelectorAll('.stack')];
-  stackGroups.forEach((g) => [...g.children].forEach((c, i) => c.style.setProperty('--i', i)));
   const nav = document.querySelector('.nav');
+  let stackHeightsFor = 0;
+  function sizeStacks() { // every card in a stack gets the height of the tallest, so no card peeks out below a shorter one
+    stackHeightsFor = innerWidth;
+    document.querySelectorAll('.stack').forEach((g) => {
+      const kids = [...g.children];
+      kids.forEach((c, i) => { c.style.setProperty('--i', i); c.style.minHeight = ''; });
+      if (innerWidth > 640) return;
+      const tallest = Math.max(...kids.map((c) => c.offsetHeight));
+      kids.forEach((c) => { c.style.minHeight = tallest + 'px'; });
+    });
+  }
   function layoutStacks() {
     const mobile = innerWidth <= 640;
+    if (stackHeightsFor !== innerWidth) sizeStacks();
     document.documentElement.style.setProperty('--stack-top', Math.max((nav ? nav.offsetHeight : 90) + 12, Math.round(innerHeight * 0.25)) + 'px'); // stack forms a quarter of the way down the screen
-    stackGroups.forEach((g) => {
+    document.querySelectorAll('.stack').forEach((g) => {
       const kids = [...g.children];
       kids.forEach((c, i) => {
-        if (!mobile || reduceMotion) { c.style.transform = ''; c.style.filter = ''; return; }
+        if (!mobile || reduceMotion) { c.style.transform = ''; return; }
         // how many later cards are already stuck on top of this one
         const top = c.getBoundingClientRect().top;
         let covered = 0;
-        for (let j = i + 1; j < kids.length; j++) if (kids[j].getBoundingClientRect().top - top < c.offsetHeight * 0.6) covered++;
-        c.style.transform = covered ? `scale(${1 - covered * 0.045})` : '';
-        c.style.filter = covered ? `brightness(${1 - covered * 0.06})` : '';
+        for (let j = i + 1; j < kids.length; j++) if (kids[j].getBoundingClientRect().top - top < 40 * (j - i)) covered++;
+        c.style.transform = covered ? `scale(${1 - covered * 0.04})` : '';
       });
     });
   }
+  window.restack = () => { sizeStacks(); layoutStacks(); };
   addEventListener('scroll', () => requestAnimationFrame(layoutStacks), { passive: true });
   addEventListener('resize', layoutStacks);
+  addEventListener('load', window.restack);
   layoutStacks();
 
   // ---------- reveal on scroll ----------

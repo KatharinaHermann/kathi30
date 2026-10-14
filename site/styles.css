@@ -474,3 +474,9 @@ textarea.linput { resize: vertical; }
   .stack > .polaroid { width: 100%; rotate: 0deg; }
   .stack > .day { min-height: 0; }
 }
+
+@media (max-width: 640px) {
+  .stack > * { box-sizing: border-box; }
+  .carpool .stack > * { box-shadow: 0 -8px 24px rgba(0,0,0,.35), 0 14px 30px rgba(0,0,0,.3); }
+  .carpool .board { margin-top: 20px; }
+}
