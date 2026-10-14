@@ -396,6 +396,7 @@ textarea.linput { resize: vertical; }
 .pack-card.bring { background: linear-gradient(180deg,#e6eef7 0%,#cfdeee 50%,var(--sky) 100%); }
 .pack-card:not(.bring) .pack-item { background: rgba(255,255,255,.6); }
 .bring-empty { background: rgba(255,255,255,.35); }
-/* frosted glass card with a chrome rim */
-.card-frost { position: relative; background: linear-gradient(160deg, rgba(255,255,255,.62) 0%, rgba(214,227,241,.45) 55%, rgba(174,197,224,.5) 100%); backdrop-filter: blur(20px) saturate(1.7); -webkit-backdrop-filter: blur(20px) saturate(1.7); box-shadow: inset 0 1px 0 #fff, 0 22px 55px rgba(20,12,8,.2); }
-.card-frost::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; background: linear-gradient(165deg, #ffffff, #8e939d 45%, #ffffff 70%, #a7adb8); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+/* dark brushed metal ("gunmetal") to pair with the silver cards */
+.card-gunmetal { background: linear-gradient(165deg,#5b606b 0%,#30333a 30%,#16171b 50%,#2b2e35 68%,#4d525d 100%); color: var(--paper); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(0,0,0,.4), 0 24px 60px rgba(20,12,8,.3); }
+.card-chrome .day-name { color: var(--red); }
+.day.card-chrome .mono-plain { color: var(--ink); }
