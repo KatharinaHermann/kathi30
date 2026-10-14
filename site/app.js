@@ -526,26 +526,13 @@
     });
     stack.style.marginBottom = 18 - MB[MB.length - 1] + 'px';  // banner sits 18px under the countdown; the release padding below it stays invisible
   }
-  // hero only: whatever gets covered by the next stacked layer blurs and fades out
-  const stack0 = (w) => w.parentNode.querySelector('.hero-kicker');
+  // hero only: each incoming layer carries a frosted veil (CSS backdrop blur) that frosts whatever it slides over.
+  // No per-frame work: JS only switches the veils on once the page has been scrolled.
   function coverFx() {
-    const pairs = [];
-    if (innerWidth <= 640 && !reduceMotion) {
-      const w30 = document.querySelector('.hero-stack .hero-30-wrap'), row = $('heroBadges');
-      if (w30 && heroIntro.parentNode === w30.parentNode) pairs.push([stack0(w30), w30, 4, .45], [w30, row, 40, .7], [row, heroIntro, -16, .3], [heroIntro, heroCd, -16, .35]);
-    }
-    pairs.forEach(([below, above, rest, span]) => {
-      const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (a.height * span)));
-      const v = Math.round(p * 40) / 40;
-      if (below._cv === v) return;
-      below._cv = v;
-      if (v) below.style.setProperty('filter', `blur(${(v * 5).toFixed(2)}px)`, 'important'); else below.style.removeProperty('filter');
-      below.style.opacity = v ? (1 - v * .55).toFixed(3) : '';
-    });
+    const st = document.querySelector('.hero-stack');
+    if (st) st.classList.toggle('is-stacking', innerWidth <= 640 && !reduceMotion && scrollY > 6);
   }
-  let fxQ = false;
-  addEventListener('scroll', () => { if (!fxQ) { fxQ = true; requestAnimationFrame(() => { fxQ = false; coverFx(); }); } }, { passive: true });
+  addEventListener('scroll', coverFx, { passive: true });
   window.restackLight = () => { sizeStacks(); sizeHero(); coverFx(); };
   // iPhone fires resize whenever the toolbar slides in/out while scrolling; only re-measure on a real width change
   let lastW = innerWidth;
@@ -591,7 +578,10 @@
 // liquid chrome headlines: every title is spelled with the Etsy chrome letter images.
 // The real text stays as the heading's accessible name; the images are decoration.
 (() => {
-  const hosts = document.querySelectorAll('.hero-kicker, .h2, .h2-car, .rsvp-big');
+  // ?silver shows the hero headline in the regular silver font, for comparing
+  const silverKicker = /(^|[?&])silver\b/.test(location.search);
+  if (silverKicker) document.documentElement.classList.add('kicker-silver');
+  const hosts = document.querySelectorAll(silverKicker ? '.h2, .h2-car, .rsvp-big' : '.hero-kicker, .h2, .h2-car, .rsvp-big');
   const GW = {'A':279,'B':195,'C':195,'D':186,'E':196,'F':156,'G':213,'H':211,'I':104,'J':184,'K':210,'L':188,'M':248,'N':217,'O':196,'P':175,'Q':198,'R':207,'S':215,'T':212,'U':206,'V':230,'W':280,'X':228,'Y':178,'Z':215,'0':208,'1':227,'2':253,'3':210,'4':251,'5':222,'6':218,'7':191,'8':231,'9':182}; // letter widths at 280px tall, so the layout is right before the images arrive
   const glyph = (c) => (/[A-Z0-9]/.test(c) ? `<img class="el" src="assets/etsy/${c}.webp" alt="" width="${GW[c]}" height="280">` : `<span class="el-p">${c}</span>`);
   hosts.forEach((h) => {
@@ -602,9 +592,7 @@
         const words = n.textContent.toUpperCase().split(/(\s+)/);
         const html = words.map((w) => (/^\s+$/.test(w) ? '<span class="el-sp"> </span>' : w ? `<span class="el-w" aria-hidden="true">${[...w].map(glyph).join('')}</span>` : '')).join('');
         const t = document.createElement('template'); t.innerHTML = html; n.replaceWith(t.content);
-      } else if (n.nodeType === 1 && n.classList.contains('kx')) {
-        n.innerHTML = '<img class="el" src="assets/etsy/X-red.webp" alt="">'; n.setAttribute('aria-hidden', 'true');
-      } else if (n.nodeType === 1) walk(n);
+      } else if (n.nodeType === 1 && !n.classList.contains('kx')) walk(n);
     });
     walk(h);
   });

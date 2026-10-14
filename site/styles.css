@@ -723,3 +723,29 @@ textarea.linput { resize: vertical; }
 .etsy-type.h2-car { font-size: clamp(44px, 7.2vw, 104px); }
 .etsy-type .el { flex-shrink: 0; max-width: none; }
 .carpool .etsy-type { filter: drop-shadow(0 0 1.5px rgba(255,255,255,.55)) drop-shadow(0 4px 14px rgba(255,255,255,.14)) !important; }
+
+/* phones: frosted veils ride on top of each stacked layer and blur what they slide over (GPU, no JS per frame) */
+@media (max-width: 640px) {
+  .hero-stack .hero-kicker, .hero-stack .hero-30-wrap, .hero-stack #heroBadges, .hero-stack .hero-intro, .hero-stack .countdown { will-change: auto; filter: none; opacity: 1; }
+  .hero-stack .hero-kicker.etsy-type { filter: drop-shadow(0 8px 12px rgba(20,12,8,.25)) !important; }
+  .hero-stack .hero-30-wrap::before, .hero-stack #heroBadges::before, .hero-stack .hero-intro::before, .hero-stack .countdown::before {
+    content: ""; position: absolute; left: -24px; right: -24px; top: -28px; bottom: 0; z-index: -1; pointer-events: none;
+    background: rgba(243,226,216,.38);
+    -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 28px); mask-image: linear-gradient(180deg, transparent 0, #000 28px);
+    opacity: 0; transition: opacity .35s ease;
+  }
+  .hero-stack .hero-intro::before, .hero-stack .countdown::before { bottom: 0; }
+  .hero-stack.is-stacking .hero-30-wrap::before, .hero-stack.is-stacking #heroBadges::before, .hero-stack.is-stacking .hero-intro::before, .hero-stack.is-stacking .countdown::before { opacity: 1; }
+  .hero-stack #heroBadges, .hero-stack .hero-intro, .hero-stack .countdown { isolation: isolate; }
+}
+
+/* polaroid frame in the same silver-champagne metal */
+.polaroid { background: var(--chrome-card); box-shadow: inset 0 2px 0 rgba(255,255,255,.9), inset 0 -2px 0 rgba(0,0,0,.18), inset 0 0 0 1px rgba(255,255,255,.45), 0 6px 0 #767b85, 0 30px 60px rgba(20,12,8,.35); }
+
+/* the x between the names: a plain red x */
+.etsy-type .kx { font-family: var(--f-display) !important; font-weight: 900; font-style: normal; font-size: .82em; line-height: 1; color: var(--red) !important; -webkit-text-fill-color: var(--red) !important; align-self: center; margin: 0 .12em; padding-bottom: .08em; }
+
+/* comparison mode (?silver): headline in the regular silver font */
+html.kicker-silver .hero-kicker { font-size: clamp(28px, 6.4vw, 92px); }
+@media (max-width: 640px) { html.kicker-silver .hero-kicker { font-size: 8.4vw; } }
