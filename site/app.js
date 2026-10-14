@@ -204,7 +204,7 @@
     if (m) return 'https://player.vimeo.com/video/' + m[1];
     return u;
   }
-  if (cfg.trailerUrl) {
+  if (cfg.trailerUrl && $('trailer')) {
     $('trailer').innerHTML = `<iframe src="${esc(embedUrl(cfg.trailerUrl))}" title="Trailer" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
   }
 
