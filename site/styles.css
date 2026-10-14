@@ -632,7 +632,7 @@ textarea.linput { resize: vertical; }
 @media (max-width: 640px) {
   .hero-stack .hero-intro { position: sticky; z-index: 4; width: 100%; }
   .hero-bottom { margin-top: 30px !important; }
-  .hero-stack .hero-30-wrap, .hero-stack #heroBadges, .stack > * { transition: filter .15s linear, opacity .15s linear; }
+  .hero-stack .hero-30-wrap, .hero-stack #heroBadges { transition: filter .15s linear, opacity .15s linear; }
 }
 
 /* intro line: no red, a size smaller */

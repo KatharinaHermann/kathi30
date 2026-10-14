@@ -511,16 +511,12 @@
       if (i) el.style.setProperty('margin-top', G[i] - MB[i - 1] + 'px', 'important');
     });
   }
-  // whatever gets covered by the next stacked layer blurs and fades out
+  // hero only: whatever gets covered by the next stacked layer blurs and fades out
   function coverFx() {
     const pairs = [];
     if (innerWidth <= 640 && !reduceMotion) {
       const w30 = document.querySelector('.hero-stack .hero-30-wrap'), row = $('heroBadges');
       if (w30 && heroIntro.parentNode === w30.parentNode) pairs.push([w30, row, 40, .7], [row, heroIntro, -16, .3], [heroIntro, heroCd, -16, .35]);
-      document.querySelectorAll('.stack').forEach((g) => {
-        const k = [...g.children];
-        k.slice(0, -1).forEach((c, i) => pairs.push([c, k[i + 1], 0, .7]));
-      });
     }
     pairs.forEach(([below, above, rest, span]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
