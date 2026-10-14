@@ -547,16 +547,30 @@
     if (mobile) stack.style.marginBottom = -MB[MB.length - 1] + 'px';
     else mq.style.setProperty('margin-bottom', '0px', 'important');
     hazePairs = mobile
-      ? [[kicker, w30, 4, .45, [kicker]], [w30, row, 40, .7, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]], [heroCd, mq, -10, .5, [heroCd]]]
+      ? [[kicker, w30, 4, .45, [kicker]], [w30, row, -24, .45, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]], [heroCd, mq, -10, .5, [heroCd]]]
       : [[kicker, w30, 0, .5, [kicker]], [w30, heroBottom, 0, .45, [w30, row]], [heroBottom, mq, 0, .6, [heroIntro, heroCd]]];
     const names = new Map([[kicker, 'kicker'], [w30, 'thirty'], [row, 'badges'], [heroIntro, 'intro'], [heroCd, 'countdown']]);
     hazePairs.forEach((pr) => pr[4].forEach((el) => twin(el, names.get(el))));
     layers.forEach((el) => el._twin && el._twin.fit && el._twin.fit());
+    if (SDA) {
+      // the browser drives each fade from the scroll position itself: work out, per covered layer, between which
+      // scroll offsets the next layer slides over it (measured with the layers un-stuck)
+      heroEl.classList.add('measuring');
+      const docTop = (el) => el.getBoundingClientRect().top + scrollY;
+      hazePairs.forEach(([below, above, rest, span, targets]) => {
+        const Yb = docTop(below), Ya = docTop(above), Hb = Math.max(1, below.offsetHeight), Tb = parseFloat(below.style.top) || 0;
+        const y0 = Math.max(Ya - Tb - Hb + rest, Yb - Tb), y1 = y0 + Hb * span;
+        targets.forEach((el) => { const t = el._twin; if (t) t.sharp.style.animationRange = t.blur.style.animationRange = `${y0.toFixed(1)}px ${y1.toFixed(1)}px`; });
+      });
+      heroEl.classList.remove('measuring');
+      heroEl.classList.add('sda');
+    }
     coverFx();
   }
   // Blur without per-frame repaints: every layer gets a pre-blurred twin; scrolling only crossfades opacity,
   // which the phone composites on the GPU.
   let hazePairs = [];
+  const SDA = typeof CSS !== 'undefined' && CSS.supports && CSS.supports('animation-timeline: scroll()');
   // On phones the blurred copy is a pre-rendered image (assets/blur/*.webp, made by tools/blur-layers.js):
   // the phone only fades a flat bitmap in, instead of blurring a big live layer while scrolling.
   const BLUR_BITMAPS = innerWidth <= 640 && !/(^|[?&])(silver|etsy|etsyx|black|allblack|redx)\b/.test(location.search);
@@ -569,7 +583,7 @@
     if (BLUR_BITMAPS && name) {
       blur.classList.add('bmp');
       const im = new Image();
-      im.alt = ''; im.decoding = 'async'; im.src = `assets/blur/${name}.webp?v=1`;
+      im.alt = ''; im.decoding = 'async'; im.src = `assets/blur/${name}.webp?v=2`;
       blur.appendChild(im);
       el._twin = { sharp, blur, v: -1, img: im };
       const fit = () => {
@@ -591,6 +605,7 @@
   // keep the countdown's blurred twin ticking
   setInterval(() => { const t = heroCd && heroCd._twin; if (t && !t.img && t.v > 0) t.blur.innerHTML = t.sharp.innerHTML.replace(/ id="[^"]*"/g, ''); }, 1000);
   function coverFx() {
+    if (SDA) return;
     hazePairs.forEach(([below, above, rest, span, targets]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (Math.max(1, a.height) * span)));

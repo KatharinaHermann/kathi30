@@ -802,3 +802,10 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
 /* phones: the blurred copy is a flat pre-rendered image */
 .lyr-blur.bmp { filter: none; padding: 0; display: block; overflow: visible; }
 .lyr-blur.bmp img { position: absolute; left: 50%; top: 0; translate: -50% 0; max-width: none; display: block; }
+
+/* scroll-driven fades (Safari 26+, Chrome): the browser crossfades sharp -> blurred copy from the scroll position */
+@keyframes lyr-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes lyr-in { from { opacity: .01; } to { opacity: .95; } }
+.hero.sda .lyr-sharp { animation: lyr-out linear both; animation-timeline: scroll(root block); }
+.hero.sda .lyr-blur { animation: lyr-in linear both; animation-timeline: scroll(root block); }
+.hero.measuring .hero-stack > *, .hero.measuring .hero-bottom, .hero.measuring .marquee { position: static !important; }
