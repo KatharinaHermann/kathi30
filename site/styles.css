@@ -534,3 +534,10 @@ textarea.linput { resize: vertical; }
   .countdown { width: 100%; }
   .cd-box { flex: 1 1 0; min-width: 0; }
 }
+@media (max-width: 640px) {
+  .hero-bottom { justify-content: center; text-align: center; }
+  .hero-intro { align-items: center; max-width: none; width: 100%; }
+  .hero-line { text-align: center; }
+  .hero-intro .row-wrap { justify-content: center; width: 100%; }
+  .countdown { justify-content: center; }
+}
