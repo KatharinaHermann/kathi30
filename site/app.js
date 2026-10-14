@@ -424,7 +424,7 @@
   const nav = document.querySelector('.nav');
   function layoutStacks() {
     const mobile = innerWidth <= 640;
-    document.documentElement.style.setProperty('--stack-top', (nav ? nav.offsetHeight : 90) + 12 + 'px');
+    document.documentElement.style.setProperty('--stack-top', Math.max((nav ? nav.offsetHeight : 90) + 12, Math.round(innerHeight * 0.25)) + 'px'); // stack forms a quarter of the way down the screen
     stackGroups.forEach((g) => {
       const kids = [...g.children];
       kids.forEach((c, i) => {
