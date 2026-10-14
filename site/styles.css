@@ -390,5 +390,4 @@ textarea.linput { resize: vertical; }
 .step-n { color: var(--red); font-size: 15px; }
 #packCount, #bringCount { color: var(--red-dark); font-weight: 600; }
 .car-name { color: var(--red); }
-.marquee { background: var(--red); color: #fff; }
 .polaroid-cap::after { content: " ♥"; color: var(--red); }
