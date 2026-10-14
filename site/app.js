@@ -507,16 +507,21 @@
     if (mobile && heroIntro.parentNode !== stack) stack.append(heroIntro, heroCd);
     if (!mobile && heroIntro.parentNode !== heroBottom) heroBottom.append(heroIntro, heroCd);
     heroBottom.hidden = mobile;
+    // phones: the banner is the last layer of the stack
+    const mq = document.querySelector('.marquee'), heroEl = document.querySelector('.hero');
+    if (mq && mobile && mq.parentNode !== stack) stack.appendChild(mq);
+    if (mq && !mobile && mq.parentNode === stack) heroEl.after(mq);
     const kicker = stack.querySelector('.hero-kicker');
-    const layers = [kicker, w30, row, heroIntro, heroCd];
+    const layers = [kicker, w30, row, heroIntro, heroCd, document.querySelector('.marquee')];
     layers.forEach((el) => ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
     stack.style.removeProperty('margin-bottom');
     if (!mobile) return;
     const navH = nav ? nav.offsetHeight : 90;
     const t30 = navH + 6;
     const H = layers.map((el) => el.offsetHeight);
-    const G = [0, 8, -28, 22, 22];                        // resting gap before each layer (stickers overlap the 30 a bit)
-    const T = [t30, t30 + 8, t30 + 4, t30 + 34, t30 + 34 + H[3] - 44]; // where each layer pins: headline, 30, stickers at the ceiling, text, countdown over the text's last line
+    const G = [0, 8, -28, 22, 22, 18];                    // resting gap before each layer (stickers overlap the 30 a bit)
+    const tCd = t30 + 34 + H[3] - 44;
+    const T = [t30, t30 + 8, t30 + 4, t30 + 34, tCd, tCd + Math.round(H[4] * .45)]; // where each layer pins: headline, 30, stickers at the ceiling, text, countdown over the text's last line, banner over the countdown
     const R = Math.max(...T.map((t, i) => t + H[i]));
     const MB = T.map((t, i) => R - t - H[i]);         // pads every layer so they all let go at the same moment
     layers.forEach((el, i) => {
@@ -524,7 +529,7 @@
       el.style.setProperty('margin-bottom', MB[i] + 'px', 'important');
       if (i) el.style.setProperty('margin-top', G[i] - MB[i - 1] + 'px', 'important');
     });
-    stack.style.marginBottom = 18 - MB[MB.length - 1] + 'px';  // banner sits 18px under the countdown; the release padding below it stays invisible
+    stack.style.marginBottom = -MB[MB.length - 1] + 'px';  // the release padding under the banner stays invisible
   }
   // hero only: each incoming layer carries a frosted veil (CSS backdrop blur) that frosts whatever it slides over.
   // No per-frame work: JS only switches the veils on once the page has been scrolled.
