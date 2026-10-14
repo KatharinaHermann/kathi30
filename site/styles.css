@@ -684,3 +684,14 @@ textarea.linput { resize: vertical; }
 @media (max-width: 640px) {
   .hero-stack .hero-kicker { position: sticky; z-index: 0; transition: filter .15s linear, opacity .15s linear; }
 }
+
+/* titles spelled with the Etsy chrome letters (built in app.js) */
+.etsy-type { background: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important; color: var(--ink) !important; -webkit-text-fill-color: var(--ink) !important; letter-spacing: 0 !important; font-family: 'Arial Black', var(--f-display) !important; font-weight: 900 !important; line-height: 1 !important; filter: drop-shadow(0 8px 12px rgba(20,12,8,.25)) !important; }
+.etsy-type .el-w { display: inline-flex; align-items: flex-end; white-space: nowrap; vertical-align: bottom; }
+.etsy-type .el { height: .95em; width: auto; display: block; margin: 0 -.035em; }
+.etsy-type .el-sp { display: inline-block; width: .28em; }
+.etsy-type .el-p { display: inline-block; font-size: .8em; line-height: 1; padding-bottom: .04em; margin-left: .02em; }
+.etsy-type .kx { display: inline-flex; vertical-align: bottom; margin: 0 .06em; }
+.hero-kicker.etsy-type span { white-space: nowrap; }
+.card-dark .etsy-type, .pay .etsy-type { color: #f6f2ec !important; -webkit-text-fill-color: #f6f2ec !important; }
+.pay .etsy-type { filter: drop-shadow(0 0 1.5px rgba(255,255,255,.55)) drop-shadow(0 4px 14px rgba(255,255,255,.14)) !important; }
