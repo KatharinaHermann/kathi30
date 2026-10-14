@@ -1,4 +1,4 @@
-# Kathi x Josh — turning 30 🏜️
+# Kathi x Joshua — turning 30 🏜️
 
 Party website for Joshua Tree, Jan 15–18 2027, built from the Claude Design "v5" mock-up
 (`project/Kathi 30 Website v5.dc.html`), with a Google Sheet as the backend.

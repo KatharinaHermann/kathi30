@@ -1,4 +1,4 @@
-# Kathi x Josh 30 — going live
+# Kathi x Joshua 30 — going live
 
 About 15 minutes. You need a Google account and (for hosting) a free Netlify account.
 

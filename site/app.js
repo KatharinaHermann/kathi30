@@ -151,7 +151,7 @@
   }
 
   // ---------- marquee ----------
-  const mq = 'KATHI x JOSH (TURNING 30) ✦ JAN 15—18 ✦ JOSHUA TREE ✦ RSVP BY OCT 30 ✦ ';
+  const mq = 'KATHI x JOSHUA (TURNING 30) ✦ JAN 15—18 ✦ JOSHUA TREE ✦ RSVP BY OCT 30 ✦ ';
   $('marquee').innerHTML = `<span>${esc(mq.repeat(3))}</span><span>${esc(mq.repeat(3))}</span>`;
 
   // ---------- countdowns + guest book lock ----------

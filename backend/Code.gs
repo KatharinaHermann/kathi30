@@ -1,5 +1,5 @@
 /**
- * Kathi x Josh 30 — Google Sheet backend
+ * Kathi x Joshua 30 — Google Sheet backend
  *
  * Paste this whole file into the Google Sheet's Extensions → Apps Script editor,
  * run `setup` once, then Deploy → New deployment → Web app
@@ -243,7 +243,7 @@ function buildDashboard_(d) {
   d.clear();
   const going = 'rsvps!B2:B="going"';
   const rows = [
-    ['KATHI x JOSH 30 — host dashboard', ''],
+    ['KATHI x JOSHUA 30 — host dashboard', ''],
     ['', ''],
     ['RSVPs', ''],
     ['going (guests)', '=COUNTIF(rsvps!B2:B,"going")'],
