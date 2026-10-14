@@ -483,7 +483,7 @@
     const navH = nav ? nav.offsetHeight : 90;
     const t30 = navH + 6, h30 = w30.offsetHeight, hb = row.offsetHeight;
     const tb = t30 + h30 * 0.42;                       // where the row lands: over the lower part of the 30
-    const travel = Math.round(innerHeight * 0.3);      // how far the row scrolls before it lands
+    const travel = Math.round(innerHeight * 0.12);     // how far the row scrolls before it lands
     const mb = Math.max(0, tb + hb - (t30 + h30));     // lets the 30 release exactly when the row lands
     w30.style.top = t30 + 'px';
     w30.style.setProperty('margin-bottom', mb + 'px', 'important');
