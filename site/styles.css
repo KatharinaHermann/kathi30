@@ -695,3 +695,15 @@ textarea.linput { resize: vertical; }
 .hero-kicker.etsy-type span { white-space: nowrap; }
 .card-dark .etsy-type, .pay .etsy-type { color: #f6f2ec !important; -webkit-text-fill-color: #f6f2ec !important; }
 .pay .etsy-type { filter: drop-shadow(0 0 1.5px rgba(255,255,255,.55)) drop-shadow(0 4px 14px rgba(255,255,255,.14)) !important; }
+
+/* one metal everywhere: the stargazing glam silver-to-champagne, a bit darker and less golden */
+:root {
+  --chrome: linear-gradient(180deg,#f4f5f7 0%,#b3b8c1 26%,#6a6f79 45%,#26282e 50%,#6b6660 53%,#c9b6a4 66%,#eee7df 84%,#a3a7af 100%);
+  --chrome-soft: linear-gradient(180deg,#f1f2f4 0%,#b3b8c1 30%,#7a7f89 48%,#c9b6a4 64%,#efe8e0 100%);
+  --chrome-btn: linear-gradient(180deg,#f1f2f4 0%,#b8bcc4 40%,#7a7f89 52%,#c9b6a4 78%,#ebe4dc 100%);
+  --chrome-card: linear-gradient(165deg,#eceef1 0%,#b3b8c1 34%,#767b85 50%,#c7b3a1 68%,#ece4dc 100%);
+  --chrome-30: linear-gradient(180deg,#f4f5f7 0%,#b3b8c1 13%,#6a6f79 23%,#26282e 25%,#6b6660 27%,#c9b6a4 34%,#eee7df 42%,#a3a7af 50%,#f4f5f7 58%,#b3b8c1 63%,#6a6f79 73%,#26282e 75%,#6b6660 77%,#c9b6a4 84%,#eee7df 92%,#a3a7af 100%);
+}
+.dress { background: var(--chrome-card); }
+.chrome-warm { background: var(--chrome-soft); -webkit-background-clip: text; background-clip: text; }
+.nav { background: linear-gradient(100deg,#eceef1 0%,#b3b8c1 30%,#868b95 48%,#c7b3a1 70%,#ece4dc 100%); }
