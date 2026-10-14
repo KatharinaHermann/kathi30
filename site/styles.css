@@ -312,6 +312,17 @@ textarea.linput { resize: vertical; }
   .car-prev { left: 10px; } .car-next { right: 10px; }
   .gb-lock { padding: 12px; }
   .lock-badge { width: 110px; height: 110px; }
+  .gb-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .gb-grid img { border-radius: 18px; }
+  .gb-wrap.locked .gb-grid { min-height: 0; max-height: 560px; overflow: hidden; }
+  .gb-lock { padding: 12px 8px; }
+  .lock-card { padding: 22px 18px; gap: 10px; max-width: 290px; }
+  .lock-title { font-size: 26px; }
+  .lock-text { font-size: 14px; }
+  .lock-count { font-size: 13px; padding: 8px 14px; }
+  .gb-badge { width: 64px !important; }
+  .gb-badge:nth-child(3), .gb-badge:nth-child(5), .gb-badge:nth-child(7) { display: none; }
+  .gb-open { margin-top: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
