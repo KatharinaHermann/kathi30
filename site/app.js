@@ -148,7 +148,7 @@
   const heroBadges = $('heroBadges');
   [
     ['assets/kathi.jpg', '50% 45%', 'BIRTHDAY GIRL ✦ TURNING 30 ✦ BIRTHDAY GIRL ✦ TURNING 30 ✦', '#f02719', '#ffffff', 'right:5%;top:30%;width:clamp(150px,20vw,270px)', 0, 16],
-    ['assets/kathi-baby.jpg', '51% 18%', 'EST. 1997 ✦ BABY KATHI ✦ EST. 1997 ✦ BABY KATHI ✦', '#fbf8f4', '#f02719', 'left:4%;top:27%;width:clamp(130px,17vw,240px)', -1.7, -20],
+    ['assets/kathi-baby.jpg', '51% 18%', 'EST. 1997 ✦ BABY KATHI ✦ EST. 1997 ✦ BABY KATHI ✦', '#fbf8f4', '#24221f', 'left:4%;top:27%;width:clamp(130px,17vw,240px)', -1.7, -20],
     ['assets/kathi-bw.jpg', '58% 30%', 'CERTIFIED CHAOS ✦ 30 & THRIVING ✦ CERTIFIED CHAOS ✦ 30 & THRIVING ✦', '#24221f', '#f6f2ec', 'right:27%;top:55%;width:clamp(110px,13vw,190px)', -3.2, 12]
   ].forEach((b) => heroBadges.append(ringSticker('badge', ...b)));
 
