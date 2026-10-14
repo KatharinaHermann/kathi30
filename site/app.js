@@ -549,25 +549,47 @@
     hazePairs = mobile
       ? [[kicker, w30, 4, .45, [kicker]], [w30, row, 40, .7, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]], [heroCd, mq, -10, .5, [heroCd]]]
       : [[kicker, w30, 0, .5, [kicker]], [w30, heroBottom, 0, .45, [w30, row]], [heroBottom, mq, 0, .6, [heroIntro, heroCd]]];
-    hazePairs.forEach((pr) => pr[4].forEach(twin));
+    const names = new Map([[kicker, 'kicker'], [w30, 'thirty'], [row, 'badges'], [heroIntro, 'intro'], [heroCd, 'countdown']]);
+    hazePairs.forEach((pr) => pr[4].forEach((el) => twin(el, names.get(el))));
+    layers.forEach((el) => el._twin && el._twin.fit && el._twin.fit());
     coverFx();
   }
   // Blur without per-frame repaints: every layer gets a pre-blurred twin; scrolling only crossfades opacity,
   // which the phone composites on the GPU.
   let hazePairs = [];
-  function twin(el) {
+  // On phones the blurred copy is a pre-rendered image (assets/blur/*.webp, made by tools/blur-layers.js):
+  // the phone only fades a flat bitmap in, instead of blurring a big live layer while scrolling.
+  const BLUR_BITMAPS = innerWidth <= 640 && !/(^|[?&])(silver|etsy|etsyx|black|allblack|redx)\b/.test(location.search);
+  const BLUR_PAD = 40;                                       // the bitmaps carry 40px of blur spill above and below
+  function twin(el, name) {
     if (el._twin) return;
     const sharp = document.createElement('div'), blur = document.createElement('div');
     sharp.className = 'lyr-sharp'; blur.className = 'lyr-blur';
     while (el.firstChild) sharp.appendChild(el.firstChild);
-    blur.innerHTML = sharp.innerHTML;
-    blur.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+    if (BLUR_BITMAPS && name) {
+      blur.classList.add('bmp');
+      const im = new Image();
+      im.alt = ''; im.decoding = 'async'; im.src = `assets/blur/${name}.webp?v=1`;
+      blur.appendChild(im);
+      el._twin = { sharp, blur, v: -1, img: im };
+      const fit = () => {
+        if (!im.naturalWidth) return;
+        // the capture spans the full screen width, so scale by the screen, capped by the layer's height (fixed-size layers)
+        const s = Math.min(document.documentElement.clientWidth / im.naturalWidth, el.offsetHeight / (im.naturalHeight - 2 * BLUR_PAD));
+        im.style.width = im.naturalWidth * s + 'px'; im.style.height = im.naturalHeight * s + 'px'; im.style.top = -BLUR_PAD * s + 'px';
+      };
+      el._twin.fit = fit;
+      im.addEventListener('load', fit);
+    } else {
+      blur.innerHTML = sharp.innerHTML;
+      blur.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+      el._twin = { sharp, blur, v: -1 };
+    }
     blur.setAttribute('aria-hidden', 'true'); blur.inert = true;
     el.classList.add('has-twin'); el.append(sharp, blur);
-    el._twin = { sharp, blur, v: -1 };
   }
   // keep the countdown's blurred twin ticking
-  setInterval(() => { const t = heroCd && heroCd._twin; if (t && t.v > 0) t.blur.innerHTML = t.sharp.innerHTML.replace(/ id="[^"]*"/g, ''); }, 1000);
+  setInterval(() => { const t = heroCd && heroCd._twin; if (t && !t.img && t.v > 0) t.blur.innerHTML = t.sharp.innerHTML.replace(/ id="[^"]*"/g, ''); }, 1000);
   function coverFx() {
     hazePairs.forEach(([below, above, rest, span, targets]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();

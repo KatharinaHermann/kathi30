@@ -798,3 +798,7 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
 /* banner: its own GPU layer so the scrolling text doesn't shimmer while it is pinned */
 .marquee { transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; contain: paint; }
 .marquee-track { will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden; -webkit-font-smoothing: antialiased; }
+
+/* phones: the blurred copy is a flat pre-rendered image */
+.lyr-blur.bmp { filter: none; padding: 0; display: block; overflow: visible; }
+.lyr-blur.bmp img { position: absolute; left: 50%; top: 0; translate: -50% 0; max-width: none; display: block; }
