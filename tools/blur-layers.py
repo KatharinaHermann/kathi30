@@ -14,7 +14,7 @@ for f in sorted(os.listdir(src)):
     rgb = b[..., :3] / np.maximum(b[..., 3:4], 1e-4)
     outp = np.concatenate([np.clip(rgb, 0, 1), b[..., 3:4]], axis=-1)
     # black type would smear as a dark smudge: lift those layers toward white and thin them out
-    light = {'kicker': (.6, .72), 'intro': (.6, .72), 'countdown': (.35, .85)}.get(f[:-4])
+    light = {'kicker': (.7, .6), 'intro': (.7, .6), 'countdown': (.45, .75), 'badges': (.5, .7), 'thirty': (.5, .7)}.get(f[:-4])
     if light:
         outp[..., :3] = outp[..., :3] * (1 - light[0]) + light[0]
         outp[..., 3] *= light[1]

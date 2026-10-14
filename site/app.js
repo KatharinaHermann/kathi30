@@ -583,7 +583,7 @@
     if (BLUR_BITMAPS && name) {
       blur.classList.add('bmp');
       const im = new Image();
-      im.alt = ''; im.decoding = 'async'; im.src = `assets/blur/${name}.webp?v=2`;
+      im.alt = ''; im.decoding = 'async'; im.src = `assets/blur/${name}.webp?v=3`;
       blur.appendChild(im);
       el._twin = { sharp, blur, v: -1, img: im };
       const fit = () => {
