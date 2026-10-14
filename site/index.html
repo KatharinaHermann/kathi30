@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KATHI x JOSH — turning 30 · Joshua Tree, Jan 15–18</title>
+<meta name="description" content="3 nights under the stars in Joshua Tree, Jan 15–18, 2027. RSVP by Oct 30.">
+<meta property="og:title" content="KATHI x JOSH — turning 30 🏜️">
+<meta property="og:description" content="3 nights under the stars in Joshua Tree · Jan 15–18 · RSVP by Oct 30">
+<meta property="og:image" content="assets/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f3e7da">
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="config.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="page">
+  <!-- fixed background: day glow → setting sun → night sky -->
+  <div id="bg" class="bg" aria-hidden="true">
+    <div class="glow" style="left:-12%;top:-14%;width:62vw;background:#9fb6d1;opacity:.85;animation-duration:16s"></div>
+    <div class="glow" style="right:-14%;top:18%;width:54vw;background:#f3b995;opacity:.9;animation-duration:19s;animation-delay:-4s"></div>
+    <div class="glow" style="right:6%;bottom:-18%;width:40vw;background:#e8764a;opacity:.55;animation-duration:22s;animation-delay:-8s"></div>
+    <div class="glow" style="left:-10%;bottom:-16%;width:44vw;background:#5c6b4c;opacity:.28;animation-duration:25s;animation-delay:-12s"></div>
+    <div class="glow" style="left:34%;top:38%;width:30vw;background:#f6dcc6;opacity:.9;animation-duration:18s;animation-delay:-6s"></div>
+  </div>
+  <div id="sun" class="sun" aria-hidden="true">
+    <div class="sun-halo"></div>
+    <div class="sun-disc"></div>
+    <div id="sunhot" class="sun-hot"></div>
+  </div>
+  <div id="night" class="night" aria-hidden="true"><div id="stars" class="stars"></div></div>
+  <div id="prog" class="prog" aria-hidden="true"></div>
+
+  <nav class="nav">
+    <a href="#top" class="nav-logo chrome-text">KATHI 30</a>
+    <div class="nav-links mono">
+      <a href="#plan">plan</a><a href="#stay">stay</a><a href="#travel">travel</a><a href="#carpool">carpool</a><a href="#music">soundtrack</a><a href="#guestbook">guest book</a><a href="#pack">pack</a><a href="#bring">bring</a>
+    </div>
+    <a href="#rsvp" class="nav-cta mono">rsvp by oct 30</a>
+  </nav>
+
+  <header id="top" class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div id="heroBadges"></div>
+    <div class="hero-top mono"><span>t-minus 3 months</span><span>jan 15—18, 2027</span><span>joshua tree, ca</span></div>
+    <h1 class="hero-kicker chrome-text">KATHI x JOSH — TURNING</h1>
+    <div class="hero-30-wrap"><div class="big30 shimmer" role="img" aria-label="30">30</div></div>
+    <div class="hero-reflect" aria-hidden="true"><div class="big30 haze">30</div></div>
+    <div class="hero-bottom">
+      <div class="hero-intro">
+        <p class="glass-pill">The desert is calling and the Airbnbs are <b>LOCKED</b> 🔐 Come join me for 3 nights under the stars.</p>
+        <div class="row-wrap">
+          <a data-href="partifulUrl" target="_blank" rel="noopener" class="btn btn-dark mono">rsvp on partiful →</a>
+          <a href="#plan" class="btn btn-outline mono">the plan ↓</a>
+        </div>
+      </div>
+      <div class="countdown" aria-label="countdown to arrival">
+        <div class="cd-box"><span class="cd-num" id="cdD">0</span><span class="cd-lbl mono">DAYS</span></div>
+        <div class="cd-box"><span class="cd-num" id="cdH">00</span><span class="cd-lbl mono">HRS</span></div>
+        <div class="cd-box"><span class="cd-num" id="cdM">00</span><span class="cd-lbl mono">MIN</span></div>
+        <div class="cd-box"><span class="cd-num" id="cdS">00</span><span class="cd-lbl mono">SEC</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="marquee" aria-label="KATHI x JOSH (TURNING 30) · JAN 15—18 · JOSHUA TREE · RSVP BY OCT 30"><div class="marquee-track" id="marquee" aria-hidden="true"></div></div>
+
+  <section class="glass reveal" aria-label="The deal">
+    <div class="grid-auto" style="--min:230px">
+      <div class="card card-sand lift"><span class="deal-big">3 nights</span><span class="body16">Fri Jan 15 → Mon Jan 18. Under the stars.</span></div>
+      <div class="card card-chrome lift"><span class="deal-big">$300</span><span class="body16">per person, all 3 nights. I'm covering part of the stay.</span></div>
+      <div class="card card-dark lift"><span class="deal-big">Oct 30</span><span class="body16">RSVP deadline so I know you're INN</span></div>
+    </div>
+  </section>
+
+  <section id="plan" class="glass reveal">
+    <div class="sec-head">
+      <h2 class="h2 chrome-text">the plan</h2>
+      <span class="mono">(preliminary) · subject to vibes</span>
+    </div>
+    <div class="plan-row">
+      <div class="card card-sand lift day">
+        <div class="day-head"><span class="day-name">FRI</span><span class="mono-plain">JAN 15</span></div>
+        <span class="emoji">🚗</span>
+        <span class="day-title">Arrival</span>
+        <span class="body16">Roll in, claim a bed, welcome snacks + drinks by the pool.</span>
+      </div>
+      <div class="card card-dark lift day day-sat">
+        <div class="day-head"><span class="day-name chrome-warm">SAT</span><span class="mono-plain">JAN 16 · THE BIG ONE</span></div>
+        <span class="emoji">🏜️ 🪩</span>
+        <span class="day-title">Hike → dinner → PARTY</span>
+        <span class="body16">Early Joshua Tree National Park adventure, then dinner and the birthday party.</span>
+        <div class="dress"><span class="mono-plain small">DRESS CODE</span><span class="dress-title">stargazing glam ✨</span><span style="font-size:14px">think sparkles, silver and gold</span></div>
+      </div>
+      <div class="card card-sand lift day">
+        <div class="day-head"><span class="day-name">SUN</span><span class="mono-plain">JAN 17</span></div>
+        <span class="emoji">🥞 🌴</span>
+        <span class="day-title">Brunch → lounge</span>
+        <span class="body16">Pool, pickleball, horizontal time — or go explore on your own. Dinner + drinks after.</span>
+      </div>
+      <div class="card card-sand lift day">
+        <div class="day-head"><span class="day-name">MON</span><span class="mono-plain">JAN 18</span></div>
+        <span class="emoji">☕</span>
+        <span class="day-title">Breakfast → goodbyes</span>
+        <span class="body16">Coffee, breakfast and goodbyes.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="stay" class="glass reveal">
+    <div class="sec-head">
+      <h2 class="h2 chrome-text">the stay</h2>
+      <span class="mono">two houses · locked in 🔐</span>
+    </div>
+    <div class="carousel" id="carousel" aria-roledescription="carousel" aria-label="Photos of the houses">
+      <div id="slides"></div>
+      <div class="carousel-shade"><span class="mono-plain" id="slideNum">1 / 8</span></div>
+      <button class="chrome-round car-prev" id="prevSlide" aria-label="previous photo">←</button>
+      <button class="chrome-round car-next" id="nextSlide" aria-label="next photo">→</button>
+    </div>
+    <div class="dots" id="dots"></div>
+    <div class="grid-auto mt16" style="--min:300px">
+      <a class="card-sand house" href="https://www.google.com/maps/search/?api=1&amp;query=7670+Wilton+Rd,+Joshua+Tree,+CA+92252" target="_blank" rel="noopener">
+        <span class="mono-plain small ls1">🏡 HOUSE 01</span>
+        <span class="house-street">7670 Wilton Rd</span>
+        <span style="font-size:15px">Joshua Tree, CA 92252</span>
+        <span class="mono-plain tiny-link">open in maps ↗</span>
+      </a>
+      <a class="card-sand house" href="https://www.google.com/maps/search/?api=1&amp;query=6715+Juniper+Rd,+Joshua+Tree,+CA+92252" target="_blank" rel="noopener">
+        <span class="mono-plain small ls1">🏡 HOUSE 02</span>
+        <span class="house-street">6715 Juniper Rd</span>
+        <span style="font-size:15px">Joshua Tree, CA 92252</span>
+        <span class="mono-plain tiny-link">open in maps ↗</span>
+      </a>
+    </div>
+    <div id="pay" class="pay">
+      <div class="col gap14">
+        <span class="pay-title chrome-soft-text">pay your share 💸</span>
+        <span class="body16" style="line-height:1.55;max-width:420px">$300 per person covers all 3 nights. Send it with your RSVP by Oct 30 to be officially INN.</span>
+        <div class="row-wrap">
+          <a data-href="venmoUrl" target="_blank" rel="noopener" class="btn-sm btn-chrome mono">venmo $300 →</a>
+          <a data-href="paypalUrl" target="_blank" rel="noopener" class="btn-sm btn-outline-light mono">paypal $300 →</a>
+        </div>
+      </div>
+      <div id="payBox"></div>
+    </div>
+  </section>
+
+  <section id="travel" class="glass reveal">
+    <h2 class="h2 chrome-text" style="margin-bottom:28px">getting there</h2>
+    <div class="grid-auto" style="--min:340px">
+      <div class="route lift">
+        <span class="mono-plain ls1">ROUTE 01 · ✈️ + 🚙</span>
+        <span class="route-title">Fly to LA, rent a car</span>
+        <span class="body16" style="line-height:1.55">Land at LAX (or Palm Springs PSP — about an hour out). It's ~2.5h east from LA. Aim to arrive Friday afternoon to dodge traffic, and split a rental with whoever lands around the same time.</span>
+      </div>
+      <div class="route lift">
+        <span class="mono-plain ls1">ROUTE 02 · 🌉 → 🏜️</span>
+        <span class="route-title">Road trip from SF</span>
+        <span class="body16" style="line-height:1.55">~8h down I-5. Leave Thursday night or early Friday, queue the playlist, split the gas. Find your car crew on the carpool board below.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="carpool" class="glass reveal">
+    <div class="carpool">
+      <div class="sec-head" style="margin-bottom:32px">
+        <h2 class="h2-car chrome-text">carpool board</h2>
+        <span class="mono" id="seatSummary">drivers + riders, find each other</span>
+      </div>
+      <div class="grid-auto" style="--min:320px">
+        <form id="driverForm" class="dform">
+          <span class="form-title">🚙 I'm driving</span>
+          <input name="name" class="dinput" placeholder="your name" required maxlength="60" autocomplete="given-name" aria-label="your name">
+          <span class="mono-plain small ls08">LEAVING FROM</span>
+          <div class="row-wrap gap6" data-choice="dFrom"></div>
+          <div class="seats">
+            <span class="mono-plain small ls08">SEATS FOR FRIENDS</span>
+            <div class="seats-ctl">
+              <button type="button" class="round-btn" id="seatsDown" aria-label="fewer seats">−</button>
+              <span class="seats-num" id="seatsNum">3</span>
+              <button type="button" class="round-btn" id="seatsUp" aria-label="more seats">+</button>
+            </div>
+          </div>
+          <input name="when" class="dinput" placeholder="leaving when? e.g. Fri 9am, or LAX pickup after 2pm" maxlength="140" aria-label="leaving when">
+          <button type="submit" class="submit btn-chrome mono">add my car</button>
+        </form>
+        <form id="riderForm" class="dform">
+          <span class="form-title">🙋 I need a ride</span>
+          <input name="name" class="dinput" placeholder="your name" required maxlength="60" autocomplete="given-name" aria-label="your name">
+          <span class="mono-plain small ls08">LEAVING FROM</span>
+          <div class="row-wrap gap6" data-choice="rFrom"></div>
+          <input name="details" class="dinput" placeholder="flying into LAX? flight # + landing time — or when you can leave SF" maxlength="200" aria-label="flight or timing details">
+          <select name="driver" class="dinput" id="driverSelect" aria-label="pick a car"></select>
+          <button type="submit" class="submit mono" style="margin-top:auto;background:var(--accent)">hop in</button>
+        </form>
+      </div>
+      <div class="board" id="board"></div>
+      <div class="looking" id="looking" hidden></div>
+    </div>
+  </section>
+
+  <section id="music" class="glass reveal">
+    <div class="sec-head">
+      <h2 class="h2 chrome-text">the soundtrack</h2>
+      <span class="homework mono-plain">homework: add ≥1 song to EACH 🎧</span>
+    </div>
+    <div class="grid-auto music" style="--min:280px">
+      <div class="playlist pl-day">
+        <span class="mono-plain ls1">☀️ DAY PLAYLIST</span>
+        <span class="pl-title">kathi x josh days</span>
+        <span class="body16">Pool floats, hike playlists, golden hour. Think breezy, sunny, a little psychedelic.</span>
+        <a data-href="dayPlaylistUrl" target="_blank" rel="noopener" class="cover"><img src="assets/cover-days.jpg" alt="Day playlist cover" loading="lazy" width="800" height="800"></a>
+        <a data-href="dayPlaylistUrl" target="_blank" rel="noopener" class="btn-sm btn-dark mono self-start">add your song →</a>
+      </div>
+      <div class="polaroid">
+        <span class="tape" aria-hidden="true"></span>
+        <video src="assets/kathi-dance.mp4" poster="assets/kathi-dance.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Kathi dancing"></video>
+        <span class="polaroid-cap">when the playlist hits</span>
+      </div>
+      <div class="playlist pl-night">
+        <span class="mono-plain ls1">🌙 NIGHT PLAYLIST</span>
+        <span class="pl-title chrome-soft-text">kathi x josh nights</span>
+        <span class="body16">Dinner → dance floor → 2am singalongs. Bangers only, guilty pleasures encouraged.</span>
+        <a data-href="nightPlaylistUrl" target="_blank" rel="noopener" class="cover"><img src="assets/cover-nights.jpg" alt="Night playlist cover" loading="lazy" width="800" height="800"></a>
+        <a data-href="nightPlaylistUrl" target="_blank" rel="noopener" class="btn-sm btn-chrome mono self-start">add your song →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="guestbook" class="glass reveal">
+    <h2 class="h2 chrome-text" style="margin-bottom:28px">trailer &amp; guest book</h2>
+    <div class="trailer" id="trailer">
+      <div class="trailer-soon">
+        <div class="play">▶</div>
+        <span class="mono">the trailer — premiering soon</span>
+      </div>
+    </div>
+    <div class="gb-wrap">
+      <div class="gb-grid" id="gbGrid">
+        <div style="rotate:-2deg"><img src="assets/gb-grid-1.jpg" alt="" loading="lazy"></div>
+        <div style="rotate:1.5deg"><img src="assets/gb-grid-2.jpg" alt="" loading="lazy"></div>
+        <div style="rotate:-1deg"><img src="assets/gb-grid-3.jpg" alt="" loading="lazy"></div>
+        <div style="rotate:2deg"><img src="assets/gb-grid-4.jpg" alt="" loading="lazy"></div>
+      </div>
+      <div class="gb-lock" id="gbLock" hidden>
+        <div id="gbBadges"></div>
+        <div class="lock-card">
+          <div id="lockBadge"></div>
+          <span class="lock-title chrome-soft-text">the guest book<br>is locked</span>
+          <span class="lock-text">It unlocks at the party — Sat Jan 16, 8pm 🪩 Save your best wishes, roasts and chaotic photos for the night.</span>
+          <span class="lock-count mono-plain">opens in <span id="gbCountdown">…</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="gb-open" id="gbOpen" hidden>
+      <form id="noteForm" class="note-form">
+        <span class="form-title">sign the guest book ✍️</span>
+        <input name="name" class="linput" placeholder="your name" required maxlength="60" aria-label="your name">
+        <textarea name="msg" class="linput" placeholder="a memory, a roast, a birthday wish…" required rows="3" maxlength="2000" aria-label="your message"></textarea>
+        <label class="photo-pick mono-plain">
+          <span id="photoLabel">+ add a photo</span>
+          <input type="file" accept="image/*" id="photoInput" hidden>
+        </label>
+        <button type="submit" class="submit mono" style="background:var(--ink);color:var(--paper)">post it</button>
+      </form>
+      <div class="notes" id="notes"></div>
+    </div>
+  </section>
+
+  <section id="rsvp" class="glass glass-rsvp reveal">
+    <div class="col gap28" style="max-width:900px;position:relative">
+      <span class="mono-plain ls1">RSVP BY OCTOBER 30 📅</span>
+      <div class="rsvp-big chrome-text">are you<br>INN? 🏡</div>
+      <div class="grid-auto gap12" style="--min:220px">
+        <div class="step"><span class="mono-plain step-n">01</span><span class="step-body"><span class="body16 lh145">RSVP on Partiful. Bringing someone? Add your +1 right in the RSVP.</span><a data-href="partifulUrl" target="_blank" rel="noopener" class="tilt">💌 tap to RSVP →</a></span></div>
+        <div class="step"><span class="mono-plain step-n">02</span><span class="step-body"><span class="body16 lh145">Sort your ride on the carpool board.</span><a href="#carpool" class="tilt">🚙 find a ride →</a></span></div>
+        <div class="step"><span class="mono-plain step-n">03</span><span class="step-body"><span class="body16 lh145">Send your $300 via Venmo or PayPal.</span><a href="#pay" class="tilt">💸 pay your share →</a></span></div>
+        <div class="step"><span class="mono-plain step-n">04</span><span class="step-body"><span class="body16 lh145">Join the group chat 💬 for updates, rides and gc spam.</span><a data-href="whatsappUrl" target="_blank" rel="noopener" class="tilt tilt-wa">💬 join WhatsApp →</a></span></div>
+      </div>
+    </div>
+    <div id="pack" class="pack">
+      <div class="grid-auto" style="--min:340px;align-items:stretch">
+        <div class="card-sand pack-card">
+          <div class="pack-head"><h2 class="h2-pack">pack this</h2><span class="mono-plain" id="packCount">0/4 packed</span></div>
+          <div class="col gap8" id="packList"></div>
+        </div>
+        <div class="gifts">
+          <span class="mono-plain ls1">🎁 RE: GIFTS</span>
+          <span class="gifts-big">no gifts.<br>just you.</span>
+          <span style="font-size:18px;line-height:1.5;max-width:420px">Seriously — you showing up is the present ✨</span>
+        </div>
+      </div>
+      <div id="bring" class="card-sand pack-card bring">
+        <div class="pack-head"><h2 class="h2-pack">who's bringing what</h2><span class="mono-plain" id="bringCount"></span></div>
+        <div class="bring-list" id="bringList"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span class="footer-big">Can't wait to celebrate with you 🥂</span>
+    <span class="mono">— kathi · jan 15—18, 2027 · joshua tree</span>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
