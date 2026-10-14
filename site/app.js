@@ -503,41 +503,84 @@
     const stack = document.querySelector('.hero-stack');
     const w30 = document.querySelector('.hero-stack .hero-30-wrap'), row = $('heroBadges');
     if (!stack || !w30 || !row || !heroIntro) return;
-    const mobile = innerWidth <= 640 && !reduceMotion;
+    const mobile = innerWidth <= 640;
+    const heroEl = document.querySelector('.hero'), mq = document.querySelector('.marquee');
     if (mobile && heroIntro.parentNode !== stack) stack.append(heroIntro, heroCd);
     if (!mobile && heroIntro.parentNode !== heroBottom) heroBottom.append(heroIntro, heroCd);
     heroBottom.hidden = mobile;
-    // phones: the banner is the last layer of the stack
-    const mq = document.querySelector('.marquee'), heroEl = document.querySelector('.hero');
+    // the banner is the last layer of the stack (inside the hero so everything shares one box)
     if (mq && mobile && mq.parentNode !== stack) stack.appendChild(mq);
-    if (mq && !mobile && mq.parentNode === stack) heroEl.after(mq);
+    if (mq && !mobile && mq.parentNode !== heroEl) heroEl.appendChild(mq);
     const kicker = stack.querySelector('.hero-kicker');
-    const layers = [kicker, w30, row, heroIntro, heroCd, document.querySelector('.marquee')];
-    layers.forEach((el) => ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
-    stack.style.removeProperty('margin-bottom');
-    if (!mobile) return;
+    const all = [kicker, w30, row, heroIntro, heroCd, heroBottom, mq];
+    all.forEach((el) => ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
+    stack.style.removeProperty('margin-bottom'); heroEl.style.removeProperty('padding-bottom');
+    heroEl.classList.toggle('hero-stacked', !reduceMotion);
+    if (reduceMotion) return;
     const navH = nav ? nav.offsetHeight : 90;
-    const t30 = navH + 6;
-    const H = layers.map((el) => el.offsetHeight);
-    const G = [0, 8, -28, 22, 22, 18];                    // resting gap before each layer (stickers overlap the 30 a bit)
-    const tCd = t30 + 34 + H[3] - 44;
-    const T = [t30, t30 + 8, t30 + 4, t30 + 34, tCd, tCd + Math.round(H[4] * .45)]; // where each layer pins: headline, 30, stickers at the ceiling, text, countdown over the text's last line, banner over the countdown
+    let layers, T, G;
+    if (mobile) {
+      // headline pins, then the 30, the stickers, the text, the countdown, and the banner on top
+      layers = [kicker, w30, row, heroIntro, heroCd, mq];
+      const H = layers.map((el) => el.offsetHeight), t0 = navH + 6, tCd = t0 + 34 + H[3] - 44;
+      G = [0, 8, -28, 22, 22, 18];
+      T = [t0, t0 + 8, t0 + 4, t0 + 34, tCd, tCd + Math.round(H[4] * .45)];
+    } else {
+      // desktop: headline pins, the 30 (stickers ride on it) slides over it, then the text + countdown, then the banner
+      layers = [kicker, w30, row, heroBottom, mq];
+      const Y = layers.map((el) => el.getBoundingClientRect().top + scrollY);
+      const H = layers.map((el) => el.offsetHeight);
+      Y[2] = Y[1]; H[2] = 0;                                   // sticker layer is a zero-height anchor on the 30
+      G = Y.map((y, i) => (i ? y - (Y[i - 1] + H[i - 1]) : 0));
+      const t0 = navH + 18, t1 = t0 + Math.round(H[0] * .42), t3 = t1 + Math.round(H[1] * .55);
+      T = [t0, t1, t1, t3, t3 + Math.round(H[3] * .55)];
+    }
+    const H = layers.map((el, i) => (!mobile && i === 2 ? 0 : el.offsetHeight));
     const R = Math.max(...T.map((t, i) => t + H[i]));
-    const MB = T.map((t, i) => R - t - H[i]);         // pads every layer so they all let go at the same moment
+    const MB = T.map((t, i) => R - t - H[i]);                 // pads every layer so they all let go at the same moment
     layers.forEach((el, i) => {
       el.style.top = T[i] + 'px';
       el.style.setProperty('margin-bottom', MB[i] + 'px', 'important');
       if (i) el.style.setProperty('margin-top', G[i] - MB[i - 1] + 'px', 'important');
     });
-    stack.style.marginBottom = -MB[MB.length - 1] + 'px';  // the release padding under the banner stays invisible
+    // the release padding under the banner stays invisible
+    if (mobile) stack.style.marginBottom = -MB[MB.length - 1] + 'px';
+    else mq.style.setProperty('margin-bottom', '0px', 'important');
+    hazePairs = mobile
+      ? [[kicker, w30, 4, .45, [kicker]], [w30, row, 40, .7, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]], [heroCd, mq, -10, .5, [heroCd]]]
+      : [[kicker, w30, 0, .5, [kicker]], [w30, heroBottom, 0, .45, [w30, row]], [heroBottom, mq, 0, .6, [heroIntro, heroCd]]];
+    hazePairs.forEach((pr) => pr[4].forEach(twin));
+    coverFx();
   }
-  // hero only: each incoming layer carries a frosted veil (CSS backdrop blur) that frosts whatever it slides over.
-  // No per-frame work: JS only switches the veils on once the page has been scrolled.
+  // Blur without per-frame repaints: every layer gets a pre-blurred twin; scrolling only crossfades opacity,
+  // which the phone composites on the GPU.
+  let hazePairs = [];
+  function twin(el) {
+    if (el._twin) return;
+    const sharp = document.createElement('div'), blur = document.createElement('div');
+    sharp.className = 'lyr-sharp'; blur.className = 'lyr-blur';
+    while (el.firstChild) sharp.appendChild(el.firstChild);
+    blur.innerHTML = sharp.innerHTML;
+    blur.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+    blur.setAttribute('aria-hidden', 'true'); blur.inert = true;
+    el.classList.add('has-twin'); el.append(sharp, blur);
+    el._twin = { sharp, blur, v: -1 };
+  }
+  // keep the countdown's blurred twin ticking
+  setInterval(() => { const t = heroCd && heroCd._twin; if (t && t.v > 0) t.blur.innerHTML = t.sharp.innerHTML.replace(/ id="[^"]*"/g, ''); }, 1000);
   function coverFx() {
-    const st = document.querySelector('.hero-stack');
-    if (st) st.classList.toggle('is-stacking', innerWidth <= 640 && !reduceMotion && scrollY > 6);
+    hazePairs.forEach(([below, above, rest, span, targets]) => {
+      const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (Math.max(1, a.height) * span)));
+      const v = Math.round(p * 50) / 50;
+      targets.forEach((el) => {
+        const t = el._twin; if (!t || t.v === v) return;
+        t.v = v; t.sharp.style.opacity = String(1 - v); t.blur.style.opacity = String(v * .85);
+      });
+    });
   }
-  addEventListener('scroll', coverFx, { passive: true });
+  let fxQ = false;
+  addEventListener('scroll', () => { if (!fxQ) { fxQ = true; requestAnimationFrame(() => { fxQ = false; coverFx(); }); } }, { passive: true });
   window.restackLight = () => { sizeStacks(); sizeHero(); coverFx(); };
   // iPhone fires resize whenever the toolbar slides in/out while scrolling; only re-measure on a real width change
   let lastW = innerWidth;
@@ -583,8 +626,8 @@
 // liquid chrome headlines: every title is spelled with the Etsy chrome letter images.
 // The real text stays as the heading's accessible name; the images are decoration.
 (() => {
-  const silverKicker = !/(^|[?&])etsy/.test(location.search);
-  const etsyX = /(^|[?&])etsyx\b/.test(location.search); // ?etsyx: Etsy letters with the Etsy X instead of the red x // headline uses the regular silver font; ?etsy previews it in the Etsy letters
+  const silverKicker = /(^|[?&])silver\b/.test(location.search); // headline: Etsy letters with the Etsy X (?silver previews the regular silver font)
+  const etsyX = !/(^|[?&])redx\b/.test(location.search);         // ?redx previews the red x instead
   // ?black previews the headline in solid black (?allblack also turns the x black)
   if (/(^|[?&])(all)?black\b/.test(location.search)) document.documentElement.classList.add('kicker-black');
   if (/(^|[?&])allblack\b/.test(location.search)) document.documentElement.classList.add('kicker-allblack');
@@ -592,8 +635,9 @@
   const hosts = document.querySelectorAll(silverKicker ? '.h2, .rsvp-big' : '.hero-kicker, .h2, .rsvp-big'); // carpool board keeps the regular silver font
   const GW = {'A':279,'B':195,'C':195,'D':186,'E':196,'F':156,'G':213,'H':211,'I':104,'J':184,'K':210,'L':188,'M':248,'N':217,'O':196,'P':175,'Q':198,'R':207,'S':215,'T':212,'U':206,'V':230,'W':280,'X':228,'Y':178,'Z':215,'0':208,'1':227,'2':253,'3':210,'4':251,'5':222,'6':218,'7':191,'8':231,'9':182}; // letter widths at 280px tall, so the layout is right before the images arrive
   const glyph = (c) => (/[A-Z0-9]/.test(c) ? `<img class="el" src="assets/etsy/${c}.webp" alt="" width="${GW[c]}" height="280">` : `<span class="el-p">${c}</span>`);
-  hosts.forEach((h) => {
-    h.setAttribute('aria-label', h.textContent.replace(/\s+/g, ' ').trim());
+  hosts.forEach((h0) => {
+    const h = h0._twin ? h0._twin.sharp : h0;   // the hero headline may already be split into sharp + blurred copies
+    h0.setAttribute('aria-label', h.textContent.replace(/\s+/g, ' ').trim());
     h.classList.add('etsy-type');
     const walk = (el) => [...el.childNodes].forEach((n) => {
       if (n.nodeType === 3 && n.textContent.trim()) {
@@ -605,6 +649,7 @@
       } else if (n.nodeType === 1 && !n.classList.contains('kx')) walk(n);
     });
     walk(h);
+    if (h0 !== h) { h0._twin.blur.innerHTML = h.innerHTML; h0.classList.add('etsy-type'); }
   });
   // titles grow to fill the width (one line each), up to a cap
   const fitTitles = () => {

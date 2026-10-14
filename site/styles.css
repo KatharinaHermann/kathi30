@@ -767,3 +767,27 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
 
 /* carpool title matches "pay a share for the stay" */
 .h2-car.pay-title { font-size: clamp(28px, 4vw, 44px); letter-spacing: -.03em; filter: none; }
+
+/* ---------- hero stack v3: sharp layer + pre-blurred twin, crossfaded on scroll ---------- */
+.lyr-sharp { display: inherit; flex-direction: inherit; flex-wrap: inherit; justify-content: inherit; align-items: inherit; align-content: inherit; gap: inherit; text-align: inherit; width: 100%; will-change: opacity; }
+.lyr-blur { position: absolute; inset: 0; padding: inherit; display: inherit; flex-direction: inherit; flex-wrap: inherit; justify-content: inherit; align-items: inherit; align-content: inherit; gap: inherit; text-align: inherit;
+  filter: blur(8px); opacity: 0; pointer-events: none; will-change: opacity; }
+.lyr-blur * { animation-play-state: paused !important; }
+/* the old frosted veils are retired */
+.hero-stack .hero-30-wrap::before, .hero-stack #heroBadges::before, .hero-stack .hero-intro::before, .hero-stack .countdown::before { display: none !important; }
+
+/* desktop: smaller headline + 30 so the banner shows on the first screen, and the same stacking */
+@media (min-width: 641px) {
+  .hero-kicker { font-size: clamp(34px, min(5.2vw, 8vh), 92px); margin-top: 2vh; }
+  .etsy30 img { height: min(38vw, 48vh); }
+  .hero.hero-stacked { overflow: clip; }
+  .hero.hero-stacked .hero-reflect { display: none; }
+  .hero.hero-stacked .hero-kicker { position: sticky; z-index: 0; }
+  .hero.hero-stacked .hero-30-wrap { position: sticky; z-index: 1; }
+  .hero.hero-stacked #heroBadges { position: sticky; z-index: 3; height: 0; }
+  .hero.hero-stacked .hero-bottom { position: sticky; z-index: 4; padding-bottom: 22px; }
+  .hero.hero-stacked .marquee { position: sticky; z-index: 6; margin-inline: -5vw; }
+  .hero.hero-stacked #heroBadges .badge:nth-child(1) { top: calc(min(38vw, 48vh) * .08) !important; }
+  .hero.hero-stacked #heroBadges .badge:nth-child(2) { top: calc(min(38vw, 48vh) * .02) !important; }
+  .hero.hero-stacked #heroBadges .badge:nth-child(3) { top: calc(min(38vw, 48vh) * .55) !important; }
+}
