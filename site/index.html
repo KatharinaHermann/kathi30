@@ -20,9 +20,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=120">
+<link rel="stylesheet" href="styles.css?v=121">
 <script src="config.js?v=26"></script>
-<script src="app.js?v=120" defer></script>
+<script src="app.js?v=121" defer></script>
 </head>
 <body>
 <div class="page">
@@ -236,6 +236,15 @@
 
   <section id="guestbook" class="glass reveal">
     <h2 class="h2 chrome-text" style="margin-bottom:28px">the guest book</h2>
+    <div class="gb-film">
+      <div class="polaroid gb-polaroid">
+        <div class="gb-video-wrap">
+          <video data-src="assets/gb-video.mp4?v=1" poster="assets/gb-video.jpg" muted loop playsinline preload="none" aria-label="How it started, how it's going"></video>
+          <button type="button" class="sound-btn mono" id="gbSound" aria-pressed="false">🔇 sound off</button>
+        </div>
+        <span class="polaroid-cap">how it started → how it's going</span>
+      </div>
+    </div>
     <div class="gb-wrap">
       <div class="gb-grid" id="gbGrid">
         <div style="rotate:-2deg"><img src="assets/gb-grid-1.jpg" alt="" loading="lazy"></div>

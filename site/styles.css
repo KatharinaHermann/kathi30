@@ -821,3 +821,12 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
 /* phones: hero stickers only rock, no vertical travel, so their top edge stays on the 30's line when pinned */
 @keyframes wobble-rock { 0%,100% { rotate: -6deg; translate: 0 0 } 50% { rotate: 6deg; translate: 0 0 } }
 @media (max-width: 640px) { #heroBadges .badge { animation-name: wobble-rock; } }
+
+/* guest book: "how it started / how it's going" clip in a polaroid above the locked book */
+.gb-film { display: flex; justify-content: center; margin-bottom: 28px; }
+.gb-polaroid { width: min(100%, 300px); rotate: -2deg; }
+.gb-video-wrap { position: relative; }
+.gb-polaroid video { width: 100%; aspect-ratio: 9/16; object-fit: cover; display: block; background: #111; }
+.sound-btn { position: absolute; right: 10px; bottom: 10px; padding: 8px 12px; border: 0; border-radius: 999px; background: rgba(36,34,31,.72); color: #fff; font-size: 11px; letter-spacing: .06em; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.sound-btn[aria-pressed="true"] { background: var(--red); }
+@media (max-width: 640px) { .gb-polaroid { width: min(100%, 260px); } }

@@ -173,11 +173,16 @@
     [kicker, hero.querySelector('.hero-30-wrap'), hero.querySelector('.hero-reflect'), $('heroBadges')].forEach((el) => wrap.appendChild(el));
   })();
 
-  // ---------- dance video: loads and plays only when it scrolls into view ----------
-  (() => {
-    const v = document.querySelector('.polaroid video');
-    if (!v || !('IntersectionObserver' in window)) return;
+  // ---------- videos: load and play only when they scroll into view ----------
+  document.querySelectorAll('video[data-src]').forEach((v) => {
+    if (!('IntersectionObserver' in window)) { v.src = v.dataset.src; return; }
     new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else if (v.src) v.pause(); }), { rootMargin: '300px 0px' }).observe(v);
+  });
+  // guest-book clip: tap for sound
+  (() => {
+    const b = $('gbSound'), v = b && b.closest('.gb-video-wrap').querySelector('video');
+    if (!b || !v) return;
+    b.addEventListener('click', () => { v.muted = !v.muted; b.setAttribute('aria-pressed', String(!v.muted)); b.textContent = v.muted ? '🔇 sound off' : '🔊 sound on'; if (!v.muted) v.play().catch(() => {}); });
   })();
 
   // ---------- marquee ----------
