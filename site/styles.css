@@ -814,12 +814,13 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
 .marquee.pinned { position: sticky; z-index: 25; }
 .measuring .hero-stack > *, .measuring .hero-bottom, .measuring .marquee { position: static !important; }
 .hero.hero-stacked .hero-stack { display: block; position: relative; }
-.marquee-track > span { opacity: var(--mqo, 1); }
-@keyframes mq-fade { from { opacity: 1; } to { opacity: .4; } }
-html.sda .marquee-track > span { animation: mq-fade linear both; animation-timeline: scroll(root block); animation-range: var(--mq-range, 999999px 1000000px); }
 .mq-zone { display: flow-root; position: relative; z-index: 7; }   /* above the hero layers, so the banner + cards slide over them */
 
 /* once the banner has docked, the released stack fades away underneath it */
 @keyframes lyr-gone { from { opacity: 1; } to { opacity: 0; } }
 .hero.sda .hero-stack > :not(.stack-spacer) { animation: lyr-gone linear both; animation-timeline: scroll(root block); animation-range: var(--gone, 999999px 1000000px); }
 .measuring #plan .stick-head { position: static !important; }
+
+/* phones: hero stickers only rock, no vertical travel, so their top edge stays on the 30's line when pinned */
+@keyframes wobble-rock { 0%,100% { rotate: -6deg; translate: 0 0 } 50% { rotate: 6deg; translate: 0 0 } }
+@media (max-width: 640px) { #heroBadges .badge { animation-name: wobble-rock; } }

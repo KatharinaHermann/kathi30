@@ -605,7 +605,6 @@
         const y0 = Math.max(Ya - Tb - Hb + rest, Yb - Tb), y1 = y0 + Hb * span;
         targets.forEach((el) => { const t = el._twin; if (t) t.sharp.style.animationRange = t.blur.style.animationRange = `${y0.toFixed(1)}px ${y1.toFixed(1)}px`; });
       });
-      if (mq) mq.style.setProperty('--mq-range', `${mqLand.toFixed(1)}px ${mqPush.toFixed(1)}px`);
       stack.style.setProperty('--gone', `${(mqLand - GONE).toFixed(1)}px ${mqLand.toFixed(1)}px`);   // the stack is gone by the time the banner docks
       heroEl.classList.add('sda'); document.documentElement.classList.add('sda');
     }
@@ -614,15 +613,6 @@
   }
   const GONE = 140;                                          // the stack fades out over this much scrolling, finishing as the banner docks
   const MQ_TUCK = 12;                                        // how far the docked banner slides under the menu
-  // the banner's scrolling text winds down with the fade and finally stands still
-  const mqTrack = $('marquee'); let mqAnim = null;
-  function mqRate() {
-    if (!mqTrack) return;
-    if (!mqAnim) { mqAnim = mqTrack.getAnimations().find((an) => an.animationName === 'marquee'); if (!mqAnim) return; }
-    const p = Math.min(1, Math.max(0, (scrollY - mqLand) / Math.max(1, mqPush - mqLand)));
-    const rate = Math.round((1 - p) * (1 - p) * 100) / 100;
-    if (mqAnim.playbackRate !== rate) mqAnim.playbackRate = rate;
-  }
   // Blur without per-frame repaints: every layer gets a pre-blurred twin; scrolling only crossfades opacity,
   // which the phone composites on the GPU.
   let hazePairs = [];
@@ -662,10 +652,8 @@
   setInterval(() => { const t = heroCd && heroCd._twin; if (t && !t.img && t.v > 0) t.blur.innerHTML = t.sharp.innerHTML.replace(/ id="[^"]*"/g, ''); }, 1000);
   function coverFx() {
     if (SDA) return;
-    const mq = document.querySelector('.marquee');
     const gone = 1 - Math.min(1, Math.max(0, (scrollY - (mqLand - GONE)) / GONE));
     document.querySelectorAll('.hero-stack > :not(.stack-spacer)').forEach((el) => { el.style.opacity = gone < 1 ? gone.toFixed(3) : ''; });
-    if (mq) mq.style.setProperty('--mqo', (1 - .6 * Math.min(1, Math.max(0, (scrollY - mqLand) / Math.max(1, mqPush - mqLand)))).toFixed(3));
     hazePairs.forEach(([below, above, rest, span, targets]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (Math.max(1, a.height) * span)));
@@ -679,8 +667,8 @@
   addEventListener('load', () => { sizeHero(); coverFx(); });
   if (document.fonts) document.fonts.ready.then(() => { sizeHero(); coverFx(); });
   let fxQ = false;
-  addEventListener('scroll', () => { if (!fxQ) { fxQ = true; requestAnimationFrame(() => { fxQ = false; coverFx(); mqRate(); }); } }, { passive: true });
-  window.restackLight = () => { sizeHero(); sizeStacks(); coverFx(); mqRate(); };
+  addEventListener('scroll', () => { if (!fxQ) { fxQ = true; requestAnimationFrame(() => { fxQ = false; coverFx(); }); } }, { passive: true });
+  window.restackLight = () => { sizeHero(); sizeStacks(); coverFx(); };
   // iPhone fires resize whenever the toolbar slides in/out while scrolling; only re-measure on a real width change
   let lastW = innerWidth;
   addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; sizeHero(); sizeStacks(); coverFx(); });
