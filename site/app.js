@@ -577,8 +577,8 @@
       heroEl.style.clipPath = `inset(0 0 ${cut}px 0)`;
     }
     hazePairs = mobile
-      ? [[kicker, w30, 4, .45, [kicker]], [w30, row, -24, .45, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]]]
-      : [[kicker, w30, 0, .5, [kicker]], [w30, heroBottom, 0, .45, [w30, row]]];
+      ? [[kicker, w30, 4, .45, [kicker]], [w30, row, -24, .45, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]], [heroCd, mq, -10, .5, [heroCd]]]
+      : [[kicker, w30, 0, .5, [kicker]], [w30, heroBottom, 0, .45, [w30, row]], [heroBottom, mq, -10, .6, [heroIntro, heroCd]]];
     const names = new Map([[kicker, 'kicker'], [w30, 'thirty'], [row, 'badges'], [heroIntro, 'intro'], [heroCd, 'countdown']]);
     hazePairs.forEach((pr) => pr[4].forEach((el) => twin(el, names.get(el))));
     layers.forEach((el) => el._twin && el._twin.fit && el._twin.fit());
