@@ -822,3 +822,4 @@ html.sda .marquee-track > span { animation: mq-fade linear both; animation-timel
 /* once the banner has docked, the released stack fades away underneath it */
 @keyframes lyr-gone { from { opacity: 1; } to { opacity: 0; } }
 .hero.sda .hero-stack > :not(.stack-spacer) { animation: lyr-gone linear both; animation-timeline: scroll(root block); animation-range: var(--gone, 999999px 1000000px); }
+.measuring #plan .stick-head { position: static !important; }

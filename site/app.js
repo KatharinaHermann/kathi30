@@ -583,7 +583,18 @@
     // where things happen, measured with every layer un-stuck
     document.documentElement.classList.add('measuring');
     const docTop = (el) => el.getBoundingClientRect().top + scrollY;
-    const zoneEnd = zone ? zone.getBoundingClientRect().bottom + scrollY : Infinity;
+    // the zone runs on until the plan title: an invisible tail after the deal cards (pulled back by a negative
+    // margin so nothing moves) lets the banner stay docked until the title itself pushes it up
+    let zoneEnd = Infinity;
+    if (zone) {
+      let tail = zone.querySelector('.mq-tail');
+      if (!tail) { tail = document.createElement('div'); tail.className = 'mq-tail'; zone.appendChild(tail); }
+      tail.style.height = '0px'; zone.style.marginBottom = '0px';
+      const title = document.querySelector('#plan .stick-head') || document.querySelector('#plan .h2');
+      const X = title ? Math.max(0, docTop(title) - 8 - (zone.getBoundingClientRect().bottom + scrollY)) : 0;
+      tail.style.height = X + 'px'; zone.style.marginBottom = -X + 'px';
+      zoneEnd = zone.getBoundingClientRect().bottom + scrollY;
+    }
     mqLand = mq ? docTop(mq) - dock : Infinity;
     mqPush = mq ? zoneEnd - (dock + mq.offsetHeight) : Infinity;   // the plan arrives: fade + slowdown are complete here
     if (SDA) {
