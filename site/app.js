@@ -16,14 +16,14 @@
     { emoji: '🔮', label: 'Vibes', why: 'or wibes' }
   ];
   const SLIDES = [
-    ['stay-01.jpg', 'Patio opening onto the kitchen, with a pool in front'],
-    ['stay-02.jpg', 'Fire pit overlooking the pickleball court at sunset'],
-    ['stay-03.jpg', 'Resort-style pool with loungers and cabana'],
-    ['stay-04.jpg', 'Patio chairs, cabana and court under a pink sky'],
-    ['stay-05.jpg', 'Pool with loungers and a wooden cabana'],
-    ['stay-06.jpg', 'Pickleball court with barrel sauna and clear dome'],
-    ['stay-07.jpg', 'Aerial view of the whole property in the desert'],
-    ['stay-08.jpg', 'Top-down aerial of pool, court and putting green']
+    ['stay-01.webp', 'Patio opening onto the kitchen, with a pool in front'],
+    ['stay-02.webp', 'Fire pit overlooking the pickleball court at sunset'],
+    ['stay-03.webp', 'Resort-style pool with loungers and cabana'],
+    ['stay-04.webp', 'Patio chairs, cabana and court under a pink sky'],
+    ['stay-05.webp', 'Pool with loungers and a wooden cabana'],
+    ['stay-06.webp', 'Pickleball court with barrel sauna and clear dome'],
+    ['stay-07.webp', 'Aerial view of the whole property in the desert'],
+    ['stay-08.webp', 'Top-down aerial of pool, court and putting green']
   ];
   const FROM = ['SF', 'LAX'];
 
@@ -142,14 +142,14 @@
         <circle cx="100" cy="100" r="99" fill="${METAL[ring] ? `url(#${id}g)` : ring}"/>
         <text fill="${ink}"><textPath href="#${id}" textLength="548" lengthAdjust="spacing">${esc(text)}</textPath></text>
       </svg>
-      <div class="badge-photo"><img src="${src}" alt="" style="object-position:${objPos}"></div>
+      <div class="badge-photo"><img src="${src}" alt="" style="object-position:${objPos}"${cls === 'gb-badge' ? ' loading="lazy" decoding="async"' : ''}></div>
     </div>`);
   }
   const heroBadges = $('heroBadges');
   [
-    ['assets/kathi.jpg', '50% 45%', 'TAP TO RSVP ✦ RSVP BY OCT 30 ✦ TAP TO RSVP ✦ RSVP BY OCT 30 ✦', '#f02719', '#ffffff', 'right:5%;top:30%;width:clamp(150px,20vw,270px)', 0, 16],
-    ['assets/kathi-baby.jpg', '51% 18%', 'EST. 1997 ✦ BABY KATHI ✦ EST. 1997 ✦ BABY KATHI ✦', '#fbf8f4', '#24221f', 'left:4%;top:27%;width:clamp(130px,17vw,240px)', -1.7, -20],
-    ['assets/kathi-bw.jpg', '58% 30%', 'CERTIFIED CHAOS ✦ 30 & THRIVING ✦ CERTIFIED CHAOS ✦ 30 & THRIVING ✦', '#24221f', '#f6f2ec', 'right:27%;top:55%;width:clamp(110px,13vw,190px)', -3.2, 12]
+    ['assets/kathi.webp', '50% 45%', 'TAP TO RSVP ✦ RSVP BY OCT 30 ✦ TAP TO RSVP ✦ RSVP BY OCT 30 ✦', '#f02719', '#ffffff', 'right:5%;top:30%;width:clamp(150px,20vw,270px)', 0, 16],
+    ['assets/kathi-baby.webp', '51% 18%', 'EST. 1997 ✦ BABY KATHI ✦ EST. 1997 ✦ BABY KATHI ✦', '#fbf8f4', '#24221f', 'left:4%;top:27%;width:clamp(130px,17vw,240px)', -1.7, -20],
+    ['assets/kathi-bw.webp', '58% 30%', 'CERTIFIED CHAOS ✦ 30 & THRIVING ✦ CERTIFIED CHAOS ✦ 30 & THRIVING ✦', '#24221f', '#f6f2ec', 'right:27%;top:55%;width:clamp(110px,13vw,190px)', -3.2, 12]
   ].forEach((b) => heroBadges.append(ringSticker('badge', ...b)));
   // the red sticker doubles as the RSVP button
   (() => {
@@ -171,6 +171,13 @@
     const kicker = hero.querySelector('.hero-kicker');
     hero.insertBefore(wrap, kicker);
     [kicker, hero.querySelector('.hero-30-wrap'), hero.querySelector('.hero-reflect'), $('heroBadges')].forEach((el) => wrap.appendChild(el));
+  })();
+
+  // ---------- dance video: loads and plays only when it scrolls into view ----------
+  (() => {
+    const v = document.querySelector('.polaroid video');
+    if (!v || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else if (v.src) v.pause(); }), { rootMargin: '300px 0px' }).observe(v);
   })();
 
   // ---------- marquee ----------
@@ -202,15 +209,15 @@
   // ---------- guest book lock stickers ----------
   const gbBadges = $('gbBadges');
   [
-    ['assets/gb-01.jpg', '35% 28%', 'KATHI 30 ✦ JOSHUA TREE ✦ KATHI 30 ✦ JOSHUA TREE ✦', 'gunmetal', '#d4d7de', 'left:3%;top:6%;width:clamp(140px,18vw,230px)', 0, 16],
-    ['assets/gb-02.jpg', '55% 35%', 'MAIN CHARACTERS ✦ MAIN CHARACTERS ✦', 'silver', '#f02719', 'left:6%;bottom:8%;width:clamp(130px,16.5vw,215px)', -1.3, -18],
-    ['assets/gb-03.jpg', '40% 30%', 'DESERT CREW ✦ DESERT CREW ✦', '#f02719', '#ffffff', 'left:14%;top:40%;width:clamp(108px,11.5vw,160px)', -2.1, 14],
-    ['assets/gb-04.jpg', '62% 58%', 'JAN 15—18 ✦ 2027 ✦ JAN 15—18 ✦ 2027 ✦', 'blue', '#24221f', 'right:4%;top:5%;width:clamp(140px,18vw,230px)', -0.7, -20],
-    ['assets/gb-05.jpg', '45% 25%', 'STARGAZING GLAM ✦ STARGAZING GLAM ✦', 'silver', '#24221f', 'right:14%;top:42%;width:clamp(108px,11.5vw,160px)', -2.8, 17],
-    ['assets/gb-06.jpg', '45% 55%', '30 & THRIVING ✦ 30 & THRIVING ✦', '#f02719', '#ffffff', 'right:5%;bottom:7%;width:clamp(130px,16.5vw,215px)', -3.5, -15],
-    ['assets/gb-07.jpg', '60% 55%', 'NO PEEKING ✦ NO PEEKING ✦ NO PEEKING ✦', 'blue', '#f02719', 'left:30%;bottom:2%;width:clamp(108px,11.5vw,160px)', -4.4, 13]
+    ['assets/gb-01.webp', '35% 28%', 'KATHI 30 ✦ JOSHUA TREE ✦ KATHI 30 ✦ JOSHUA TREE ✦', 'gunmetal', '#d4d7de', 'left:3%;top:6%;width:clamp(140px,18vw,230px)', 0, 16],
+    ['assets/gb-02.webp', '55% 35%', 'MAIN CHARACTERS ✦ MAIN CHARACTERS ✦', 'silver', '#f02719', 'left:6%;bottom:8%;width:clamp(130px,16.5vw,215px)', -1.3, -18],
+    ['assets/gb-03.webp', '40% 30%', 'DESERT CREW ✦ DESERT CREW ✦', '#f02719', '#ffffff', 'left:14%;top:40%;width:clamp(108px,11.5vw,160px)', -2.1, 14],
+    ['assets/gb-04.webp', '62% 58%', 'JAN 15—18 ✦ 2027 ✦ JAN 15—18 ✦ 2027 ✦', 'blue', '#24221f', 'right:4%;top:5%;width:clamp(140px,18vw,230px)', -0.7, -20],
+    ['assets/gb-05.webp', '45% 25%', 'STARGAZING GLAM ✦ STARGAZING GLAM ✦', 'silver', '#24221f', 'right:14%;top:42%;width:clamp(108px,11.5vw,160px)', -2.8, 17],
+    ['assets/gb-06.webp', '45% 55%', '30 & THRIVING ✦ 30 & THRIVING ✦', '#f02719', '#ffffff', 'right:5%;bottom:7%;width:clamp(130px,16.5vw,215px)', -3.5, -15],
+    ['assets/gb-07.webp', '60% 55%', 'NO PEEKING ✦ NO PEEKING ✦ NO PEEKING ✦', 'blue', '#f02719', 'left:30%;bottom:2%;width:clamp(108px,11.5vw,160px)', -4.4, 13]
   ].forEach(([src, op, text, ring, ink, style, delay, dur]) => gbBadges.append(ringSticker('gb-badge', src, op, text, ring, ink, style, delay, dur)));
-  const lock = ringSticker('lock-badge', 'assets/kathi.jpg', '50% 45%', 'NO PEEKING ✦ LOCKED TILL THE PARTY ✦ NO PEEKING ✦ LOCKED ✦', '#f02719', '#ffffff', '', 0, 14);
+  const lock = ringSticker('lock-badge', 'assets/kathi.webp', '50% 45%', 'NO PEEKING ✦ LOCKED TILL THE PARTY ✦ NO PEEKING ✦ LOCKED ✦', '#f02719', '#ffffff', '', 0, 14);
   lock.firstElementChild.append(h('<span class="lock-icon">🔒</span>'));
   $('lockBadge').replaceWith(lock);
 
@@ -228,7 +235,10 @@
 
   // ---------- carousel ----------
   let slide = 0, lastNav = 0;
-  $('slides').innerHTML = SLIDES.map(([src, alt], i) => `<img src="assets/${src}" alt="${esc(alt)}" ${i ? 'loading="lazy"' : 'fetchpriority="high"'} class="${i ? '' : 'on'}">`).join('');
+  // the photos only get their addresses once the stay section comes near, so they don't weigh on the first load
+  $('slides').innerHTML = SLIDES.map(([src, alt], i) => `<img data-src="assets/${src}" alt="${esc(alt)}" decoding="async" class="${i ? '' : 'on'}">`).join('');
+  const loadSlides = () => [...$('slides').children].forEach((im) => { if (!im.src) im.src = im.dataset.src; });
+  if ('IntersectionObserver' in window) new IntersectionObserver((es, io) => { if (es.some((en) => en.isIntersecting)) { loadSlides(); io.disconnect(); } }, { rootMargin: '700px 0px' }).observe($('carousel')); else loadSlides();
   $('dots').innerHTML = SLIDES.map((_, i) => `<button type="button" aria-label="go to photo ${i + 1}" class="${i ? '' : 'on'}"></button>`).join('');
   const slideImgs = [...$('slides').children], dots = [...$('dots').children];
   function go(i, user) {
@@ -562,7 +572,7 @@
       zone.style.marginTop = GAPB - MB[last] - P + 'px';
       let gap = zone.querySelector('.mq-gap');
       if (!gap) { gap = document.createElement('div'); gap.className = 'mq-gap'; mq.after(gap); }
-      gap.style.height = MB[last] + P - GAPB + 'px';
+      gap.style.height = MB[last] + P - GAPB - mq.offsetHeight - MQ_TUCK + 'px';   // the cards arrive right behind the stack
     }
     hazePairs = mobile
       ? [[kicker, w30, 4, .45, [kicker]], [w30, row, -24, .45, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]], [heroCd, mq, -10, .5, [heroCd]]]
@@ -585,11 +595,13 @@
         targets.forEach((el) => { const t = el._twin; if (t) t.sharp.style.animationRange = t.blur.style.animationRange = `${y0.toFixed(1)}px ${y1.toFixed(1)}px`; });
       });
       if (mq) mq.style.setProperty('--mq-range', `${mqLand.toFixed(1)}px ${mqPush.toFixed(1)}px`);
+      stack.style.setProperty('--gone', `${mqLand.toFixed(1)}px ${(mqLand + GONE).toFixed(1)}px`);   // the released stack fades out under the banner
       heroEl.classList.add('sda'); document.documentElement.classList.add('sda');
     }
     document.documentElement.classList.remove('measuring');
     coverFx();
   }
+  const GONE = 160;                                          // scroll distance over which the released stack fades out
   const MQ_TUCK = 12;                                        // how far the docked banner slides under the menu
   // the banner's scrolling text winds down with the fade and finally stands still
   const mqTrack = $('marquee'); let mqAnim = null;
@@ -640,6 +652,8 @@
   function coverFx() {
     if (SDA) return;
     const mq = document.querySelector('.marquee');
+    const gone = 1 - Math.min(1, Math.max(0, (scrollY - mqLand) / GONE));
+    document.querySelectorAll('.hero-stack > :not(.stack-spacer)').forEach((el) => { el.style.opacity = gone < 1 ? gone.toFixed(3) : ''; });
     if (mq) mq.style.setProperty('--mqo', (1 - .6 * Math.min(1, Math.max(0, (scrollY - mqLand) / Math.max(1, mqPush - mqLand)))).toFixed(3));
     hazePairs.forEach(([below, above, rest, span, targets]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
@@ -647,7 +661,7 @@
       const v = Math.round(p * 50) / 50;
       targets.forEach((el) => {
         const t = el._twin; if (!t || t.v === v) return;
-        t.v = v; t.sharp.style.opacity = String(1 - v); t.blur.style.opacity = String(Math.max(.01, v * .95));
+        t.v = v; t.sharp.style.opacity = String(1 - v * .88); t.blur.style.opacity = String(Math.max(.01, v * .85));
       });
     });
   }
@@ -709,7 +723,7 @@
   if (silverKicker) document.documentElement.classList.add('kicker-silver');
   const hosts = document.querySelectorAll(silverKicker ? '.h2, .rsvp-big' : '.hero-kicker, .h2, .rsvp-big'); // carpool board keeps the regular silver font
   const GW = {'A':279,'B':195,'C':195,'D':186,'E':196,'F':156,'G':213,'H':211,'I':104,'J':184,'K':210,'L':188,'M':248,'N':217,'O':196,'P':175,'Q':198,'R':207,'S':215,'T':212,'U':206,'V':230,'W':280,'X':228,'Y':178,'Z':215,'0':208,'1':227,'2':253,'3':210,'4':251,'5':222,'6':218,'7':191,'8':231,'9':182}; // letter widths at 280px tall, so the layout is right before the images arrive
-  const glyph = (c) => (/[A-Z0-9]/.test(c) ? `<img class="el" src="assets/etsy/${c}.webp" alt="" width="${GW[c]}" height="280">` : `<span class="el-p">${c}</span>`);
+  const glyph = (c) => (/[A-Z0-9]/.test(c) ? `<img class="el" src="assets/etsy/${c}.webp" alt="" width="${GW[c]}" height="280" loading="lazy" decoding="async">` : `<span class="el-p">${c}</span>`);
   hosts.forEach((h0) => {
     const h = h0._twin ? h0._twin.sharp : h0;   // the hero headline may already be split into sharp + blurred copies
     h0.setAttribute('aria-label', h.textContent.replace(/\s+/g, ' ').trim());
