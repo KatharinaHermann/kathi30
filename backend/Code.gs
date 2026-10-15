@@ -17,8 +17,8 @@
 
 // ---- settings -------------------------------------------------------------
 const PRICE_PER_PERSON = 300;
-// Guest book opens at the party: Sat Jan 16 2027, 8pm Pacific. Notes posted earlier are refused.
-const GUESTBOOK_OPENS = new Date('2027-01-16T20:00:00-08:00');
+// Guest book opens on arrival: Fri Jan 15 2027, 3pm Pacific. Notes posted earlier are refused.
+const GUESTBOOK_OPENS = new Date('2027-01-15T15:00:00-08:00');
 const PHOTO_FOLDER_NAME = 'Kathi 30 — guest book photos';
 const CACHE_SECONDS = 10;
 

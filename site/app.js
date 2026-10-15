@@ -4,7 +4,7 @@
   const cfg = window.KATHI30 || {};
   const $ = (id) => document.getElementById(id);
   const ARRIVAL = new Date(cfg.arrival || '2027-01-15T15:00:00-08:00').getTime();
-  const PARTY = new Date(cfg.party || '2027-01-16T20:00:00-08:00').getTime();
+  const PARTY = new Date(cfg.party || '2027-01-15T15:00:00-08:00').getTime();
   const SHEET = (cfg.sheetUrl || '').trim();
   const POLL_MS = 20000;
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -228,9 +228,9 @@
   // ---------- guest book lock stickers ----------
   const gbBadges = $('gbBadges');
   [
-    ['assets/gb-01.jpg', '35% 28%', 'KATHI 30 ✦ JOSHUA TREE ✦ KATHI 30 ✦ JOSHUA TREE ✦', 'gunmetal', '#d4d7de', 'left:3%;top:6%;width:clamp(140px,18vw,230px)', 0, 16],
+    ['assets/gb-01.jpg', '35% 28%', 'KATHI 30 ✦ JOSHUA TREE ✦ KATHI 30 ✦ JOSHUA TREE ✦', 'gunmetal', '#d4d7de', 'left:0%;top:4%;width:clamp(140px,18vw,230px)', 0, 16],
     ['assets/gb-02.jpg', '55% 35%', 'MAIN CHARACTERS ✦ MAIN CHARACTERS ✦', 'silver', '#f02719', 'left:0%;bottom:4%;width:clamp(130px,16.5vw,215px)', -1.3, -18],
-    ['assets/gb-03.jpg', '40% 30%', 'DESERT CREW ✦ DESERT CREW ✦', '#f02719', '#ffffff', 'left:3%;top:46%;width:clamp(108px,11.5vw,160px)', -2.1, 14],
+    ['assets/gb-03.jpg', '40% 30%', 'DESERT CREW ✦ DESERT CREW ✦', '#f02719', '#ffffff', 'left:0%;top:46%;width:clamp(108px,11.5vw,160px)', -2.1, 14],
     ['assets/gb-04.jpg', '62% 58%', 'JAN 15—18 ✦ 2027 ✦ JAN 15—18 ✦ 2027 ✦', 'blue', '#24221f', 'right:4%;top:5%;width:clamp(140px,18vw,230px)', -0.7, -20],
     ['assets/gb-05.jpg', '45% 25%', 'STARGAZING GLAM ✦ STARGAZING GLAM ✦', 'silver', '#24221f', 'right:2%;top:44%;width:clamp(108px,11.5vw,160px)', -2.8, 17],
     ['assets/gb-06.jpg', '45% 55%', '30 & THRIVING ✦ 30 & THRIVING ✦', '#f02719', '#ffffff', 'right:5%;bottom:7%;width:clamp(130px,16.5vw,215px)', -3.5, -15],

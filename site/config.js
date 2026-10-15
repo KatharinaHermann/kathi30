@@ -18,5 +18,5 @@ window.KATHI30 = {
   // (The sheet backend also refuses posts before GUESTBOOK_OPENS in Code.gs — change both.)
   lockGuestbook: true,
   arrival: '2027-01-15T15:00:00-08:00', // countdown target (Pacific time)
-  party: '2027-01-16T20:00:00-08:00'    // guest book unlocks
+  party: '2027-01-15T15:00:00-08:00'    // guest book unlocks: on arrival, Friday
 };
