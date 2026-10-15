@@ -847,7 +847,13 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
   #gbBadges .gb-badge:nth-child(3) { left: -10px !important; top: 32% !important; }
   #gbBadges .gb-badge:nth-child(2) { left: -10px !important; top: 56% !important; }
   #gbBadges .gb-badge:nth-child(4) { right: -10px !important; left: auto !important; top: 5% !important; }
-  #gbBadges .gb-badge:nth-child(5) { right: -10px !important; left: auto !important; top: 24% !important; }
-  #gbBadges .gb-badge:nth-child(7) { right: -10px !important; left: auto !important; top: 43% !important; }
-  #gbBadges .gb-badge:nth-child(6) { right: -10px !important; left: auto !important; top: 62% !important; }
+  #gbBadges .gb-badge:nth-child(5) { right: -10px !important; left: auto !important; top: 21% !important; }
+  #gbBadges .gb-badge:nth-child(7) { right: -10px !important; left: auto !important; top: 37% !important; }
+  #gbBadges .gb-badge:nth-child(6) { right: -10px !important; left: auto !important; top: 53% !important; }
+}
+
+/* phones: the lock card fills the whole overlay, so there is no second frame peeking out around it */
+@media (max-width: 640px) {
+  .gb-lock { padding: 0; background: none; }
+  .lock-card { width: 100%; max-width: none; min-height: 100%; border-radius: 32px; justify-content: center; padding: 22px 18px 26px; }
 }
