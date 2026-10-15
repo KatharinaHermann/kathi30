@@ -831,12 +831,15 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
 .gb-video-wrap video { width: 100%; aspect-ratio: 9/16; object-fit: cover; display: block; border-radius: 18px; background: #111; }
 .sound-btn { position: absolute; left: 12px; bottom: 12px; padding: 8px 12px; border: 0; border-radius: 999px; background: rgba(36,34,31,.72); color: #fff; font-size: 11px; letter-spacing: .06em; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .sound-btn[aria-pressed="true"] { background: var(--red); }
-.lock-media .lock-badge { position: absolute; right: -84px; bottom: -34px; width: 118px; height: 118px; }
+.lock-media .lock-badge { position: absolute; right: -70px; top: -44px; bottom: auto; width: 150px; height: 150px; z-index: 3; }
+.lock-badge .lock-icon { width: 56px; height: 56px; font-size: 28px; }
 @media (max-width: 640px) {
   .lock-card { flex-direction: column; text-align: center; max-width: 340px; gap: 14px; padding: 18px 16px 22px; }
   .lock-copy { align-items: center; gap: 10px; }
   .lock-media { width: 250px; }
-  .lock-media .lock-badge { right: -62px; bottom: -26px; width: 92px; height: 92px; }
+  .lock-media .lock-badge { right: auto; left: 50%; top: -52px; bottom: auto; translate: -50% 0; width: 112px; height: 112px; }
+  .lock-badge .lock-icon { width: 44px; height: 44px; font-size: 22px; }
+  .lock-card { padding-top: 70px; }
   .gb-wrap.locked .gb-grid { height: 760px; }
 }
 
