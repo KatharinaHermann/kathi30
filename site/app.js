@@ -508,7 +508,15 @@
         if (i) c.style.setProperty('margin-top', FLOW - STEP * (n - i) + 'px', 'important');
       });
       const headTop = navH + 10;
-      const fits = head && head.offsetHeight + GAP + cardH + STEP * (n - 1) <= document.documentElement.clientHeight - headTop - 8;
+      // the title always pins; when the stack doesn't fit under it, the title shrinks a little to make room
+      // (on very short screens the bottom of the cards may still tuck under the screen edge)
+      const room = document.documentElement.clientHeight - headTop - 8 - GAP - cardH - STEP * (n - 1);
+      const h2 = head && head.querySelector('.h2');
+      if (h2 && h2.dataset.fit) {
+        h2.style.setProperty('font-size', h2.dataset.fit + 'px', 'important');
+        if (head.offsetHeight > room) h2.style.setProperty('font-size', Math.round(h2.dataset.fit * .7) + 'px', 'important');
+      }
+      const fits = !!head;
       let stackTop = headTop;
       if (fits) {
         head.classList.add('is-sticky');
@@ -767,7 +775,9 @@
       h.style.setProperty('font-size', '100px', 'important');
       const w = [...h.querySelectorAll('.el-w, .el-sp, .kx')].reduce((t, e) => t + e.getBoundingClientRect().width, 0);
       const cap = rsvp ? (phone ? 92 : 150) : 64;
-      h.style.setProperty('font-size', Math.min(cap, Math.floor(100 * avail / w)) + 'px', 'important');
+      const fit = Math.min(cap, Math.floor(100 * avail / w));
+      h.dataset.fit = fit;
+      h.style.setProperty('font-size', fit + 'px', 'important');
     });
   };
   fitTitles();
