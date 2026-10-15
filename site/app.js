@@ -216,9 +216,9 @@
   [
     ['assets/gb-01.jpg', '35% 28%', 'KATHI 30 ✦ JOSHUA TREE ✦ KATHI 30 ✦ JOSHUA TREE ✦', 'gunmetal', '#d4d7de', 'left:3%;top:6%;width:clamp(140px,18vw,230px)', 0, 16],
     ['assets/gb-02.jpg', '55% 35%', 'MAIN CHARACTERS ✦ MAIN CHARACTERS ✦', 'silver', '#f02719', 'left:6%;bottom:8%;width:clamp(130px,16.5vw,215px)', -1.3, -18],
-    ['assets/gb-03.jpg', '40% 30%', 'DESERT CREW ✦ DESERT CREW ✦', '#f02719', '#ffffff', 'left:14%;top:40%;width:clamp(108px,11.5vw,160px)', -2.1, 14],
+    ['assets/gb-03.jpg', '40% 30%', 'DESERT CREW ✦ DESERT CREW ✦', '#f02719', '#ffffff', 'left:3%;top:46%;width:clamp(108px,11.5vw,160px)', -2.1, 14],
     ['assets/gb-04.jpg', '62% 58%', 'JAN 15—18 ✦ 2027 ✦ JAN 15—18 ✦ 2027 ✦', 'blue', '#24221f', 'right:4%;top:5%;width:clamp(140px,18vw,230px)', -0.7, -20],
-    ['assets/gb-05.jpg', '45% 25%', 'STARGAZING GLAM ✦ STARGAZING GLAM ✦', 'silver', '#24221f', 'right:14%;top:42%;width:clamp(108px,11.5vw,160px)', -2.8, 17],
+    ['assets/gb-05.jpg', '45% 25%', 'STARGAZING GLAM ✦ STARGAZING GLAM ✦', 'silver', '#24221f', 'right:2%;top:44%;width:clamp(108px,11.5vw,160px)', -2.8, 17],
     ['assets/gb-06.jpg', '45% 55%', '30 & THRIVING ✦ 30 & THRIVING ✦', '#f02719', '#ffffff', 'right:5%;bottom:7%;width:clamp(130px,16.5vw,215px)', -3.5, -15],
     ['assets/gb-07.jpg', '60% 55%', 'NO PEEKING ✦ NO PEEKING ✦ NO PEEKING ✦', 'blue', '#f02719', 'left:30%;bottom:2%;width:clamp(108px,11.5vw,160px)', -4.4, 13]
   ].forEach(([src, op, text, ring, ink, style, delay, dur]) => gbBadges.append(ringSticker('gb-badge', src, op, text, ring, ink, style, delay, dur)));
