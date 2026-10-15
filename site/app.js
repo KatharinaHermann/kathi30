@@ -533,6 +533,7 @@
     all.forEach((el) => el && ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
     stack.style.removeProperty('margin-bottom');
     if (mq) { mq.classList.add('pinned'); mq.style.top = dock + 'px'; }
+    heroEl.style.removeProperty('clip-path');
     heroEl.classList.toggle('hero-stacked', !reduceMotion);
     if (reduceMotion) return;
     let layers, T, G;
@@ -559,24 +560,21 @@
       if (i) el.style.setProperty('margin-top', G[i] - MB[i - 1] + 'px', 'important');
     });
     const last = layers.length - 1, GAPB = 18;                 // resting gap between the last layer and the banner
-    // an invisible spacer at the end of the stack keeps the layers pinned until the banner has slid over the
-    // countdown and docked; the zone with the banner is pulled up over that spacer so the banner still rests
-    // 18px under the countdown, and a second spacer after the banner holds the deal cards back until the stack
-    // has scrolled away underneath
-    const P = T[last] + H[last] - dock + GAPB;
+    // the zone with the banner is pulled up so the banner rests 18px under the last layer; the hero is clipped at
+    // the banner's top edge, so the rising banner wipes the pinned layers away and the menu hides what's above
     let spacer = stack.querySelector('.stack-spacer');
-    if (!spacer) { spacer = document.createElement('div'); spacer.className = 'stack-spacer'; }
-    stack.appendChild(spacer);
-    spacer.style.height = P + 'px';
+    if (spacer) spacer.remove();
+    const cut = Math.max(0, MB[last] - GAPB);
     if (zone) {
-      zone.style.marginTop = GAPB - MB[last] - P + 'px';
+      zone.style.marginTop = GAPB - MB[last] + 'px';
       let gap = zone.querySelector('.mq-gap');
       if (!gap) { gap = document.createElement('div'); gap.className = 'mq-gap'; mq.after(gap); }
-      gap.style.height = '0px';                               // the cards ride directly under the banner, over the vanishing stack
+      gap.style.height = '0px';
+      heroEl.style.clipPath = `inset(0 0 ${cut}px 0)`;
     }
     hazePairs = mobile
-      ? [[kicker, w30, 4, .45, [kicker]], [w30, row, -24, .45, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]], [heroCd, mq, -10, .5, [heroCd]]]
-      : [[kicker, w30, 0, .5, [kicker]], [w30, heroBottom, 0, .45, [w30, row]], [heroBottom, mq, -10, .6, [heroIntro, heroCd]]];
+      ? [[kicker, w30, 4, .45, [kicker]], [w30, row, -24, .45, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]]]
+      : [[kicker, w30, 0, .5, [kicker]], [w30, heroBottom, 0, .45, [w30, row]]];
     const names = new Map([[kicker, 'kicker'], [w30, 'thirty'], [row, 'badges'], [heroIntro, 'intro'], [heroCd, 'countdown']]);
     hazePairs.forEach((pr) => pr[4].forEach((el) => twin(el, names.get(el))));
     layers.forEach((el) => el._twin && el._twin.fit && el._twin.fit());
@@ -605,13 +603,11 @@
         const y0 = Math.max(Ya - Tb - Hb + rest, Yb - Tb), y1 = y0 + Hb * span;
         targets.forEach((el) => { const t = el._twin; if (t) t.sharp.style.animationRange = t.blur.style.animationRange = `${y0.toFixed(1)}px ${y1.toFixed(1)}px`; });
       });
-      stack.style.setProperty('--gone', `${(mqLand - GONE).toFixed(1)}px ${mqLand.toFixed(1)}px`);   // the stack is gone by the time the banner docks
       heroEl.classList.add('sda'); document.documentElement.classList.add('sda');
     }
     document.documentElement.classList.remove('measuring');
     coverFx();
   }
-  const GONE = 140;                                          // the stack fades out over this much scrolling, finishing as the banner docks
   const MQ_TUCK = 12;                                        // how far the docked banner slides under the menu
   // Blur without per-frame repaints: every layer gets a pre-blurred twin; scrolling only crossfades opacity,
   // which the phone composites on the GPU.
@@ -652,8 +648,6 @@
   setInterval(() => { const t = heroCd && heroCd._twin; if (t && !t.img && t.v > 0) t.blur.innerHTML = t.sharp.innerHTML.replace(/ id="[^"]*"/g, ''); }, 1000);
   function coverFx() {
     if (SDA) return;
-    const gone = 1 - Math.min(1, Math.max(0, (scrollY - (mqLand - GONE)) / GONE));
-    document.querySelectorAll('.hero-stack > :not(.stack-spacer)').forEach((el) => { el.style.opacity = gone < 1 ? gone.toFixed(3) : ''; });
     hazePairs.forEach(([below, above, rest, span, targets]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (Math.max(1, a.height) * span)));

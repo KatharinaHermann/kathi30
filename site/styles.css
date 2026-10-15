@@ -816,9 +816,6 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
 .hero.hero-stacked .hero-stack { display: block; position: relative; }
 .mq-zone { display: flow-root; position: relative; z-index: 7; }   /* above the hero layers, so the banner + cards slide over them */
 
-/* once the banner has docked, the released stack fades away underneath it */
-@keyframes lyr-gone { from { opacity: 1; } to { opacity: 0; } }
-.hero.sda .hero-stack > :not(.stack-spacer) { animation: lyr-gone linear both; animation-timeline: scroll(root block); animation-range: var(--gone, 999999px 1000000px); }
 .measuring #plan .stick-head { position: static !important; }
 
 /* phones: hero stickers only rock, no vertical travel, so their top edge stays on the 30's line when pinned */
