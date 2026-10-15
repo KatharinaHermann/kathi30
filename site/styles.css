@@ -817,7 +817,7 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
 .marquee-track > span { opacity: var(--mqo, 1); }
 @keyframes mq-fade { from { opacity: 1; } to { opacity: .4; } }
 html.sda .marquee-track > span { animation: mq-fade linear both; animation-timeline: scroll(root block); animation-range: var(--mq-range, 999999px 1000000px); }
-.mq-zone { display: flow-root; position: relative; }
+.mq-zone { display: flow-root; position: relative; z-index: 7; }   /* above the hero layers, so the banner + cards slide over them */
 
 /* once the banner has docked, the released stack fades away underneath it */
 @keyframes lyr-gone { from { opacity: 1; } to { opacity: 0; } }

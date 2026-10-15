@@ -572,7 +572,7 @@
       zone.style.marginTop = GAPB - MB[last] - P + 'px';
       let gap = zone.querySelector('.mq-gap');
       if (!gap) { gap = document.createElement('div'); gap.className = 'mq-gap'; mq.after(gap); }
-      gap.style.height = MB[last] + P - GAPB - mq.offsetHeight - MQ_TUCK + 'px';   // the cards arrive right behind the stack
+      gap.style.height = '0px';                               // the cards ride directly under the banner, over the vanishing stack
     }
     hazePairs = mobile
       ? [[kicker, w30, 4, .45, [kicker]], [w30, row, -24, .45, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]], [heroCd, mq, -10, .5, [heroCd]]]
@@ -606,13 +606,13 @@
         targets.forEach((el) => { const t = el._twin; if (t) t.sharp.style.animationRange = t.blur.style.animationRange = `${y0.toFixed(1)}px ${y1.toFixed(1)}px`; });
       });
       if (mq) mq.style.setProperty('--mq-range', `${mqLand.toFixed(1)}px ${mqPush.toFixed(1)}px`);
-      stack.style.setProperty('--gone', `${mqLand.toFixed(1)}px ${(mqLand + GONE).toFixed(1)}px`);   // the released stack fades out under the banner
+      stack.style.setProperty('--gone', `${(mqLand - GONE).toFixed(1)}px ${mqLand.toFixed(1)}px`);   // the stack is gone by the time the banner docks
       heroEl.classList.add('sda'); document.documentElement.classList.add('sda');
     }
     document.documentElement.classList.remove('measuring');
     coverFx();
   }
-  const GONE = 160;                                          // scroll distance over which the released stack fades out
+  const GONE = 140;                                          // the stack fades out over this much scrolling, finishing as the banner docks
   const MQ_TUCK = 12;                                        // how far the docked banner slides under the menu
   // the banner's scrolling text winds down with the fade and finally stands still
   const mqTrack = $('marquee'); let mqAnim = null;
@@ -663,7 +663,7 @@
   function coverFx() {
     if (SDA) return;
     const mq = document.querySelector('.marquee');
-    const gone = 1 - Math.min(1, Math.max(0, (scrollY - mqLand) / GONE));
+    const gone = 1 - Math.min(1, Math.max(0, (scrollY - (mqLand - GONE)) / GONE));
     document.querySelectorAll('.hero-stack > :not(.stack-spacer)').forEach((el) => { el.style.opacity = gone < 1 ? gone.toFixed(3) : ''; });
     if (mq) mq.style.setProperty('--mqo', (1 - .6 * Math.min(1, Math.max(0, (scrollY - mqLand) / Math.max(1, mqPush - mqLand)))).toFixed(3));
     hazePairs.forEach(([below, above, rest, span, targets]) => {
