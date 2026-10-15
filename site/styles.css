@@ -332,7 +332,7 @@ textarea.linput { resize: vertical; }
   .lock-title { font-size: 26px; }
   .lock-text { font-size: 14px; }
   .lock-count { font-size: 13px; padding: 8px 14px; }
-  .gb-badge { width: 64px !important; }
+  .gb-badge { width: 84px !important; }
   .gb-badge:nth-child(3), .gb-badge:nth-child(5), .gb-badge:nth-child(7) { display: none; }
   .gb-open { margin-top: 20px; }
 }
@@ -817,3 +817,4 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
 .marquee-track > span { opacity: var(--mqo, 1); }
 @keyframes mq-fade { from { opacity: 1; } to { opacity: .4; } }
 html.sda .marquee-track > span { animation: mq-fade linear both; animation-timeline: scroll(root block); animation-range: var(--mq-range, 999999px 1000000px); }
+.mq-zone { display: flow-root; position: relative; }

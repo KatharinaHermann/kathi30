@@ -202,13 +202,13 @@
   // ---------- guest book lock stickers ----------
   const gbBadges = $('gbBadges');
   [
-    ['assets/gb-01.jpg', '35% 28%', 'KATHI 30 ✦ JOSHUA TREE ✦ KATHI 30 ✦ JOSHUA TREE ✦', 'gunmetal', '#d4d7de', 'left:3%;top:6%;width:clamp(110px,14vw,180px)', 0, 16],
-    ['assets/gb-02.jpg', '55% 35%', 'MAIN CHARACTERS ✦ MAIN CHARACTERS ✦', 'silver', '#f02719', 'left:6%;bottom:8%;width:clamp(100px,13vw,170px)', -1.3, -18],
-    ['assets/gb-03.jpg', '40% 30%', 'DESERT CREW ✦ DESERT CREW ✦', '#f02719', '#ffffff', 'left:19%;top:40%;width:clamp(84px,9vw,124px)', -2.1, 14],
-    ['assets/gb-04.jpg', '62% 58%', 'JAN 15—18 ✦ 2027 ✦ JAN 15—18 ✦ 2027 ✦', 'blue', '#24221f', 'right:4%;top:5%;width:clamp(110px,14vw,180px)', -0.7, -20],
-    ['assets/gb-05.jpg', '45% 25%', 'STARGAZING GLAM ✦ STARGAZING GLAM ✦', 'silver', '#24221f', 'right:18%;top:42%;width:clamp(84px,9vw,124px)', -2.8, 17],
-    ['assets/gb-06.jpg', '45% 55%', '30 & THRIVING ✦ 30 & THRIVING ✦', '#f02719', '#ffffff', 'right:5%;bottom:7%;width:clamp(100px,13vw,170px)', -3.5, -15],
-    ['assets/gb-07.jpg', '60% 55%', 'NO PEEKING ✦ NO PEEKING ✦ NO PEEKING ✦', 'blue', '#f02719', 'left:30%;bottom:2%;width:clamp(84px,9vw,124px)', -4.4, 13]
+    ['assets/gb-01.jpg', '35% 28%', 'KATHI 30 ✦ JOSHUA TREE ✦ KATHI 30 ✦ JOSHUA TREE ✦', 'gunmetal', '#d4d7de', 'left:3%;top:6%;width:clamp(140px,18vw,230px)', 0, 16],
+    ['assets/gb-02.jpg', '55% 35%', 'MAIN CHARACTERS ✦ MAIN CHARACTERS ✦', 'silver', '#f02719', 'left:6%;bottom:8%;width:clamp(130px,16.5vw,215px)', -1.3, -18],
+    ['assets/gb-03.jpg', '40% 30%', 'DESERT CREW ✦ DESERT CREW ✦', '#f02719', '#ffffff', 'left:14%;top:40%;width:clamp(108px,11.5vw,160px)', -2.1, 14],
+    ['assets/gb-04.jpg', '62% 58%', 'JAN 15—18 ✦ 2027 ✦ JAN 15—18 ✦ 2027 ✦', 'blue', '#24221f', 'right:4%;top:5%;width:clamp(140px,18vw,230px)', -0.7, -20],
+    ['assets/gb-05.jpg', '45% 25%', 'STARGAZING GLAM ✦ STARGAZING GLAM ✦', 'silver', '#24221f', 'right:14%;top:42%;width:clamp(108px,11.5vw,160px)', -2.8, 17],
+    ['assets/gb-06.jpg', '45% 55%', '30 & THRIVING ✦ 30 & THRIVING ✦', '#f02719', '#ffffff', 'right:5%;bottom:7%;width:clamp(130px,16.5vw,215px)', -3.5, -15],
+    ['assets/gb-07.jpg', '60% 55%', 'NO PEEKING ✦ NO PEEKING ✦ NO PEEKING ✦', 'blue', '#f02719', 'left:30%;bottom:2%;width:clamp(108px,11.5vw,160px)', -4.4, 13]
   ].forEach(([src, op, text, ring, ink, style, delay, dur]) => gbBadges.append(ringSticker('gb-badge', src, op, text, ring, ink, style, delay, dur)));
   const lock = ringSticker('lock-badge', 'assets/kathi.jpg', '50% 45%', 'NO PEEKING ✦ LOCKED TILL THE PARTY ✦ NO PEEKING ✦ LOCKED ✦', '#f02719', '#ffffff', '', 0, 14);
   lock.firstElementChild.append(h('<span class="lock-icon">🔒</span>'));
@@ -458,8 +458,7 @@
   });
   function sizeStacks() {
     const mobile = innerWidth <= 640;
-    const mqEl = document.querySelector('.marquee.pinned');
-    const navH = mqEl ? (parseFloat(mqEl.style.top) || 0) + mqEl.offsetHeight : (nav ? nav.offsetHeight : 90);   // the docked banner counts as part of the menu now
+    const navH = nav ? nav.offsetHeight : 90;
     const GAP = 14, STEP = 10, FLOW = 16;
     document.documentElement.style.setProperty('--nav-h', navH + 'px');
     document.documentElement.style.scrollPaddingTop = navH + 10 + 'px';
@@ -501,7 +500,7 @@
   // hero on phones: the headline pins, the 30 slides onto it, then the sticker row, the intro text and the countdown;
   // all three release together
   const heroIntro = document.querySelector('.hero-intro'), heroCd = document.querySelector('.hero-bottom .countdown'), heroBottom = document.querySelector('.hero-bottom');
-  let mqLand = Infinity;                                   // scroll offset where the banner docks under the menu
+  let mqLand = Infinity, mqPush = Infinity;                  // scroll offsets: banner docks under the menu / gets pushed away by the plan
   function sizeHero() {
     const stack = document.querySelector('.hero-stack');
     const w30 = document.querySelector('.hero-stack .hero-30-wrap'), row = $('heroBadges');
@@ -513,14 +512,17 @@
     heroBottom.hidden = mobile;
     // the text + countdown block joins the stack on desktop too, so every layer shares one box
     if (!mobile && heroBottom.parentNode !== stack) stack.appendChild(heroBottom);
-    // the banner sits right after the hero and pins under the menu for the rest of the page
-    if (mq && mq.previousElementSibling !== heroEl) heroEl.after(mq);
+    // the banner and the deal cards share a zone right after the hero: the banner pins under the menu inside it,
+    // and the plan section pushes it away when the zone ends
+    let zone = document.querySelector('.mq-zone');
+    if (!zone && mq) { zone = document.createElement('div'); zone.className = 'mq-zone'; heroEl.after(zone); zone.append(mq, document.querySelector('.glass-bare')); }
     const navH = nav ? nav.offsetHeight : 90;
-    if (mq) { mq.classList.add('pinned'); mq.style.top = navH - MQ_TUCK + 'px'; }   // docks tucked slightly under the menu
+    const dock = navH - MQ_TUCK;                              // the banner docks tucked slightly under the menu
     const kicker = stack.querySelector('.hero-kicker');
-    const all = [kicker, w30, row, heroIntro, heroCd, heroBottom];
-    all.forEach((el) => ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
+    const all = [kicker, w30, row, heroIntro, heroCd, heroBottom, mq];
+    all.forEach((el) => el && ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
     stack.style.removeProperty('margin-bottom');
+    if (mq) { mq.classList.add('pinned'); mq.style.top = dock + 'px'; }
     heroEl.classList.toggle('hero-stacked', !reduceMotion);
     if (reduceMotion) return;
     let layers, T, G;
@@ -546,17 +548,34 @@
       el.style.setProperty('margin-bottom', MB[i] + 'px', 'important');
       if (i) el.style.setProperty('margin-top', G[i] - MB[i - 1] + 'px', 'important');
     });
-    stack.style.marginBottom = -MB[MB.length - 1] + 'px';     // the release padding under the last layer stays invisible
+    const last = layers.length - 1, GAPB = 18;                 // resting gap between the last layer and the banner
+    // an invisible spacer at the end of the stack keeps the layers pinned until the banner has slid over the
+    // countdown and docked; the zone with the banner is pulled up over that spacer so the banner still rests
+    // 18px under the countdown, and a second spacer after the banner holds the deal cards back until the stack
+    // has scrolled away underneath
+    const P = T[last] + H[last] - dock + GAPB;
+    let spacer = stack.querySelector('.stack-spacer');
+    if (!spacer) { spacer = document.createElement('div'); spacer.className = 'stack-spacer'; }
+    stack.appendChild(spacer);
+    spacer.style.height = P + 'px';
+    if (zone) {
+      zone.style.marginTop = GAPB - MB[last] - P + 'px';
+      let gap = zone.querySelector('.mq-gap');
+      if (!gap) { gap = document.createElement('div'); gap.className = 'mq-gap'; mq.after(gap); }
+      gap.style.height = MB[last] + P - GAPB + 'px';
+    }
     hazePairs = mobile
-      ? [[kicker, w30, 4, .45, [kicker]], [w30, row, -24, .45, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]]]
-      : [[kicker, w30, 0, .5, [kicker]], [w30, heroBottom, 0, .45, [w30, row]]];
+      ? [[kicker, w30, 4, .45, [kicker]], [w30, row, -24, .45, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]], [heroCd, mq, -10, .5, [heroCd]]]
+      : [[kicker, w30, 0, .5, [kicker]], [w30, heroBottom, 0, .45, [w30, row]], [heroBottom, mq, -10, .6, [heroIntro, heroCd]]];
     const names = new Map([[kicker, 'kicker'], [w30, 'thirty'], [row, 'badges'], [heroIntro, 'intro'], [heroCd, 'countdown']]);
     hazePairs.forEach((pr) => pr[4].forEach((el) => twin(el, names.get(el))));
     layers.forEach((el) => el._twin && el._twin.fit && el._twin.fit());
     // where things happen, measured with every layer un-stuck
     document.documentElement.classList.add('measuring');
     const docTop = (el) => el.getBoundingClientRect().top + scrollY;
-    mqLand = mq ? docTop(mq) - navH : Infinity;
+    const zoneEnd = zone ? zone.getBoundingClientRect().bottom + scrollY : Infinity;
+    mqLand = mq ? docTop(mq) - dock : Infinity;
+    mqPush = mq ? zoneEnd - (dock + mq.offsetHeight) : Infinity;   // the plan arrives: fade + slowdown are complete here
     if (SDA) {
       // the browser drives each fade from the scroll position itself: work out, per covered layer, between which
       // scroll offsets the next layer slides over it
@@ -565,20 +584,19 @@
         const y0 = Math.max(Ya - Tb - Hb + rest, Yb - Tb), y1 = y0 + Hb * span;
         targets.forEach((el) => { const t = el._twin; if (t) t.sharp.style.animationRange = t.blur.style.animationRange = `${y0.toFixed(1)}px ${y1.toFixed(1)}px`; });
       });
-      if (mq) mq.style.setProperty('--mq-range', `${mqLand.toFixed(1)}px ${(mqLand + MQ_FADE).toFixed(1)}px`);
+      if (mq) mq.style.setProperty('--mq-range', `${mqLand.toFixed(1)}px ${mqPush.toFixed(1)}px`);
       heroEl.classList.add('sda'); document.documentElement.classList.add('sda');
     }
     document.documentElement.classList.remove('measuring');
     coverFx();
   }
-  const MQ_FADE = 500;                                       // banner text fades out over this much scrolling after docking
   const MQ_TUCK = 12;                                        // how far the docked banner slides under the menu
   // the banner's scrolling text winds down with the fade and finally stands still
   const mqTrack = $('marquee'); let mqAnim = null;
   function mqRate() {
     if (!mqTrack) return;
     if (!mqAnim) { mqAnim = mqTrack.getAnimations().find((an) => an.animationName === 'marquee'); if (!mqAnim) return; }
-    const p = Math.min(1, Math.max(0, (scrollY - mqLand) / (MQ_FADE * 1.8)));
+    const p = Math.min(1, Math.max(0, (scrollY - mqLand) / Math.max(1, mqPush - mqLand)));
     const rate = Math.round((1 - p) * (1 - p) * 100) / 100;
     if (mqAnim.playbackRate !== rate) mqAnim.playbackRate = rate;
   }
@@ -622,7 +640,7 @@
   function coverFx() {
     if (SDA) return;
     const mq = document.querySelector('.marquee');
-    if (mq) mq.style.setProperty('--mqo', (1 - .6 * Math.min(1, Math.max(0, (scrollY - mqLand) / MQ_FADE))).toFixed(3));
+    if (mq) mq.style.setProperty('--mqo', (1 - .6 * Math.min(1, Math.max(0, (scrollY - mqLand) / Math.max(1, mqPush - mqLand)))).toFixed(3));
     hazePairs.forEach(([below, above, rest, span, targets]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (Math.max(1, a.height) * span)));
