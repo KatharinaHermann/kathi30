@@ -562,11 +562,15 @@
     const last = layers.length - 1, GAPB = 18;                 // resting gap between the last layer and the banner
     // the zone with the banner is pulled up so the banner rests 18px under the last layer; the hero is clipped at
     // the banner's top edge, so the rising banner wipes the pinned layers away and the menu hides what's above
+    // an invisible spacer keeps the layers pinned until the banner has wiped over them and docked
+    const P = T[last] + H[last] - dock + GAPB;
     let spacer = stack.querySelector('.stack-spacer');
-    if (spacer) spacer.remove();
-    const cut = Math.max(0, MB[last] - GAPB);
+    if (!spacer) { spacer = document.createElement('div'); spacer.className = 'stack-spacer'; }
+    stack.appendChild(spacer);
+    spacer.style.height = P + 'px';
+    const cut = Math.max(0, MB[last] + P - GAPB);
     if (zone) {
-      zone.style.marginTop = GAPB - MB[last] + 'px';
+      zone.style.marginTop = GAPB - MB[last] - P + 'px';
       let gap = zone.querySelector('.mq-gap');
       if (!gap) { gap = document.createElement('div'); gap.className = 'mq-gap'; mq.after(gap); }
       gap.style.height = '0px';
