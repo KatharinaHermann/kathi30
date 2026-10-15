@@ -458,9 +458,11 @@
   });
   function sizeStacks() {
     const mobile = innerWidth <= 640;
-    const navH = nav ? nav.offsetHeight : 90;
+    const mqEl = document.querySelector('.marquee.pinned');
+    const navH = (nav ? nav.offsetHeight : 90) + (mqEl ? mqEl.offsetHeight : 0);   // the pinned banner counts as part of the menu now
     const GAP = 14, STEP = 10, FLOW = 16;
     document.documentElement.style.setProperty('--nav-h', navH + 'px');
+    document.documentElement.style.scrollPaddingTop = navH + 10 + 'px';
     document.querySelectorAll('.stack').forEach((g) => {
       const kids = [...g.children];
       const head = g.previousElementSibling && g.previousElementSibling.classList.contains('stick-head') ? g.previousElementSibling : null;
@@ -499,6 +501,7 @@
   // hero on phones: the headline pins, the 30 slides onto it, then the sticker row, the intro text and the countdown;
   // all three release together
   const heroIntro = document.querySelector('.hero-intro'), heroCd = document.querySelector('.hero-bottom .countdown'), heroBottom = document.querySelector('.hero-bottom');
+  let mqLand = Infinity;                                   // scroll offset where the banner docks under the menu
   function sizeHero() {
     const stack = document.querySelector('.hero-stack');
     const w30 = document.querySelector('.hero-stack .hero-30-wrap'), row = $('heroBadges');
@@ -508,32 +511,32 @@
     if (mobile && heroIntro.parentNode !== stack) stack.append(heroIntro, heroCd);
     if (!mobile && heroIntro.parentNode !== heroBottom) heroBottom.append(heroIntro, heroCd);
     heroBottom.hidden = mobile;
-    // the banner is the last layer of the stack (inside the hero so everything shares one box)
-    if (mq && mobile && mq.parentNode !== stack) stack.appendChild(mq);
-    if (mq && !mobile && mq.parentNode !== heroEl) heroEl.appendChild(mq);
+    // the text + countdown block joins the stack on desktop too, so every layer shares one box
+    if (!mobile && heroBottom.parentNode !== stack) stack.appendChild(heroBottom);
+    // the banner sits right after the hero and pins under the menu for the rest of the page
+    if (mq && mq.previousElementSibling !== heroEl) heroEl.after(mq);
+    const navH = nav ? nav.offsetHeight : 90;
+    if (mq) { mq.classList.add('pinned'); mq.style.top = navH + 'px'; }
     const kicker = stack.querySelector('.hero-kicker');
-    const all = [kicker, w30, row, heroIntro, heroCd, heroBottom, mq];
+    const all = [kicker, w30, row, heroIntro, heroCd, heroBottom];
     all.forEach((el) => ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
-    stack.style.removeProperty('margin-bottom'); heroEl.style.removeProperty('padding-bottom');
+    stack.style.removeProperty('margin-bottom');
     heroEl.classList.toggle('hero-stacked', !reduceMotion);
     if (reduceMotion) return;
-    const navH = nav ? nav.offsetHeight : 90;
     let layers, T, G;
     if (mobile) {
-      // headline pins, then the 30, the stickers, the text, the countdown, and the banner on top
-      layers = [kicker, w30, row, heroIntro, heroCd, mq];
-      const t0 = navH + 6;
-      G = [0, 8, -28, 22, 22, 18];
-      T = layers.map(() => t0);                              // every layer pins on the same line under the menu
+      // headline pins, then the 30, the stickers, the text and the countdown slide over it, one by one
+      layers = [kicker, w30, row, heroIntro, heroCd];
+      G = [0, 8, -28, 22, 22];
+      T = layers.map(() => navH + 6);
     } else {
-      // desktop: headline pins, the 30 (stickers ride on it) slides over it, then the text + countdown, then the banner
-      layers = [kicker, w30, row, heroBottom, mq];
+      // desktop: headline, then the 30 (stickers ride on it), then the text + countdown
+      layers = [kicker, w30, row, heroBottom];
       const Y = layers.map((el) => el.getBoundingClientRect().top + scrollY);
-      const H = layers.map((el) => el.offsetHeight);
-      Y[2] = Y[1]; H[2] = 0;                                   // sticker layer is a zero-height anchor on the 30
-      G = Y.map((y, i) => (i ? y - (Y[i - 1] + H[i - 1]) : 0));
-      const t0 = navH + 18;
-      T = layers.map(() => t0);                              // every layer pins on the same line under the menu
+      const H0 = layers.map((el) => el.offsetHeight);
+      Y[2] = Y[1]; H0[2] = 0;                                 // sticker layer is a zero-height anchor on the 30
+      G = Y.map((y, i) => (i ? y - (Y[i - 1] + H0[i - 1]) : 0));
+      T = layers.map(() => navH + 18);
     }
     const H = layers.map((el, i) => (!mobile && i === 2 ? 0 : el.offsetHeight));
     const R = Math.max(...T.map((t, i) => t + H[i]));
@@ -543,30 +546,32 @@
       el.style.setProperty('margin-bottom', MB[i] + 'px', 'important');
       if (i) el.style.setProperty('margin-top', G[i] - MB[i - 1] + 'px', 'important');
     });
-    // the release padding under the banner stays invisible
-    if (mobile) stack.style.marginBottom = -MB[MB.length - 1] + 'px';
-    else mq.style.setProperty('margin-bottom', '0px', 'important');
+    stack.style.marginBottom = -MB[MB.length - 1] + 'px';     // the release padding under the last layer stays invisible
     hazePairs = mobile
-      ? [[kicker, w30, 4, .45, [kicker]], [w30, row, -24, .45, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]], [heroCd, mq, -10, .5, [heroCd]]]
-      : [[kicker, w30, 0, .5, [kicker]], [w30, heroBottom, 0, .45, [w30, row]], [heroBottom, mq, 0, .6, [heroIntro, heroCd]]];
+      ? [[kicker, w30, 4, .45, [kicker]], [w30, row, -24, .45, [w30]], [row, heroIntro, -16, .3, [row]], [heroIntro, heroCd, -16, .35, [heroIntro]]]
+      : [[kicker, w30, 0, .5, [kicker]], [w30, heroBottom, 0, .45, [w30, row]]];
     const names = new Map([[kicker, 'kicker'], [w30, 'thirty'], [row, 'badges'], [heroIntro, 'intro'], [heroCd, 'countdown']]);
     hazePairs.forEach((pr) => pr[4].forEach((el) => twin(el, names.get(el))));
     layers.forEach((el) => el._twin && el._twin.fit && el._twin.fit());
+    // where things happen, measured with every layer un-stuck
+    document.documentElement.classList.add('measuring');
+    const docTop = (el) => el.getBoundingClientRect().top + scrollY;
+    mqLand = mq ? docTop(mq) - navH : Infinity;
     if (SDA) {
       // the browser drives each fade from the scroll position itself: work out, per covered layer, between which
-      // scroll offsets the next layer slides over it (measured with the layers un-stuck)
-      heroEl.classList.add('measuring');
-      const docTop = (el) => el.getBoundingClientRect().top + scrollY;
+      // scroll offsets the next layer slides over it
       hazePairs.forEach(([below, above, rest, span, targets]) => {
         const Yb = docTop(below), Ya = docTop(above), Hb = Math.max(1, below.offsetHeight), Tb = parseFloat(below.style.top) || 0;
         const y0 = Math.max(Ya - Tb - Hb + rest, Yb - Tb), y1 = y0 + Hb * span;
         targets.forEach((el) => { const t = el._twin; if (t) t.sharp.style.animationRange = t.blur.style.animationRange = `${y0.toFixed(1)}px ${y1.toFixed(1)}px`; });
       });
-      heroEl.classList.remove('measuring');
-      heroEl.classList.add('sda');
+      if (mq) mq.style.setProperty('--mq-range', `${mqLand.toFixed(1)}px ${(mqLand + MQ_FADE).toFixed(1)}px`);
+      heroEl.classList.add('sda'); document.documentElement.classList.add('sda');
     }
+    document.documentElement.classList.remove('measuring');
     coverFx();
   }
+  const MQ_FADE = 500;                                       // banner text fades out over this much scrolling after docking
   // Blur without per-frame repaints: every layer gets a pre-blurred twin; scrolling only crossfades opacity,
   // which the phone composites on the GPU.
   let hazePairs = [];
@@ -606,6 +611,8 @@
   setInterval(() => { const t = heroCd && heroCd._twin; if (t && !t.img && t.v > 0) t.blur.innerHTML = t.sharp.innerHTML.replace(/ id="[^"]*"/g, ''); }, 1000);
   function coverFx() {
     if (SDA) return;
+    const mq = document.querySelector('.marquee');
+    if (mq) mq.style.setProperty('--mqo', (1 - .82 * Math.min(1, Math.max(0, (scrollY - mqLand) / MQ_FADE))).toFixed(3));
     hazePairs.forEach(([below, above, rest, span, targets]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (Math.max(1, a.height) * span)));
@@ -620,7 +627,7 @@
   if (document.fonts) document.fonts.ready.then(() => { sizeHero(); coverFx(); });
   let fxQ = false;
   addEventListener('scroll', () => { if (!fxQ) { fxQ = true; requestAnimationFrame(() => { fxQ = false; coverFx(); }); } }, { passive: true });
-  window.restackLight = () => { sizeStacks(); sizeHero(); coverFx(); };
+  window.restackLight = () => { sizeHero(); sizeStacks(); coverFx(); };
   // iPhone fires resize whenever the toolbar slides in/out while scrolling; only re-measure on a real width change
   let lastW = innerWidth;
   addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; sizeHero(); sizeStacks(); coverFx(); });

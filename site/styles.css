@@ -809,3 +809,11 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
 .hero.sda .lyr-sharp { animation: lyr-out linear both; animation-timeline: scroll(root block); }
 .hero.sda .lyr-blur { animation: lyr-in linear both; animation-timeline: scroll(root block); }
 .hero.measuring .hero-stack > *, .hero.measuring .hero-bottom, .hero.measuring .marquee { position: static !important; }
+
+/* ---------- banner docks under the menu for the rest of the page; its text fades once docked ---------- */
+.marquee.pinned { position: sticky; z-index: 25; }
+.measuring .hero-stack > *, .measuring .hero-bottom, .measuring .marquee { position: static !important; }
+.hero.hero-stacked .hero-stack { display: block; position: relative; }
+.marquee-track > span { opacity: var(--mqo, 1); }
+@keyframes mq-fade { from { opacity: 1; } to { opacity: .18; } }
+html.sda .marquee-track > span { animation: mq-fade linear both; animation-timeline: scroll(root block); animation-range: var(--mq-range, 999999px 1000000px); }
