@@ -174,15 +174,29 @@
   })();
 
   // ---------- videos: load and play only when they scroll into view ----------
+  const gbVideo = document.querySelector('.gb-video-wrap video');
   document.querySelectorAll('video[data-src]').forEach((v) => {
+    if (v === gbVideo) return;
     if (!('IntersectionObserver' in window)) { v.src = v.dataset.src; return; }
     new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else if (v.src) v.pause(); }), { rootMargin: '300px 0px' }).observe(v);
   });
-  // guest-book clip: tap for sound
+  // guest-book clip: fetched when the section comes near, started only once it is fully on screen, with sound
+  // when the browser allows it (it does after the first tap on the page), muted until then
   (() => {
-    const b = $('gbSound'), v = b && b.closest('.gb-video-wrap').querySelector('video');
-    if (!b || !v) return;
-    b.addEventListener('click', () => { v.muted = !v.muted; b.setAttribute('aria-pressed', String(!v.muted)); b.textContent = v.muted ? '🔇 sound off' : '🔊 sound on'; if (!v.muted) v.play().catch(() => {}); });
+    const v = gbVideo, b = $('gbSound');
+    if (!v || !b) return;
+    const label = () => { b.setAttribute('aria-pressed', String(!v.muted)); b.textContent = v.muted ? '🔇 tap for sound' : '🔊 sound on'; };
+    let wanted = false;                                      // true while the clip should be playing
+    const start = () => { wanted = true; if (!v.src) v.src = v.dataset.src; v.muted = false; v.play().then(label).catch(() => { v.muted = true; v.play().catch(() => {}); label(); }); };
+    const stop = () => { wanted = false; if (v.src) v.pause(); };
+    if (!('IntersectionObserver' in window)) { start(); return; }
+    new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting && !v.src) v.src = v.dataset.src; }), { rootMargin: '600px 0px' }).observe(v);
+    new IntersectionObserver((es) => es.forEach((en) => { if (en.intersectionRatio >= .98) { if (!wanted) start(); } else if (en.intersectionRatio < .5 && wanted) stop(); }), { threshold: [0, .5, .98, 1] }).observe(v);
+    // the first tap or click anywhere counts as permission: switch the sound on if the clip is running muted
+    const unlock = () => { if (wanted && v.muted) { v.muted = false; v.play().then(label).catch(() => { v.muted = true; label(); }); } };
+    addEventListener('pointerdown', unlock, { passive: true }); addEventListener('keydown', unlock);
+    b.addEventListener('click', (e) => { e.stopPropagation(); v.muted = !v.muted; label(); if (!v.muted) { wanted = true; v.play().catch(() => {}); } });
+    label();
   })();
 
   // ---------- marquee ----------
