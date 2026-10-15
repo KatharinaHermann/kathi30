@@ -612,7 +612,7 @@
   function coverFx() {
     if (SDA) return;
     const mq = document.querySelector('.marquee');
-    if (mq) mq.style.setProperty('--mqo', (1 - .82 * Math.min(1, Math.max(0, (scrollY - mqLand) / MQ_FADE))).toFixed(3));
+    if (mq) mq.style.setProperty('--mqo', (1 - .6 * Math.min(1, Math.max(0, (scrollY - mqLand) / MQ_FADE))).toFixed(3));
     hazePairs.forEach(([below, above, rest, span, targets]) => {
       const a = below.getBoundingClientRect(), b = above.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, (a.bottom - b.top - rest) / (Math.max(1, a.height) * span)));

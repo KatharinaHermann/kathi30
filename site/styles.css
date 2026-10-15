@@ -815,5 +815,5 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
 .measuring .hero-stack > *, .measuring .hero-bottom, .measuring .marquee { position: static !important; }
 .hero.hero-stacked .hero-stack { display: block; position: relative; }
 .marquee-track > span { opacity: var(--mqo, 1); }
-@keyframes mq-fade { from { opacity: 1; } to { opacity: .18; } }
+@keyframes mq-fade { from { opacity: 1; } to { opacity: .4; } }
 html.sda .marquee-track > span { animation: mq-fade linear both; animation-timeline: scroll(root block); animation-range: var(--mq-range, 999999px 1000000px); }
