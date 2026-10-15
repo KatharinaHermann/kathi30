@@ -459,7 +459,7 @@
   function sizeStacks() {
     const mobile = innerWidth <= 640;
     const mqEl = document.querySelector('.marquee.pinned');
-    const navH = (nav ? nav.offsetHeight : 90) + (mqEl ? mqEl.offsetHeight : 0);   // the pinned banner counts as part of the menu now
+    const navH = mqEl ? (parseFloat(mqEl.style.top) || 0) + mqEl.offsetHeight : (nav ? nav.offsetHeight : 90);   // the docked banner counts as part of the menu now
     const GAP = 14, STEP = 10, FLOW = 16;
     document.documentElement.style.setProperty('--nav-h', navH + 'px');
     document.documentElement.style.scrollPaddingTop = navH + 10 + 'px';
@@ -516,7 +516,7 @@
     // the banner sits right after the hero and pins under the menu for the rest of the page
     if (mq && mq.previousElementSibling !== heroEl) heroEl.after(mq);
     const navH = nav ? nav.offsetHeight : 90;
-    if (mq) { mq.classList.add('pinned'); mq.style.top = navH + 'px'; }
+    if (mq) { mq.classList.add('pinned'); mq.style.top = navH - MQ_TUCK + 'px'; }   // docks tucked slightly under the menu
     const kicker = stack.querySelector('.hero-kicker');
     const all = [kicker, w30, row, heroIntro, heroCd, heroBottom];
     all.forEach((el) => ['top', 'margin-top', 'margin-bottom'].forEach((k) => el.style.removeProperty(k)));
@@ -572,6 +572,16 @@
     coverFx();
   }
   const MQ_FADE = 500;                                       // banner text fades out over this much scrolling after docking
+  const MQ_TUCK = 12;                                        // how far the docked banner slides under the menu
+  // the banner's scrolling text winds down with the fade and finally stands still
+  const mqTrack = $('marquee'); let mqAnim = null;
+  function mqRate() {
+    if (!mqTrack) return;
+    if (!mqAnim) { mqAnim = mqTrack.getAnimations().find((an) => an.animationName === 'marquee'); if (!mqAnim) return; }
+    const p = Math.min(1, Math.max(0, (scrollY - mqLand) / (MQ_FADE * 1.8)));
+    const rate = Math.round((1 - p) * (1 - p) * 100) / 100;
+    if (mqAnim.playbackRate !== rate) mqAnim.playbackRate = rate;
+  }
   // Blur without per-frame repaints: every layer gets a pre-blurred twin; scrolling only crossfades opacity,
   // which the phone composites on the GPU.
   let hazePairs = [];
@@ -626,8 +636,8 @@
   addEventListener('load', () => { sizeHero(); coverFx(); });
   if (document.fonts) document.fonts.ready.then(() => { sizeHero(); coverFx(); });
   let fxQ = false;
-  addEventListener('scroll', () => { if (!fxQ) { fxQ = true; requestAnimationFrame(() => { fxQ = false; coverFx(); }); } }, { passive: true });
-  window.restackLight = () => { sizeHero(); sizeStacks(); coverFx(); };
+  addEventListener('scroll', () => { if (!fxQ) { fxQ = true; requestAnimationFrame(() => { fxQ = false; coverFx(); mqRate(); }); } }, { passive: true });
+  window.restackLight = () => { sizeHero(); sizeStacks(); coverFx(); mqRate(); };
   // iPhone fires resize whenever the toolbar slides in/out while scrolling; only re-measure on a real width change
   let lastW = innerWidth;
   addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; sizeHero(); sizeStacks(); coverFx(); });
