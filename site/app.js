@@ -185,7 +185,7 @@
   (() => {
     const v = gbVideo, b = $('gbSound');
     if (!v || !b) return;
-    const label = () => { b.setAttribute('aria-pressed', String(!v.muted)); b.textContent = v.muted ? '🔇 tap for sound' : '🔊 sound on'; };
+    const label = () => { b.setAttribute('aria-pressed', String(!v.muted)); b.textContent = v.muted ? '🔇' : '🔊'; b.setAttribute('aria-label', v.muted ? 'Turn sound on' : 'Turn sound off'); };
     let wanted = false;                                      // true while the clip should be playing
     const start = () => { wanted = true; if (!v.src) v.src = v.dataset.src; v.muted = false; v.play().then(label).catch(() => { v.muted = true; v.play().catch(() => {}); label(); }); };
     const stop = () => { wanted = false; if (v.src) v.pause(); };
@@ -193,9 +193,9 @@
     new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting && !v.src) v.src = v.dataset.src; }), { rootMargin: '600px 0px' }).observe(v);
     new IntersectionObserver((es) => es.forEach((en) => { if (en.intersectionRatio >= .98) { if (!wanted) start(); } else if (en.intersectionRatio < .5 && wanted) stop(); }), { threshold: [0, .5, .98, 1] }).observe(v);
     // the first tap or click anywhere counts as permission: switch the sound on if the clip is running muted
-    const unlock = () => { if (wanted && v.muted) { v.muted = false; v.play().then(label).catch(() => { v.muted = true; label(); }); } };
+    const unlock = (e) => { if (e && b.contains(e.target)) return; if (wanted && v.muted) { v.muted = false; label(); v.play().catch(() => { v.muted = true; label(); }); } };
     addEventListener('pointerdown', unlock, { passive: true }); addEventListener('keydown', unlock);
-    b.addEventListener('click', (e) => { e.stopPropagation(); v.muted = !v.muted; label(); if (!v.muted) { wanted = true; v.play().catch(() => {}); } });
+    b.addEventListener('click', (e) => { e.preventDefault(); v.muted = !v.muted; label(); if (!v.muted) { wanted = true; v.play().catch(() => {}); } });
     label();
   })();
 
