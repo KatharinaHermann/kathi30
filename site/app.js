@@ -508,14 +508,9 @@
         if (i) c.style.setProperty('margin-top', FLOW - STEP * (n - i) + 'px', 'important');
       });
       const headTop = navH + 10;
-      // the title always pins; when the stack doesn't fit under it, the title shrinks a little to make room
-      // (on very short screens the bottom of the cards may still tuck under the screen edge)
+      // the title always pins (on very short screens the bottom of the cards may tuck under the screen edge)
       const room = document.documentElement.clientHeight - headTop - 8 - GAP - cardH - STEP * (n - 1);
-      const h2 = head && head.querySelector('.h2');
-      if (h2 && h2.dataset.fit) {
-        h2.style.setProperty('font-size', h2.dataset.fit + 'px', 'important');
-        if (head.offsetHeight > room) h2.style.setProperty('font-size', Math.round(h2.dataset.fit * .7) + 'px', 'important');
-      }
+      void room;                                             // titles keep their shared size even when the stack runs long
       const fits = !!head;
       let stackTop = headTop;
       if (fits) {
@@ -656,7 +651,9 @@
     if (BLUR_BITMAPS && name) {
       blur.classList.add('bmp');
       const im = new Image();
-      im.alt = ''; im.decoding = 'async'; im.src = `assets/blur/${name}.webp?v=3`;
+      im.alt = ''; im.decoding = 'async';
+      const url = `assets/blur/${name}.webp?v=3`;
+      if (document.readyState === 'complete') im.src = url; else addEventListener('load', () => { im.src = url; }, { once: true });
       blur.appendChild(im);
       el._twin = { sharp, blur, v: -1, img: im };
       const fit = () => {
@@ -767,15 +764,32 @@
   // titles grow to fill the width (one line each), up to a cap
   const fitTitles = () => {
     const phone = innerWidth <= 640;
-    document.querySelectorAll('.etsy-type.h2, .etsy-type.h2-car, .etsy-type.rsvp-big').forEach((h) => {
+    const heads = [...document.querySelectorAll('.etsy-type.h2, .etsy-type.h2-car, .etsy-type.rsvp-big')];
+    // phones: every section title shares one size (the largest at which the longest word still fits on a line);
+    // long titles wrap onto two lines. ARE YOU INN? keeps its own, bigger size.
+    let shared = 0;
+    if (phone) {
+      shared = 56;
+      heads.filter((h) => !h.classList.contains('rsvp-big')).forEach((h) => {
+        const box = h.parentElement, cs = getComputedStyle(box);
+        const avail = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 4;
+        h.style.setProperty('font-size', '100px', 'important');
+        const longest = Math.max(...[...h.querySelectorAll('.el-w')].map((e) => e.getBoundingClientRect().width));
+        shared = Math.min(shared, Math.floor(100 * avail / longest));
+      });
+    }
+    heads.forEach((h) => {
       const rsvp = h.classList.contains('rsvp-big');
-      if (!phone && !rsvp) { h.style.removeProperty('font-size'); return; }
-      const box = h.parentElement, cs = getComputedStyle(box);
-      const avail = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 4;
-      h.style.setProperty('font-size', '100px', 'important');
-      const w = [...h.querySelectorAll('.el-w, .el-sp, .kx')].reduce((t, e) => t + e.getBoundingClientRect().width, 0);
-      const cap = rsvp ? (phone ? 92 : 150) : 64;
-      const fit = Math.min(cap, Math.floor(100 * avail / w));
+      if (!phone && !rsvp) { h.style.removeProperty('font-size'); delete h.dataset.fit; return; }
+      let fit;
+      if (phone && !rsvp) fit = shared;
+      else {
+        const box = h.parentElement, cs = getComputedStyle(box);
+        const avail = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 4;
+        h.style.setProperty('font-size', '100px', 'important');
+        const w = [...h.querySelectorAll('.el-w, .el-sp, .kx')].reduce((t, e) => t + e.getBoundingClientRect().width, 0);
+        fit = Math.min(phone ? 92 : 150, Math.floor(100 * avail / w));
+      }
       h.dataset.fit = fit;
       h.style.setProperty('font-size', fit + 'px', 'important');
     });
