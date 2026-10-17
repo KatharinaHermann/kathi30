@@ -511,7 +511,7 @@
       // the title always pins (on very short screens the bottom of the cards may tuck under the screen edge)
       const room = document.documentElement.clientHeight - headTop - 8 - GAP - cardH - STEP * (n - 1);
       void room;                                             // titles keep their shared size even when the stack runs long
-      const fits = !!head;
+      const fits = !!head && g.dataset.pin !== 'top';          // data-pin="top": the title scrolls away and the cards pin right under the menu
       let stackTop = headTop;
       if (fits) {
         head.classList.add('is-sticky');
