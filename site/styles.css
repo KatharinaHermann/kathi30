@@ -869,3 +869,17 @@ html.kicker-allblack .hero-kicker .kx { color: var(--ink) !important; -webkit-te
   .etsy-type.h2, .etsy-type.h2-car { white-space: normal; line-height: 1.08 !important; }
   .etsy-type.h2 .el-sp { width: .2em; }
 }
+
+/* phones: soundtrack cards fit under the pinned title, so each one is fully readable before the next covers it */
+@media (max-width: 640px) {
+  .stack.music > .polaroid { padding: 12px 12px 14px; gap: 8px; }
+  .stack.music > .polaroid video { aspect-ratio: 10 / 9; object-position: 50% 22%; }
+  .stack.music > .polaroid .polaroid-cap { font-size: 15px; }
+  /* playlist cards: cover art sits beside the title instead of filling the card */
+  .stack.music > .playlist { display: grid; grid-template-columns: minmax(0, 1fr) 118px; grid-template-areas: "label cover" "title cover" "text text" "btn btn"; gap: 10px 14px; padding: 20px; align-items: start; }
+  .stack.music > .playlist > :nth-child(1) { grid-area: label; }
+  .stack.music > .playlist > :nth-child(2) { grid-area: title; font-size: 24px; }
+  .stack.music > .playlist > :nth-child(3) { grid-area: text; font-size: 15px; }
+  .stack.music > .playlist > :nth-child(4) { grid-area: btn; margin-top: 2px !important; }
+  .stack.music > .playlist > .cover { grid-area: cover; width: 118px; align-self: start; }
+}
